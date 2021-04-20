@@ -6,3 +6,7 @@ class sign_up(Resource):
     
     def post(self):
         return
+
+class log_in(Resource):
+    def get(self):
+        return

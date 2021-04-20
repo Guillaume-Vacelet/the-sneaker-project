@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Origin</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in products %}
+        <tr>
+            <th scope="row">{{ p.id }}</th>
+            <td>{{ p.name }}</td>
+            <td>{{ p.origin }}</td>
+            <td>{{ p.price }}</td>
+            <td> <a href="/delete/{{ p.id }}"> supprimer </a> </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
