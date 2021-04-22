@@ -10,9 +10,11 @@ import { connect } from 'react-redux'
 import HomeScreen from "../views/Home/HomeScreen";
 import ProfileScreen from "../views/Profile/ProfileScreen";
 import SearchScreen from "../views/Search/SearchScreen";
+import ScanScreen from "../views/Scan/ScanScreen";
 import SignInScreen from '../views/Authentication/SignInScreen';
 import SignUpScreen from '../views/Authentication/SignUpScreen';
 import LoadingScreen from '../views/LoadingScreen';
+import SettingsScreen from '../views/Settings/SettingsScreen';
 
 const AppTabs = createBottomTabNavigator();
 const AppTabsScreen = () => (
@@ -24,8 +26,12 @@ const AppTabsScreen = () => (
             iconName = 'home';
         } else if (route.name === 'Search') {
             iconName = 'search';
+        } else if (route.name === 'Scan') {
+            iconName = 'camera';
         } else if (route.name === 'Profile') {
             iconName = 'user-circle';
+        } else if (route.name === 'Settings') {
+            iconName = 'cog';
         } else {
             iconName = 'question'
         }
@@ -40,7 +46,9 @@ const AppTabsScreen = () => (
   >
     <AppTabs.Screen name="Home" component={HomeScreen} />
     <AppTabs.Screen name="Search" component={SearchScreen} />
+    <AppTabs.Screen name="Scan" component={ScanScreen} />
     <AppTabs.Screen name="Profile" component={ProfileScreen} />
+    <AppTabs.Screen name="Settings" component={SettingsScreen} />
   </AppTabs.Navigator>
 );
 
