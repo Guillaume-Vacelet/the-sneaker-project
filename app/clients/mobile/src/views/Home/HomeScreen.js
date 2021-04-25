@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, StatusBar, Text, StyleSheet } from 'react-native';
+import { View, StatusBar, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import { signOutUser } from "../../redux/actions/authActions";
 import { useDispatch } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';                               
+import SneakerCard from '../../components/SneakerCard';
+
 
 export default function HomeScreen(props) {
   const dispatch = useDispatch();
@@ -16,8 +18,11 @@ export default function HomeScreen(props) {
 
   return (
     <View style={styles.rootContainer}>
-      <Text style={styles.title}>Home</Text>
       <Button color="#841584" title="Sign out" onPress={handleSignOut} />
+      <View>
+        <Text style={styles.title}>Vérifiez vos sneakers rapidement !</Text>
+      </View>
+      <SneakerCard />
     </View>
   );
 }
@@ -25,17 +30,15 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
   rootContainer: {
     marginTop: StatusBar.currentHeight,
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-evenly',
+    flex: 1,
     alignItems: 'center',
-    flexDirection: 'column',
   },
   title: {
-    fontSize: 40,
-    fontWeight: "600",
+    fontSize: 30,
     padding: 20,
     color: "black",
   },
+  imageCard: {
+    height:200,
+  }
 });
