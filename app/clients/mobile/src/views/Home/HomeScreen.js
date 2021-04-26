@@ -23,6 +23,7 @@ export default function HomeScreen(props) {
         <Text style={styles.title}>Vérifiez vos sneakers rapidement !</Text>
       </View>
       <SneakerCard />
+      <Text>TEST</Text>
     </View>
   );
 }
