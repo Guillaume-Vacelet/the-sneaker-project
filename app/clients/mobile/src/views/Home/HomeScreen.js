@@ -18,12 +18,9 @@ export default function HomeScreen(props) {
 
   return (
     <View style={styles.rootContainer}>
-      <Button color="#841584" title="Sign out" onPress={handleSignOut} />
-      <View>
-        <Text style={styles.title}>Vérifiez vos sneakers rapidement !</Text>
-      </View>
-      <SneakerCard />
-      <Text>TEST</Text>
+      <Text style={styles.title}>Vérifiez vos sneakers</Text>
+      <Text style={styles.title}>rapidement !</Text>
+      <Button style={styles.signOutButton} color="#841584" title="Sign out" onPress={handleSignOut} />
     </View>
   );
 }
@@ -31,15 +28,18 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
   rootContainer: {
     marginTop: StatusBar.currentHeight,
-    flex: 1,
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'column',
   },
   title: {
     fontSize: 30,
-    padding: 20,
     color: "black",
   },
-  imageCard: {
-    height:200,
+  signOutButton: {
+    margin: 50
   }
 });
