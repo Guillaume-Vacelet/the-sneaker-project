@@ -1,7 +1,7 @@
 import { SIGN_IN, SIGN_OUT } from '../constants/authActionTypes';
 
 const initialState = {
-  loggedIn: false,
+  loggedIn: true,
   user: {
     username: '',
     password: '',
