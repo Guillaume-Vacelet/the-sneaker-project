@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     shadowColor: 'white',
     shadowOpacity: 0.5,
-    shadowOffset: { width: 5, height: 5 },
+    shadowOffset: { width: 0, height: 5 },
   },
   authInput: {
     width: 300,
