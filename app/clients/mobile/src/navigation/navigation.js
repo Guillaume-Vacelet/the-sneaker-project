@@ -2,55 +2,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-elements';
 //redux
 import { connect } from 'react-redux'
 //views
-import HomeScreen from "../views/Home/HomeScreen";
-import ProfileScreen from "../views/Profile/ProfileScreen";
-import SearchScreen from "../views/Search/SearchScreen";
-import ScanScreen from "../views/Scan/ScanScreen";
 import SignInScreen from '../views/Authentication/SignInScreen';
 import SignUpScreen from '../views/Authentication/SignUpScreen';
 import LoadingScreen from '../views/LoadingScreen';
-import SettingsScreen from '../views/Settings/SettingsScreen';
+import { BottomNavBarTabs } from './BottomNavBarTabs';
 
-const AppTabs = createBottomTabNavigator();
-const AppTabsScreen = () => (
-  <AppTabs.Navigator initialRouteName="Home"
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ color, size }) => {
-        let iconName;
-        if (route.name === 'Home') {
-            iconName = 'home';
-        } else if (route.name === 'Search') {
-            iconName = 'search';
-        } else if (route.name === 'Scan') {
-            iconName = 'camera';
-        } else if (route.name === 'Profile') {
-            iconName = 'user-circle';
-        } else if (route.name === 'Settings') {
-            iconName = 'cog';
-        } else {
-            iconName = 'question'
-        }
-        return <Icon name={iconName} size={size} color={color} type={"font-awesome-5"}/>;
-      },
-    })}
-    tabBarOptions={{
-      activeTintColor: '#73eca6',
-      inactiveTintColor: 'black',
-      showLabel: false
-    }}
-  >
-    <AppTabs.Screen name="Home" component={HomeScreen} />
-    <AppTabs.Screen name="Search" component={SearchScreen} />
-    <AppTabs.Screen name="Scan" component={ScanScreen} />
-    <AppTabs.Screen name="Profile" component={ProfileScreen} />
-    <AppTabs.Screen name="Settings" component={SettingsScreen} />
-  </AppTabs.Navigator>
-);
 
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
@@ -79,7 +38,7 @@ const RootStackScreen = ({loggedIn}) => {
       {isLoading 
         ? <RootStack.Screen name="LoadingScreen" component={LoadingScreen} />
         : loggedIn 
-          ? <RootStack.Screen name="AppTabsScreen" component={AppTabsScreen} />
+          ? <RootStack.Screen name="BottomNavBarTabs" component={BottomNavBarTabs} />
           : <RootStack.Screen name="AuthStackScreen" component={AuthStackScreen} />
       }
     </RootStack.Navigator>
