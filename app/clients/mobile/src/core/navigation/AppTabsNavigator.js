@@ -44,6 +44,7 @@ export const AppTabsNavigator = () => (
         height: 60,
         marginVertical: 20,
         marginHorizontal: 10,
+        position: 'absolute'
       }
     }}
   >
