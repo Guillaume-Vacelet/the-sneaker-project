@@ -25,7 +25,7 @@ services:
   
   web:
     build: ./web
-    image: web
+    image: project_back_end
     command: ./entrypoint.sh
     ports:
       - 5000:5000
@@ -34,7 +34,7 @@ services:
     depends_on:
       - db
     environment:
-      SECRET: Back-1!
+      SECRET: Back-snickers!
       PORT: 5000
       HOST: 0.0.0.0
       FLASK_ENV: $FLASK_ENV

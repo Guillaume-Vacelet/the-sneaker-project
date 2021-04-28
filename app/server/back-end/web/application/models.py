@@ -1,14 +1,16 @@
-from application import db
+from . import db
 from sqlalchemy.dialects.postgresql import JSON
 
 class Users(db.Model):
     __tablename__ = 'Users'
+    user_num = db.Column(db.Integer, primary_key=True)
     pseudo = db.Column(db.String(128))
     password = db.Column(db.String(128))
     email = db.Column(db.String(128))
 
-    def __init__(self, newPseudo, newPassword, newEmail):
+    def __init__(self, newPseudo, newPassword, newEmail, newUserid):
         id = db.column(db.Integer, primary_key = True)
+        self.user_id = newUserid
         self.pseudo = newPseudo
         self.password = newPassword
         self.email = newEmail
