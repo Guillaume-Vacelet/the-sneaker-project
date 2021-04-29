@@ -5,10 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 //redux
 import { connect } from 'react-redux'
 //views
-import SignInScreen from '../views/Authentication/SignInScreen';
-import SignUpScreen from '../views/Authentication/SignUpScreen';
-import LoadingScreen from '../views/LoadingScreen';
-import { BottomNavBarTabs } from './BottomNavBarTabs';
+import SignInScreen from '../../views/Authentication/SignInScreen';
+import SignUpScreen from '../../views/Authentication/SignUpScreen';
+import LoadingScreen from '../../views/LoadingScreen';
+import { AppTabsNavigator } from './AppTabsNavigator';
 
 
 const AuthStack = createStackNavigator();
@@ -38,7 +38,7 @@ const RootStackScreen = ({loggedIn}) => {
       {isLoading 
         ? <RootStack.Screen name="LoadingScreen" component={LoadingScreen} />
         : loggedIn 
-          ? <RootStack.Screen name="BottomNavBarTabs" component={BottomNavBarTabs} />
+          ? <RootStack.Screen name="AppTabsNavigator" component={AppTabsNavigator} />
           : <RootStack.Screen name="AuthStackScreen" component={AuthStackScreen} />
       }
     </RootStack.Navigator>

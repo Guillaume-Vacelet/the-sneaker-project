@@ -30,7 +30,7 @@ export default function ProfileScreen() {
           <Carousel
             data={userProducts}
             renderItem={({item}) => (
-              <SneakerCard item={item} />
+              <SneakerCard item={item} hasBeenChecked={true} />
             )}
             sliderWidth={Dimensions.get('window').width}
             itemWidth={220}
@@ -94,6 +94,5 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     paddingTop: '50%',
-    // backgroundColor: 'orange'
   },
 });

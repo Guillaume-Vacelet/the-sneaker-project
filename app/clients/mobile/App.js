@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import {store, persistedStore} from "./src/redux/store";
-import Navigator from './src/navigation/navigation';
+import Navigator from './src/core/navigation/navigation';
 
 export default function App() {
   // const [jwt, setJWT] = React.useState(null);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 const SneakerCard = (props) => {
     return (
@@ -13,20 +13,23 @@ const SneakerCard = (props) => {
                 <View style={styles.colorCircle}></View>
             </View>
             <Text style={styles.price}>${props.item.price}</Text>
-            {props.item.checked
-                ? <Image
-                    style={styles.badgeImg}
-                    source={require('../../assets/approved-badge.png')}/>
+            {props.hasBeenChecked
+                ? props.item.checked
+                    ? <Image
+                        style={styles.badgeImg}
+                        source={require('../../assets/approved-badge.png')}/>
+                    : null
                 : null
             }
             <Image
                 style={styles.sneakerImg}
                 source={{uri: props.item.image}}
-                // source={require('../../assets/sneaker-example.png')}
             />
-            {props.item.checked
-                ? <View style={styles.checkedBox}><Text style={styles.checkedTxt}>CHECKED</Text></View>
-                : <View style={styles.notCheckedBox}><Text style={styles.checkedTxt}>NOT LEGIT</Text></View>
+            {props.hasBeenChecked
+                ? props.item.checked
+                    ? <View style={styles.checkedBox}><Text style={styles.checkedTxt}>CHECKED</Text></View>
+                    : <View style={styles.notCheckedBox}><Text style={styles.checkedTxt}>NOT LEGIT</Text></View>
+                : null
             }
         </View>
     );
@@ -35,8 +38,11 @@ const SneakerCard = (props) => {
 
 const styles = StyleSheet.create({
     card: {
-        padding: '4%',
-        width: 190,
+        margin: '5%',
+        padding: '5%',
+        // width: '90%',
+        // height: '100%',
+        // width: 190,
         height: 145,
         backgroundColor: 'white',
         borderRadius: 20,
@@ -82,8 +88,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     sneakerImg: {
-        width: 120,
-        height: 120,
+        // width: 120,
+        // height: 120,
+        width: '65%',
+        height: '75%',
         position: 'absolute',
         left: '53%',
         top: 10,

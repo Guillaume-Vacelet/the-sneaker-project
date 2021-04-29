@@ -1,19 +1,19 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import ScanButton from '../components/ScanButton';
+import ScanButton from '../../components/ScanButton';
 //views
-import HomeScreen from "../views/Home/HomeScreen";
-import ProfileScreen from "../views/Profile/ProfileScreen";
-import SearchScreen from "../views/Search/SearchScreen";
-import ScanScreen from "../views/Scan/ScanScreen";
-import SettingsScreen from '../views/Settings/SettingsScreen';
+import HomeScreen from "../../views/Home/HomeScreen";
+import ProfileScreen from "../../views/Profile/ProfileScreen";
+import SearchScreen from "../../views/Search/SearchScreen";
+import ScanScreen from "../../views/Scan/ScanScreen";
+import SettingsScreen from '../../views/Settings/SettingsScreen';
 
 
-const BottomNavBar = createBottomTabNavigator();
+const AppTabs = createBottomTabNavigator();
 
-export const BottomNavBarTabs = () => (
-  <BottomNavBar.Navigator initialRouteName="Home"
+export const AppTabsNavigator = () => (
+  <AppTabs.Navigator initialRouteName="Home"
     screenOptions={({ route }) => ({
       tabBarIcon: ({ color, size }) => {
         let iconName;
@@ -44,13 +44,14 @@ export const BottomNavBarTabs = () => (
         height: 60,
         marginVertical: 20,
         marginHorizontal: 10,
+        position: 'absolute'
       }
     }}
   >
-    <BottomNavBar.Screen name="Home" component={HomeScreen} />
-    <BottomNavBar.Screen name="Search" component={SearchScreen} />
-    <BottomNavBar.Screen name="Scan" component={ScanScreen} />
-    <BottomNavBar.Screen name="Profile" component={ProfileScreen} />
-    <BottomNavBar.Screen name="Settings" component={SettingsScreen} />
-  </BottomNavBar.Navigator>
+    <AppTabs.Screen name="Home" component={HomeScreen} />
+    <AppTabs.Screen name="Search" component={SearchScreen} />
+    <AppTabs.Screen name="Scan" component={ScanScreen} />
+    <AppTabs.Screen name="Profile" component={ProfileScreen} />
+    <AppTabs.Screen name="Settings" component={SettingsScreen} />
+  </AppTabs.Navigator>
 );
