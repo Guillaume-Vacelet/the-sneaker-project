@@ -45,7 +45,8 @@ def create():
             newUser = models.Users(pseudo=data['pseudo'],
             password=data['password'],
             email=data['email'],
-            user_num=data['user_num'])
+            user_num=data['user_num']
+            )
             db.add(newUser)
             db.commit()
         except Exception as e:
