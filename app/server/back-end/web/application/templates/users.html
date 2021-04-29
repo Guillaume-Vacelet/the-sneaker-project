@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">pseudo</th>
+            <th scope="col">password</th>
+            <th scope="col">email</th>
+            <th scope="col">user_num</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <th scope="row">{{ u.id }}</th>
+            <td>{{ u.pseudo }}</td>
+            <td>{{ u.password }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.user_num }}</td>
+            <td> <a href="/delete/{{ u.user_num }}"> supprimer </a> </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

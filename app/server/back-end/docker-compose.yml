@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  db:
+    build: ./db
+    image: db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testdb
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+  
+  web:
+    build: ./web
+    image: project_back_end
+    command: ./entrypoint.sh
+    ports:
+      - 5000:5000
+    volumes:
+      - ./web:/code  
+    depends_on:
+      - db
+    environment:
+      SECRET: Back-snickers!
+      PORT: 5000
+      HOST: 0.0.0.0
+      FLASK_ENV: $FLASK_ENV
+      FLASK_DEBUG: 1
