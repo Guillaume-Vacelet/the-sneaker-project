@@ -1,44 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 const SneakerCard = (props) => {
     return (
-        <View style={styles.container} >
-            <View style={styles.card} >
-                <View style={styles.topText}>
-                    <Text style={styles.model}>NMD_R1</Text>
-                    <Text style={styles.brand}>Nike</Text>
-                </View>
-                <View style={styles.botText}>
-                    <Text style={styles.colorTxt}>Color</Text>
-                    <View style={styles.colorCircle}></View>
-                </View>
-                <Text style={styles.price}>$180.00</Text>
-                <Image
-                    style={styles.badgeImg}
-                    source={require('../../assets/approved-badge.png')}
-                />
-                <Image
-                    style={styles.sneakerImg}
-                    source={require('../../assets/sneaker-example.png')}
-                />
-                <View style={styles.checkedBox}>
-                    <Text style={styles.checkedTxt}>CHECKED</Text>
-                </View>
+        <View style={styles.card} >
+            <View style={styles.topText}>
+                <Text style={styles.model}>{props.item.model}</Text>
+                <Text style={styles.brand}>{props.item.brand}</Text>
             </View>
+            <View style={styles.botText}>
+                <Text style={styles.colorTxt}>Color</Text>
+                <View style={styles.colorCircle}></View>
+            </View>
+            <Text style={styles.price}>${props.item.price}</Text>
+            {props.hasBeenChecked
+                ? props.item.checked
+                    ? <Image
+                        style={styles.badgeImg}
+                        source={require('../../assets/approved-badge.png')}/>
+                    : null
+                : null
+            }
+            <Image
+                style={styles.sneakerImg}
+                source={{uri: props.item.image}}
+            />
+            {props.hasBeenChecked
+                ? props.item.checked
+                    ? <View style={styles.checkedBox}><Text style={styles.checkedTxt}>CHECKED</Text></View>
+                    : <View style={styles.notCheckedBox}><Text style={styles.checkedTxt}>NOT LEGIT</Text></View>
+                : null
+            }
         </View>
     );
 };
 
 
 const styles = StyleSheet.create({
-    container: {
-        paddingBottom: '5%',
-        paddingRight: '10%',
-    },
     card: {
-        padding: '4%',
-        width: 190,
+        margin: '5%',
+        padding: '5%',
+        // width: '90%',
+        // height: '100%',
+        // width: 190,
         height: 145,
         backgroundColor: 'white',
         borderRadius: 20,
@@ -84,8 +88,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     sneakerImg: {
-        width: 120,
-        height: 120,
+        // width: 120,
+        // height: 120,
+        width: '65%',
+        height: '75%',
         position: 'absolute',
         left: '53%',
         top: 10,
@@ -101,6 +107,17 @@ const styles = StyleSheet.create({
     },
     checkedBox: {
         backgroundColor: '#4cfa8e',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: '10%',
+        borderRadius: 5,
+        paddingVertical: 3,
+        position: 'relative',
+        top: '5%',
+        zIndex: 1,
+    },
+    notCheckedBox: {
+        backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '10%',
