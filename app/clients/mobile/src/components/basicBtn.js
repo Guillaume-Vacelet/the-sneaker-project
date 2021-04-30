@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const basicBtn = (props) => {
+const BasicBtn = (props) => {
     return (
         <TouchableOpacity onPress={ props.onPress } style={styles.container} >
             <Text style={styles.txt} >TEST</Text>
@@ -14,4 +14,4 @@ const styles = StyleSheet.create({
     txt: {},
 });
 
-export default basicBtn;
+export default BasicBtn;
