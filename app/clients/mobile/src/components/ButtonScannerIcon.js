@@ -1,7 +1,6 @@
 import {StatusBar} from 'expo-status-bar'
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, ImageBackground} from 'react-native'
-import { Button } from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 import {Camera} from 'expo-camera'
 /* 
@@ -9,31 +8,30 @@ Faire run bouton pour fermer l'appareil, redemander a reprendre la photo & affic
 Mettre la camera en full screen
 */
 
-export default function ButtonScanner() {
+export default function ButtonScannerIcon() {
   let camera = Camera;
-  const [startCamera, setStartCamera] = React.useState(false);
+  const [startCamera,setStartCamera] = React.useState(false);
   const [type, setType] = React.useState(Camera.Constants.Type.back);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [capturedImage, setCapturedImage] = React.useState(null);
    
   const handleStartCamera = async () => {
     const {status} = await Camera.requestPermissionsAsync();
-
-    if(status === 'granted') {
+    if (status === 'granted') {
       setStartCamera(true);
     } else {
       Alert.alert("Access denied");
     }
-  }
+  } 
 
   const takePicture = async () => {
     if (!camera) {
-      return
+      return;
     }
-    const photo = await camera.takePictureAsync()
-    console.log(photo)
-    setPreviewVisible(true)
-    setCapturedImage(photo)
+    const photo = await camera.takePictureAsync();
+    console.log(photo);
+    setPreviewVisible(true);
+    setCapturedImage(photo);
   }
   
   return (
@@ -54,40 +52,47 @@ export default function ButtonScanner() {
                   <Icon type={"entypo"} name={"cycle"} size={24} color={'white'} />
                 </Text>
               </TouchableOpacity>
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  flexDirection: 'row',
-                  flex: 1,
-                  width: '100%',
-                  padding: 20,
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{alignSelf: 'center', flex: 1, alignItems: 'center'}}>
-                  <TouchableOpacity onPress={takePicture}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      bottom: 0,
-                      borderRadius: 50,
-                      backgroundColor: '#fff'
-                    }}
-                  />
-                </View>
+            <View style={{
+              position: 'absolute', 
+              bottom: 0, 
+              flexDirection: 'row', 
+              flex: 1, 
+              width: '100%', 
+              padding: 20, 
+              justifyContent: 'space-between'
+              }}
+            >
+              <View style={{alignSelf: 'center', flex: 1, alignItems: 'center'}}>
+                <TouchableOpacity onPress={takePicture}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    bottom: 0,
+                    borderRadius: 50,
+                    backgroundColor: '#fff'
+                  }}
+                />
               </View>
             </View>
-          </Camera>)
-        : (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Button onPress={handleStartCamera}
-              title='Scanner'
-              titleStyle={{ fontSize: 25, marginRight: '10%' }}
-              buttonStyle={{ backgroundColor: '#73eca6', borderRadius: 50, height: 50}}
-              containerStyle={{ marginRight: '10%' }}
-              icon={() => <Icon type={"antdesign"} name={"scan1"} size={30} color={'white'} style={{marginHorizontal: '10%'}} />}
-            />
-          </View>)
+          </View>
+        </Camera>)
+      : (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity onPress={handleStartCamera}
+            style={{
+              width: 80,
+              borderRadius: 50,
+              backgroundColor: '#73eca6',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 80
+            }}
+          >
+            <Text>
+              <Icon type={"antdesign"} name={"scan1"} size={40} color={'white'} />
+            </Text>
+          </TouchableOpacity>
+       </View>)
       }
     </View> 
   )
@@ -96,6 +101,6 @@ export default function ButtonScanner() {
 const styles = StyleSheet.create({
  container: {
     flex: 1,
-    width:300,
+    width:500,
   }
 })
