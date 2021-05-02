@@ -1,10 +1,10 @@
-import { SIGN_IN, SIGN_OUT } from '../constants/authActionTypes';
+import { SIGN_IN, SIGN_UP, SIGN_OUT } from '../constants/authActionTypes';
 
 const initialState = {
   loggedIn: false,
   user: {
     username: '',
-    password: '',
+    email: '',
     token: null,
   }
 };
@@ -18,13 +18,20 @@ export default function(state = initialState, action) {
         user: action.payload.user
 			};
 		}
+    case SIGN_UP: {
+			return {
+        ...state,
+        loggedIn: true,
+        user: action.payload.user
+			};
+		}
     case SIGN_OUT: {
       return {
         ...state,
         loggedIn: false,
         user: {
           username: '',
-          password: '',
+          email: '',
           token: null,
         }
       }
