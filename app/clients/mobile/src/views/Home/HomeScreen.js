@@ -17,7 +17,7 @@ export default function HomeScreen(props) {
       <Text style={styles.verif}>Vérifiez vos <Text style={{ fontWeight: 'bold', color: Colors.primary }}>sneakers</Text> <Text style={styles.rapid}>rapidement !</Text></Text>
       <SneakerCard item={itemExample} hasBeenChecked={true}/>
       <Text style={styles.comment}>Comment <Text style={{ fontWeight: 'bold', color: Colors.primary }}>vérifier{'\n'}</Text><Text style={styles.paires}>Mes paires ?</Text></Text>
-      <Text style={styles.paragraph}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+      <Text style={styles.paragraph}>Assurez-vous de l'authenticité de vos sneakers grâce à une seule photo prise de profile.</Text>
       <BasicBtn title='commencer' onPress={console.log('hello')} />
     </View>      
   );
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   verif: {
     fontSize: 22,
-    padding: 20,
+    marginVertical: 10,
     color: "black",
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -52,9 +52,6 @@ const styles = StyleSheet.create({
   paires: {
     fontSize: 28,
     textTransform: 'uppercase',
-  },
-  imageCard: {
-    height: 200,
   },
   paragraph: {
     marginTop: 10,
