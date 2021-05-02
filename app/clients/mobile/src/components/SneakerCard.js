@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         height: '75%',
         position: 'absolute',
         left: '53%',
-        top: 10,
+        top: '5%',
         zIndex: 1,
     },
     badgeImg: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         height: 38,
         position: 'absolute',
         left: '53%',
-        top: 70,
+        top: '55%',
         zIndex: 2,
     },
     checkedBox: {
