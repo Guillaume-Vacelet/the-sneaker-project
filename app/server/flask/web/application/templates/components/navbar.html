@@ -1,0 +1,11 @@
+{% macro navbar(tabs) -%}
+  <div class="navbar">
+    <ul class="navbar-tabs">
+      {% for tab in tabs %}
+        <li class="navbar-tab">
+          <a class="navbar-link" href="{{ tab.to }}">{{ tab.label }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{%- endmacro %}
