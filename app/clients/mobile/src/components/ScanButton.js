@@ -1,30 +1,21 @@
 import React from 'react';
-import {Button, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 
-
-export default function ScanButton(props) {
+export default function ScanButton() {
   return (
-    <Button
-      onPress={() => console.log('scan!')}
-      buttonStyle={{
-        marginBottom: 55,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 80,
-        height: 80,
-        backgroundColor: props.bgcolor,
+    <Icon 
+      type={"antdesign"}
+      name={"scan1"}
+      size={40}
+      color={'white'}
+      containerStyle={{
+        backgroundColor: '#73eca6', 
+        marginBottom: 55, 
+        width: 80, 
+        height: 80, 
+        justifyContent: 'center', 
         borderRadius: 50
       }}
-      icon={
-        <Icon 
-          type={"antdesign"}
-          name={"scan1"}
-          size={40}
-          color={props.color}
-        />
-      }
-    >
-    </Button>
-
+    />
   );
 }
