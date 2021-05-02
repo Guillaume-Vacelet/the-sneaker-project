@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import Colors from '../../constants/Colors';
 
 const SneakerCard = (props) => {
     return (
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     checkedBox: {
-        backgroundColor: '#4cfa8e',
+        backgroundColor: Colors.primary,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '10%',
