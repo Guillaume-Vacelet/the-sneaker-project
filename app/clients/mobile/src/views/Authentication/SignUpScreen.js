@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
-import { Button, Input } from "react-native-elements";
-import CustomIcon from '../../components/CustomIcon';
+import { Button, Input, Icon } from "react-native-elements";
 
 export default function SignUpScreen(props) {
 
@@ -14,7 +13,7 @@ export default function SignUpScreen(props) {
           onChangeText={(value) => setEmail(value)}
           inputContainerStyle={styles.authInput}
           leftIcon={
-            <CustomIcon type={"font-awesome-5"} name={"user-circle"} size={20} />
+            <Icon type={"font-awesome-5"} name={"user-circle"} size={20} />
           }
         />
         <Input
@@ -22,18 +21,16 @@ export default function SignUpScreen(props) {
           onChangeText={(value) => setEmail(value)}
           inputContainerStyle={styles.authInput}
           leftIcon={
-            <CustomIcon type={"font-awesome-5"} name={"envelope"} size={20} />
+            <Icon type={"font-awesome-5"} name={"envelope"} size={20} />
           }
         />
         <Input
           placeholder='Password'
           onChangeText={(value) => setPassword(value)}
           inputContainerStyle={styles.authInput}
-          leftIcon={{ 
-            type: 'font-awesome-5', 
-            size: 20, 
-            name: 'key'
-          }}
+          leftIcon={
+            <Icon type={"font-awesome-5"} name={"key"} size={20} />
+          }
         />
         <Button title="Sign-up" 
           buttonStyle={styles.authButton} 
