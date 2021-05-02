@@ -22,16 +22,16 @@ const SneakerCard = (props) => {
                     : null
                 : null
             }
-            <Image
-                style={styles.sneakerImg}
-                source={{uri: props.item.image}}
-            />
             {props.hasBeenChecked
                 ? props.item.checked
                     ? <View style={styles.checkedBox}><Text style={styles.checkedTxt}>CHECKED</Text></View>
                     : <View style={styles.notCheckedBox}><Text style={styles.checkedTxt}>NOT LEGIT</Text></View>
                 : null
             }
+            <Image
+                style={styles.sneakerImg}
+                source={{uri: props.item.image}}
+            />
         </View>
     );
 };
@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
     card: {
         margin: '5%',
         padding: '5%',
-        // width: '90%',
-        // height: '100%',
         // width: 190,
         height: 145,
         backgroundColor: 'white',
@@ -59,13 +57,13 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     topText: {
-        marginBottom: 30,
-        zIndex: 0,
+        marginBottom: '10%',
+        zIndex: 1,
     },
     botText: {
         flexDirection: 'row',
         alignItems: 'center',
-        zIndex: 0,
+        zIndex: 1,
     },
     model: {
         fontSize: 18,
@@ -76,7 +74,7 @@ const styles = StyleSheet.create({
     },
     colorTxt: {
         fontSize: 12,
-        marginRight: 7,
+        marginRight: '2%',
     },
     colorCircle: {
         width: 10,
@@ -94,9 +92,9 @@ const styles = StyleSheet.create({
         width: '65%',
         height: '75%',
         position: 'absolute',
-        left: '53%',
+        left: '55%',
         top: '5%',
-        zIndex: 1,
+        zIndex: 0,
     },
     badgeImg: {
         width: 38,
@@ -110,20 +108,22 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         alignItems: 'center',
         justifyContent: 'center',
-        marginHorizontal: '10%',
         borderRadius: 5,
+        alignSelf: 'center',
         paddingVertical: 3,
+        paddingHorizontal: 15,
         position: 'relative',
-        top: '5%',
-        zIndex: 1,
+        top: '10%',
+        zIndex: 2,
     },
     notCheckedBox: {
         backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: '10%',
-        borderRadius: 5,
+        alignSelf: 'center',
         paddingVertical: 3,
+        paddingHorizontal: 15,
         position: 'relative',
         top: '5%',
         zIndex: 1,
