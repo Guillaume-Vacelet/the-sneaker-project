@@ -64,7 +64,7 @@ export default function SearchScreen() {
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     flex: 1
   },
   title: {
@@ -75,14 +75,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   searchBarContainer: {
-    backgroundColor: 'white', 
+    backgroundColor: 'lightgray', 
     borderBottomColor: 'transparent', 
     borderTopColor: 'transparent',
   },
   searchBarInputContainer: {
     backgroundColor: 'white', 
     borderRadius: 50, 
-    borderWidth: 1, 
+    // borderWidth: 1, 
     borderColor: 'black',
   },
 });

@@ -1,28 +1,33 @@
-import { StyleSheet, StatusBar, View, Text, Button } from 'react-native';
-import { Icon } from 'react-native-elements';
 import React from 'react';
+import { StyleSheet, StatusBar, View, SafeAreaView, Text, Button } from 'react-native';
+import { Icon } from 'react-native-elements';
 import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
+import { signOutUser } from "../../redux/actions/authActions";
+import { useDispatch } from "react-redux";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function SettingsScreen() {
-  const [notif,setnotif] = React.useState(false)
+  const [notif, setnotif] = React.useState(false)
+
+  const dispatch = useDispatch();
+  function handleSignOut() {
+    dispatch(signOutUser());
+    // AsyncStorage.removeItem();
+    // navigation.navigate('AuthStackScreen', { screen: 'SignIn' });
+  };
 
   return(
-    <View style={styles.Container}>
+    <SafeAreaView style={styles.Container}>
       <View style={styles.Head2} >
-        <View style={styles.Head}>
-          <RoundUserAvatarWithScore/>
-        </View>
-        <View style={{marginTop:70}}>
-          <Text style={{fontSize:20}}>#Guillaume Vacelet</Text>
-        </View>
+        <RoundUserAvatarWithScore/>
       </View>
       <View style={styles.buttons_container}>
         <View style={styles.button_view1}>
           <Text style={styles.button1} onPress={() => {alert("Access denied")}} >Modifier</Text>
         </View>
         <View style={styles.button_view2}>
-          <Text style={styles.button2} onPress={() => {alert("Access denied")}}>Deconnexion</Text>
+          <Text style={styles.button2} onPress={handleSignOut}>Deconnexion</Text>
         </View>
       </View>
       <Text style={styles.title}>Général</Text>
@@ -89,7 +94,7 @@ export default function SettingsScreen() {
             <Icon type={'material'} name={'arrow-forward-ios'} size={30} />
           </View>
         </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -102,6 +107,7 @@ Head:{
 
 Head2:{
 flexDirection:'row',
+justifyContent: 'center'
 },
 
 buttons_container:{
