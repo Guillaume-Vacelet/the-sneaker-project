@@ -8,8 +8,6 @@ import ProfileScreen from "../../views/Profile/ProfileScreen";
 import SearchScreen from "../../views/Search/SearchScreen";
 import ScanScreen from "../../views/Scan/ScanScreen";
 import SettingsScreen from '../../views/Settings/SettingsScreen';
-import ProductScreen from '../../views/Product/ProductScreen';
-
 
 const AppTabs = createBottomTabNavigator();
 
@@ -62,6 +60,6 @@ export const AppTabsNavigator = () => (
     <AppTabs.Screen name="Search" component={SearchScreen} />
     <AppTabs.Screen name="Scan" component={ScanScreen} />
     <AppTabs.Screen name="Profile" component={ProfileScreen} />
-    <AppTabs.Screen name="Settings" component={ProductScreen} />
+    <AppTabs.Screen name="Settings" component={SettingsScreen} />
   </AppTabs.Navigator>
 );
