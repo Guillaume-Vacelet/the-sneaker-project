@@ -1,16 +1,47 @@
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../../redux/actions/authActions";
+import CustomIcon from '../../components/CustomIcon';
+import Authentication from '../../core/Authentication'
 import { Button, Input, Icon } from "react-native-elements";
 
 export default function SignUpScreen(props) {
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [status, setStatus] = React.useState('');
+  const dispatch = useDispatch();
+
+  function handleSignUp() {
+    const auth = new Authentication();
+    if (!username || !email || !password) {
+      setStatus('Some inputs are empty');
+      return;
+    }
+
+    // auth.signup(username, email, password).then((/*jwt*/) => {
+    //   dispatch(signUpUser(username, email, "abc"))
+    // }).catch(() => {
+    //   setStatus('Something went wrong, please try again.');
+    // });
+
+    auth.signup(username, email, password, () => {
+      dispatch(signUpUser(username, email, "abc"));
+      setStatus('Registered successfully!');
+    }, (err) => {
+      setStatus('Something went wrong, please try again.');
+    });
+  };
 
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Create your account:</Text>
+      <Text style={{color:'red'}}>{ status }</Text>
       <View style={styles.inputsContainer}>
         <Input
           placeholder='Username'
-          onChangeText={(value) => setEmail(value)}
+          onChangeText={(value) => setUsername(value)}
           inputContainerStyle={styles.authInput}
           leftIcon={
             <Icon type={"font-awesome-5"} name={"user-circle"} size={20} />
@@ -34,6 +65,7 @@ export default function SignUpScreen(props) {
         />
         <Button title="Sign-up" 
           buttonStyle={styles.authButton} 
+          onPress={handleSignUp}
         />
       </View>
       <Button title="Sign-in" 

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+{% endblock %}
+
+{% block content %}
+  <header>
+    <h2 class="page-title">{% block title %}{{table_name}}{% endblock %}</h2>
+  </header>
+
+  <table class="table">
+    <thead>
+      <tr>
+        {% for key, value in data[0].items() %}
+          <th scope="col">{{ key }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+        <tr>
+        {% for key, value in row.items() %}
+          <td>{{value}}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

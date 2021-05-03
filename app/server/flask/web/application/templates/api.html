@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+{% endblock %}
+
+{% block content %}
+    <header>
+      <h2 class="page-title">{% block title %}API{% endblock %}</h2>
+    </header>
+{% endblock %}
