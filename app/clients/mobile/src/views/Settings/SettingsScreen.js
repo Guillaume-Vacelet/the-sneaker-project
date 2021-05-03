@@ -130,7 +130,7 @@ width:120,
 },
 
 button_view2:{
-  width:120,
+  // width:120,
   },
 
 button2:{

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
 import { useDispatch } from "react-redux";
 import { signUpUser } from "../../redux/actions/authActions";
-import CustomIcon from '../../components/CustomIcon';
 import Authentication from '../../core/Authentication'
 import { Button, Input, Icon } from "react-native-elements";
 

@@ -18,11 +18,12 @@ export default function SignInScreen(props) {
       return;
     }
 
-    auth.signin(email, password).then((/*jwt*/) => {
-      dispatch(signInUser(user.username, user.email, "abc"))
-    }).catch(() => {
-      setStatus('Something went wrong, please try again.');
-    });
+    dispatch(signInUser('username', 'email', "abc"))
+    // auth.signin(email, password).then((/*jwt*/) => {
+      // dispatch(signInUser(user.username, user.email, "abc"))
+    // }).catch(() => {
+    //   setStatus('Something went wrong, please try again.');
+    // });
   };
 
   return (
