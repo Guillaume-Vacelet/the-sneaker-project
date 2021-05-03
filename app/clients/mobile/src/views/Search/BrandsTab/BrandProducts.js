@@ -2,18 +2,18 @@ import React from 'react';
 import { View, Text, StatusBar, StyleSheet, Image } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import SneakerCard from '../../../components/SneakerCard';
-import UserProductsContext from '../../../core/contexts/UserProductsContext';
+import ProductsContext from '../../../core/contexts/ProductsContext';
 
 
 export default function BrandProducts({route, navigation}) {
   const brand = route.params;
-  const userProducts = React.useContext(UserProductsContext);
+  const products = React.useContext(ProductsContext);
 
   return (
     <View style={styles.rootContainer}>
-      {userProducts
+      {products
         ? (<FlatGrid
-            data={userProducts.filter(product => product.brand == brand)}
+            data={products.filter(product => product.brand == brand)}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <SneakerCard item={item} hasBeenChecked={false} />

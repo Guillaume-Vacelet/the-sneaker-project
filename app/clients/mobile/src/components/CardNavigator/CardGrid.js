@@ -1,39 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Colors from '../../constants/Colors';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { FlatGrid } from 'react-native-super-grid';
+import Colors from '../../../constants/Colors'
+import nmd_r1 from '../../../assets/sneaker-example.png';
+import Card from './Card'
+import ProductsContext from '../../core/contexts/ProductsContext';
 
-const SneakerCard = (props) => {
-    return (
-        <View style={styles.card} >
-            <View style={styles.topText}>
-                <Text style={styles.model}>{props.item.model}</Text>
-                <Text style={styles.brand}>{props.item.brand}</Text>
-            </View>
-            <View style={styles.botText}>
-                <Text style={styles.colorTxt}>Color</Text>
-                <View style={styles.colorCircle}></View>
-            </View>
-            <Text style={styles.price}>${props.item.price}</Text>
-            {props.hasBeenChecked
-                ? props.item.checked
-                    ? <Image
-                        style={styles.badgeImg}
-                        source={require('../../assets/approved-badge.png')}/>
-                    : null
-                : null
-            }
-            {props.hasBeenChecked
-                ? props.item.checked
-                    ? <View style={styles.checkedBox}><Text style={styles.checkedTxt}>CHECKED</Text></View>
-                    : <View style={styles.notCheckedBox}><Text style={styles.checkedTxt}>NOT LEGIT</Text></View>
-                : null
-            }
-            <Image
-                style={styles.sneakerImg}
-                source={{uri: props.item.image}}
-            />
-        </View>
-    );
+export default function CardGrid(props) {
+  const items = React.useContext(ProductsContext);
+
+  return (
+    <View style={styles.rootContainer}>
+      {items
+        ? (<FlatGrid
+            data={items}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Card item={item} hasBeenChecked={false} navigation={props.navigation} />
+            )}
+            itemDimension={150}
+            spacing={10}
+            contentContainerStyle={{paddingBottom: '50%'}}
+          />)
+        : null
+      }
+    </View>
+  );
 };
 
 
@@ -134,5 +126,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
-
-export default SneakerCard;
