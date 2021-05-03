@@ -32,21 +32,21 @@ export default function ProfileScreen() {
     <View style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>Username</Text>
+          <Text style={styles.userName}>Username</Text>
           <Text style={styles.userID}>#usernameID</Text>
         </View>
         <View style={styles.avatarContainer}>
           <RoundUserAvatarWithScore />
         </View>
       </View>
-      <View style={styles.bodyContainer}>
+      <View>
         <View style={styles.userProductsContainer}>
-          <BasicBtn title="Sign out" onPress={handleSignOut} />
-          <Text style={styles.title}>Mes vérifications</Text>
+        <BasicBtn title="Sign out" onPress={handleSignOut} />
+          <Text style={styles.mesVerifs}>Mes vérifications</Text>
           <Carousel
             data={userProducts}
             renderItem={({item}) => (
-              <SneakerCard item={item} hasBeenChecked={true} />
+              <SneakerCard item={item} hasBeenChecked={true} size={1}/>
             )}
             sliderWidth={Dimensions.get('window').width}
             itemWidth={220}
@@ -62,54 +62,46 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   rootContainer: {
     marginTop: StatusBar.currentHeight,
-    marginBottom: 100,
-    //height: '100%',
-    //width: '100%',
     flex: 1,
-    //justifyContent: 'center',
     alignItems: 'center',
-    //flexDirection: 'column',
   },
   headerContainer: {
-    flex: 1,
     zIndex: 1,
     width: '100%',
+    height: '20%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightgray'
   },
   infoContainer: {
-    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '5%',
+    marginTop: '30%',
   },
-  title: {
+  mesVerifs: {
     fontSize: 35,
     fontWeight: "600",
     color: "black",
+    marginTop: 15,
   },
   userID: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "300",
     color: "black",
+    textTransform: 'uppercase',
+  },
+  userName: {
+    fontSize: 30,
+    fontWeight:'bold',
+    color: "black",
+    textTransform: 'capitalize',
   },
   avatarContainer: {
-    flex: 1,
+    top: '10%',
     position: 'relative',
   },
-  bodyContainer: {
-    flex: 2,
-    zIndex: 0,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   userProductsContainer: {
-    width: '100%',
-    height: '100%',
     alignItems: 'center',
-    paddingTop: '50%',
+    marginTop: '35%',
   },
 });
