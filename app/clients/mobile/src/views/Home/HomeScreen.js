@@ -15,12 +15,10 @@ export default function HomeScreen(props) {
         <Image style={styles.logo} source={require('../../../assets/logo_example.png')} />
       </View>
       <Text style={styles.verif}>Vérifiez vos <Text style={{ fontWeight: 'bold', color: Colors.primary }}>sneakers</Text> <Text style={styles.rapid}>rapidement !</Text></Text>
-      <View style={{ width: '65%' }}>
-        <SneakerCard item={itemExample} hasBeenChecked={true} />
-      </View>
+      <SneakerCard item={itemExample} hasBeenChecked={true} size={1.3} />
       <Text style={styles.comment}>Comment <Text style={{ fontWeight: 'bold', color: Colors.primary }}>vérifier{'\n'}</Text><Text style={styles.paires}>Mes paires ?</Text></Text>
       <Text style={styles.paragraph}>Grâce à de l'intelligence artificielle, AICheck/SafeCheck est capable de déterminer l'authenticité de vos sneakers grâce à une seule photo à publier.</Text>
-      <BasicBtn title='commencer' onPress={console.log('hello')} />
+      <BasicBtn title='commencer' onPress={console.log('Commencer bouton pressed')} />
     </View>
   );
 }
@@ -30,8 +28,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight,
     marginBottom: 125,
     flex: 1,
-    marginHorizontal: 25,
-    justifyContent: 'space-around',
+    marginHorizontal: '8%',
   },
   logo: {
     width: 50,
@@ -39,10 +36,11 @@ const styles = StyleSheet.create({
   },
   verif: {
     fontSize: 22,
-    //marginVertical: 10,
+    marginVertical: 10,
     color: "black",
     textAlign: 'center',
     textTransform: 'uppercase',
+    marginVertical: '7%',
   },
   rapid: {
     fontSize: 38
@@ -50,15 +48,16 @@ const styles = StyleSheet.create({
   comment: {
     fontSize: 18,
     textTransform: 'uppercase',
-    //marginTop: 20,
-    //marginBottom: 5,
+    marginTop: 40,
+    marginBottom: 5,
+    marginVertical: '7%',
   },
   paires: {
     fontSize: 28,
     textTransform: 'uppercase',
   },
   paragraph: {
-    //marginTop: 10,
-    //marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 30,
   }
 });
