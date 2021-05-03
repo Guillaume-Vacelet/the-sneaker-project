@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet, Image } from 'react-native';
 
-import SneakerCard from '../../components/SneakerCard';
+import SneakerCard_sizeable from '../../components/SneakerCard_sizeable';
 import Colors from '../../../constants/Colors';
 import BasicBtn from '../../components/BasicBtn';
 import nmd_r1 from '../../../assets/sneaker-example.png';
@@ -15,7 +15,7 @@ export default function HomeScreen(props) {
         <Image style={styles.logo} source={require('../../../assets/logo_example.png')} />
       </View>
       <Text style={styles.verif}>Vérifiez vos <Text style={{ fontWeight: 'bold', color: Colors.primary }}>sneakers</Text> <Text style={styles.rapid}>rapidement !</Text></Text>
-      <SneakerCard item={itemExample} hasBeenChecked={true} size={1.3} />
+      <SneakerCard_sizeable item={itemExample} hasBeenChecked={true} size={1.3} />
       <Text style={styles.comment}>Comment <Text style={{ fontWeight: 'bold', color: Colors.primary }}>vérifier{'\n'}</Text><Text style={styles.paires}>Mes paires ?</Text></Text>
       <Text style={styles.paragraph}>Grâce à de l'intelligence artificielle, AICheck/SafeCheck est capable de déterminer l'authenticité de vos sneakers grâce à une seule photo à publier.</Text>
       <BasicBtn title='commencer' onPress={console.log('Commencer bouton pressed')} />

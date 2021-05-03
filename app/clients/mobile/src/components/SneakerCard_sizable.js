@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import Colors from '../../constants/Colors';
 
-const SneakerCard = (props) => {
+const SneakerCard_sizeable = (props) => {
     const styles = StyleSheet.create({
         card: {
             //margin: '5%',
@@ -138,4 +138,4 @@ const SneakerCard = (props) => {
 };
 
 
-export default SneakerCard;
+export default SneakerCard_sizeable;

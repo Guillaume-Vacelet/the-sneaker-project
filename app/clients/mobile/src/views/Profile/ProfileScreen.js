@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StatusBar, StyleSheet, Dimensions, Image } from 'react-native';
 import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
-import SneakerCard from '../../components/SneakerCard';
+import SneakerCard_sizeable from '../../components/SneakerCard_sizeable';
 import Carousel from 'react-native-snap-carousel';
 //images
 import nmd_r1 from '../../../assets/sneaker-example.png';
@@ -46,7 +46,7 @@ export default function ProfileScreen() {
           <Carousel
             data={userProducts}
             renderItem={({item}) => (
-              <SneakerCard item={item} hasBeenChecked={true} size={1}/>
+              <SneakerCard_sizeable item={item} hasBeenChecked={true} size={1}/>
             )}
             sliderWidth={Dimensions.get('window').width}
             itemWidth={220}
