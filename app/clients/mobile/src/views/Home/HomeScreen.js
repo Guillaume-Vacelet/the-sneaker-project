@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   verif: {
     fontSize: 22,
-    marginVertical: 10,
+    //marginVertical: 10,
     color: "black",
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -50,15 +50,15 @@ const styles = StyleSheet.create({
   comment: {
     fontSize: 18,
     textTransform: 'uppercase',
-    marginTop: 20,
-    marginBottom: 5,
+    //marginTop: 20,
+    //marginBottom: 5,
   },
   paires: {
     fontSize: 28,
     textTransform: 'uppercase',
   },
   paragraph: {
-    marginTop: 10,
-    marginBottom: 20,
+    //marginTop: 10,
+    //marginBottom: 20,
   }
 });
