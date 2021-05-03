@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
 import { useDispatch } from "react-redux";
-import { Button, Input } from "react-native-elements";
 import { signUpUser } from "../../redux/actions/authActions";
 import CustomIcon from '../../components/CustomIcon';
 import Authentication from '../../core/Authentication'
+import { Button, Input, Icon } from "react-native-elements";
 
 export default function SignUpScreen(props) {
   const [username, setUsername] = React.useState('');
@@ -44,7 +44,7 @@ export default function SignUpScreen(props) {
           onChangeText={(value) => setUsername(value)}
           inputContainerStyle={styles.authInput}
           leftIcon={
-            <CustomIcon type={"font-awesome-5"} name={"user-circle"} size={20} />
+            <Icon type={"font-awesome-5"} name={"user-circle"} size={20} />
           }
         />
         <Input
@@ -52,18 +52,16 @@ export default function SignUpScreen(props) {
           onChangeText={(value) => setEmail(value)}
           inputContainerStyle={styles.authInput}
           leftIcon={
-            <CustomIcon type={"font-awesome-5"} name={"envelope"} size={20} />
+            <Icon type={"font-awesome-5"} name={"envelope"} size={20} />
           }
         />
         <Input
           placeholder='Password'
           onChangeText={(value) => setPassword(value)}
           inputContainerStyle={styles.authInput}
-          leftIcon={{ 
-            type: 'font-awesome-5', 
-            size: 20, 
-            name: 'key'
-          }}
+          leftIcon={
+            <Icon type={"font-awesome-5"} name={"key"} size={20} />
+          }
         />
         <Button title="Sign-up" 
           buttonStyle={styles.authButton} 

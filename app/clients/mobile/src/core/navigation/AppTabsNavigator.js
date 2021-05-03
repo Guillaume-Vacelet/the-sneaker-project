@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import ScanButton from '../../components/ScanButton';
+import Colors from '../../../constants/Colors';
 //views
 import HomeScreen from "../../views/Home/HomeScreen";
 import ProfileScreen from "../../views/Profile/ProfileScreen";
@@ -9,20 +9,28 @@ import SearchScreen from "../../views/Search/SearchScreen";
 import ScanScreen from "../../views/Scan/ScanScreen";
 import SettingsScreen from '../../views/Settings/SettingsScreen';
 
-
 const AppTabs = createBottomTabNavigator();
 
 export const AppTabsNavigator = () => (
   <AppTabs.Navigator initialRouteName="Home"
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ color, size }) => {
+      tabBarIcon: ({ color }) => {
         let iconName;
         if (route.name === 'Home') {
           iconName = 'home';
         } else if (route.name === 'Search') {
           iconName = 'search1';
         } else if (route.name === 'Scan') {
-          return <ScanButton size={size} color={color} bgcolor={'#73eca6'} />
+          return <Icon type={"antdesign"} name={"scan1"} size={40} color={'white'}
+            containerStyle={{
+              backgroundColor: Colors.primary, 
+              marginBottom: 55, 
+              width: 80, 
+              height: 80, 
+              justifyContent: 'center', 
+              borderRadius: 50
+            }}
+          />
         } else if (route.name === 'Profile') {
           iconName = 'user';
         } else if (route.name === 'Settings') {
@@ -34,7 +42,7 @@ export const AppTabsNavigator = () => (
       },
     })}
     tabBarOptions={{
-      activeTintColor: '#73eca6',
+      activeTintColor: Colors.primary,
       inactiveTintColor: '#F5F5F5',
       showLabel: false,
       safeAreaInsets: { bottom: 0, top: 0 },

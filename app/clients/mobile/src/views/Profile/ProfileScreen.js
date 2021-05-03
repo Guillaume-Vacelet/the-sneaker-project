@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, StatusBar, StyleSheet, Dimensions, Image } from 'react-native';
+import { SafeAreaView, View, Text, StatusBar, StyleSheet, Dimensions, Image } from 'react-native';
 import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
-import SneakerCard from '../../components/SneakerCard';
+import SneakerCard_sizeable from '../../components/SneakerCard_sizeable';
 import Carousel from 'react-native-snap-carousel';
 //images
 import nmd_r1 from '../../../assets/sneaker-example.png';
 
-export default function ProfileScreen() {
+
+export default function ProfileScreen() { 
   const [userProducts, setUserProducts] = React.useState([
     {id: '0', model: 'NMD_R1', brand: 'Adidas', color: 'pink', price: '180.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
     {id: '1', model: 'Air Force 1', brand: 'Nike', color: 'white', price: '100.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
@@ -14,23 +15,23 @@ export default function ProfileScreen() {
   ]);
 
   return (
-    <View style={styles.rootContainer}>
+    <SafeAreaView style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>Username</Text>
+          <Text style={styles.userName}>Username</Text>
           <Text style={styles.userID}>#usernameID</Text>
         </View>
         <View style={styles.avatarContainer}>
           <RoundUserAvatarWithScore />
         </View>
       </View>
-      <View style={styles.bodyContainer}>
+      <View>
         <View style={styles.userProductsContainer}>
-          <Text style={styles.title}>Mes vérifications</Text>
+          <Text style={styles.mesVerifs}>Mes vérifications</Text>
           <Carousel
             data={userProducts}
             renderItem={({item}) => (
-              <SneakerCard item={item} hasBeenChecked={true} />
+              <SneakerCard_sizeable item={item} hasBeenChecked={true} size={1}/>
             )}
             sliderWidth={Dimensions.get('window').width}
             itemWidth={220}
@@ -39,60 +40,53 @@ export default function ProfileScreen() {
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   rootContainer: {
-    marginTop: StatusBar.currentHeight,
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
+    // marginTop: StatusBar.currentHeight,
+    flex: 1,
     alignItems: 'center',
-    flexDirection: 'column',
   },
   headerContainer: {
-    flex: 1,
     zIndex: 1,
     width: '100%',
+    height: '20%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightgray'
   },
   infoContainer: {
-    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '5%',
+    marginTop: '30%',
   },
-  title: {
+  mesVerifs: {
     fontSize: 35,
     fontWeight: "600",
     color: "black",
+    marginTop: 15,
   },
   userID: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "300",
     color: "black",
+    textTransform: 'uppercase',
+  },
+  userName: {
+    fontSize: 30,
+    fontWeight:'bold',
+    color: "black",
+    textTransform: 'capitalize',
   },
   avatarContainer: {
-    flex: 1,
+    top: '10%',
     position: 'relative',
   },
-  bodyContainer: {
-    flex: 2,
-    zIndex: 0,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   userProductsContainer: {
-    width: '100%',
-    height: '100%',
     alignItems: 'center',
-    paddingTop: '50%',
+    marginTop: '35%',
   },
 });

@@ -5,6 +5,7 @@ import PopularTab from '../../views/Search/PopularTab/PopularTab';
 import CategoriesTab from '../../views/Search/CategoriesTab/CategoriesTab';
 import BrandsTab from '../../views/Search/BrandsTab/BrandsTab';
 
+import CardNavigator from '../../components/CardNavigator/CardNavigator';
 
 const SearchTabs = createMaterialTopTabNavigator();
 
@@ -15,8 +16,8 @@ export const SearchTabsNavigator = () => (
       indicatorStyle: { height: '7%', backgroundColor: 'black' },
     }}
   >
-    <SearchTabs.Screen name="Populaires" component={PopularTab} />
-    <SearchTabs.Screen name="Categories" component={CategoriesTab} />
+    <SearchTabs.Screen name="Populaires" component={CardNavigator} />
+    <SearchTabs.Screen name="Categories" component={CardNavigator} />
     <SearchTabs.Screen name="Marques" component={BrandsTab} />
   </SearchTabs.Navigator>
 );

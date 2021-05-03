@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
-import { Button, Input } from "react-native-elements";
+import { Button, Input, Icon } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { signInUser } from "../../redux/actions/authActions";
 import Authentication from '../../core/Authentication'
@@ -34,21 +34,17 @@ export default function SignInScreen(props) {
           placeholder='Email'
           onChangeText={(value) => setEmail(value)}
           inputContainerStyle={styles.authInput}
-          leftIcon={{ 
-            type: 'font-awesome-5', 
-            size: 20, 
-            name: 'envelope'
-          }}
+          leftIcon={
+            <Icon type={"font-awesome-5"} name={"envelope"} size={20} />
+          }
         />
         <Input
           placeholder='Password'
           onChangeText={(value) => setPassword(value)}
           inputContainerStyle={styles.authInput}
-          leftIcon={{ 
-            type: 'font-awesome-5', 
-            size: 20, 
-            name: 'key'
-          }}
+          leftIcon={
+            <Icon type={"font-awesome-5"} name={"key"} size={20} />
+          }
         />
         <Button title="Sign-in" 
           buttonStyle={styles.authButton} 

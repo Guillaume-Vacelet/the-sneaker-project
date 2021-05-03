@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, StatusBar, StyleSheet, Image } from 'react-na
 import { SearchBar } from 'react-native-elements';
 import { SearchTabsNavigator } from '../../core/navigation/SearchTabsNavigator';
 import BrandsContext from '../../core/contexts/BrandsContext';
-import UserProductsContext from '../../core/contexts/UserProductsContext';
+import ProductsContext from '../../core/contexts/ProductsContext';
 import { FlatGrid } from 'react-native-super-grid';
 import SneakerCard from '../../components/SneakerCard';
 // images
@@ -14,7 +14,7 @@ import newbalanceLogo from '../../../assets/new-balance-logo.svg';
 
 export default function SearchScreen() {
   const [searchInput, setSearchInput] = React.useState('');
-  const userProducts = [
+  const products = [
     {id: '0', model: 'NMD_R1', brand: 'Adidas', color: 'pink', price: '180.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
     {id: '1', model: 'Air Force 1', brand: 'Nike', color: 'white', price: '100.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
     {id: '2', model: 'AirMax 97 Off-White', brand: 'Nike', color: 'gray', price: '180.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: false},
@@ -32,7 +32,7 @@ export default function SearchScreen() {
 
   return (
     <BrandsContext.Provider value={brands}>
-      <UserProductsContext.Provider value={userProducts}>
+      <ProductsContext.Provider value={products}>
         <SafeAreaView style={styles.rootContainer}>
           <Text style={styles.title}>Que recherchez-vous ?</Text>
           <SearchBar
@@ -46,7 +46,7 @@ export default function SearchScreen() {
           />
           {searchInput
             ? <FlatGrid
-                data={userProducts.filter(product => product.model === searchInput)}
+                data={products.filter(product => product.model === searchInput)}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                   <SneakerCard item={item} hasBeenChecked={false} />
@@ -54,17 +54,17 @@ export default function SearchScreen() {
                 itemDimension={150}
                 spacing={10}
               />
-            : <SearchTabsNavigator userProducts={userProducts} />
+            : <SearchTabsNavigator products={products} />
           }
         </SafeAreaView>
-      </UserProductsContext.Provider>
+      </ProductsContext.Provider>
     </BrandsContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
   rootContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     flex: 1
   },
   title: {
@@ -75,14 +75,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   searchBarContainer: {
-    backgroundColor: 'white', 
+    backgroundColor: 'lightgray', 
     borderBottomColor: 'transparent', 
     borderTopColor: 'transparent',
   },
   searchBarInputContainer: {
     backgroundColor: 'white', 
     borderRadius: 50, 
-    borderWidth: 1, 
+    // borderWidth: 1, 
     borderColor: 'black',
   },
 });
