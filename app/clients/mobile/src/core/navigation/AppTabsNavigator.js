@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon, Button } from 'react-native-elements';
-import ScanButton from '../../components/ScanButton';
+import { Icon } from 'react-native-elements';
+import Colors from '../../../constants/Colors';
 //views
 import HomeScreen from "../../views/Home/HomeScreen";
 import ProfileScreen from "../../views/Profile/ProfileScreen";
@@ -25,7 +25,7 @@ export const AppTabsNavigator = () => (
         } else if (route.name === 'Scan') {
           return <Icon type={"antdesign"} name={"scan1"} size={40} color={'white'}
             containerStyle={{
-              backgroundColor: '#73eca6', 
+              backgroundColor: Colors.primary, 
               marginBottom: 55, 
               width: 80, 
               height: 80, 
@@ -44,7 +44,7 @@ export const AppTabsNavigator = () => (
       },
     })}
     tabBarOptions={{
-      activeTintColor: '#73eca6',
+      activeTintColor: Colors.primary,
       inactiveTintColor: '#F5F5F5',
       showLabel: false,
       safeAreaInsets: { bottom: 0, top: 0 },
@@ -62,6 +62,6 @@ export const AppTabsNavigator = () => (
     <AppTabs.Screen name="Search" component={SearchScreen} />
     <AppTabs.Screen name="Scan" component={ScanScreen} />
     <AppTabs.Screen name="Profile" component={ProfileScreen} />
-    <AppTabs.Screen name="Settings" component={ProductScreen} />
+    <AppTabs.Screen name="Settings" component={SettingsScreen} />
   </AppTabs.Navigator>
 );
