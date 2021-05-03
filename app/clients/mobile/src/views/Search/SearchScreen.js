@@ -5,7 +5,7 @@ import { SearchTabsNavigator } from '../../core/navigation/SearchTabsNavigator';
 import BrandsContext from '../../core/contexts/BrandsContext';
 import UserProductsContext from '../../core/contexts/UserProductsContext';
 import { FlatGrid } from 'react-native-super-grid';
-import SneakerCard from '../../components/SneakerCard';
+import SneakerCard_sizeable from '../../components/SneakerCard_sizeable';
 // images
 import nmd_r1 from '../../../assets/sneaker-example.png';
 import nikeLogo from '../../../assets/nike-logo.svg';
@@ -49,7 +49,7 @@ export default function SearchScreen() {
                 data={userProducts.filter(product => product.model === searchInput)}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                  <SneakerCard item={item} hasBeenChecked={false} />
+                  <SneakerCard_sizeable item={item} hasBeenChecked={false} size={1} />
                 )}
                 itemDimension={150}
                 spacing={10}
