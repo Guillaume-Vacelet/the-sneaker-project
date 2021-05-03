@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 // let localurl = 'http://77.153.254.113:5000/';
+// let localurl = 'http://0.0.0.0:5000/';
 let localurl = 'http://192.168.0.15:5000/';
+// let localurl = 'http://127.0.0.1:5000/';
 
 
 export default class Authentication {
@@ -30,7 +32,7 @@ export default class Authentication {
   signin(email, password) {
     return new Promise((resolve, reject) => {
       console.log(localurl + 'account/login')
-      axios.get(
+      axios.post(
         localurl +  'account/login',
         { email: email, password: password }
       ).then(async res => {
