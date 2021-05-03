@@ -8,8 +8,6 @@ import ProfileScreen from "../../views/Profile/ProfileScreen";
 import SearchScreen from "../../views/Search/SearchScreen";
 import ScanScreen from "../../views/Scan/ScanScreen";
 import SettingsScreen from '../../views/Settings/SettingsScreen';
-import ProductScreen from '../../views/Product/ProductScreen';
-
 
 const AppTabs = createBottomTabNavigator();
 

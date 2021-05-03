@@ -54,6 +54,7 @@ export default function ProductScreen() {
 const styles = StyleSheet.create({
   rootContainer: {
     // marginTop:50
+    
   },
   Container:{
     height:350,
