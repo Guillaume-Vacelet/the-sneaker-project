@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+# from flask_cors import CORS
 from flask_migrate import Migrate
-from flask_ngrok import run_with_ngrok
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -13,10 +12,7 @@ def create_app():
     app.config.from_object('config.Config')
 
     #flask-cors
-    cors = CORS(app,  resources={r"/api/*": {"origins": "*"}})
-
-    #flask-ngrok
-    run_with_ngrok(app)
+    # cors = CORS(app,  resources={r"/api/*": {"origins": "*"}})
 
     #flask-sqlalchemy
     db.init_app(app)
