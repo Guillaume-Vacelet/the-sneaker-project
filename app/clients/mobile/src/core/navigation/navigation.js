@@ -5,19 +5,11 @@ import { NavigationContainer } from '@react-navigation/native';
 //redux
 import { connect } from 'react-redux'
 //views
-import SignInScreen from '../../views/Authentication/SignInScreen';
-import SignUpScreen from '../../views/Authentication/SignUpScreen';
-import LoadingScreen from '../../views/LoadingScreen';
-import { AppTabsNavigator } from './AppTabsNavigator';
+import AuthStackNavigator from './AuthStackNavigator';
+import AppStackNavigator from './AppStackNavigator';
+// import LoadingScreen from '../../views/LoadingScreen';
+// import { AppTabsNavigator } from './AppTabsNavigator';
 
-
-const AuthStack = createStackNavigator();
-const AuthStackScreen = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen name="SignIn" component={SignInScreen} options={{headerShown: false}} />
-    <AuthStack.Screen name="SignUp" component={SignUpScreen} options={{headerShown: false}} />
-  </AuthStack.Navigator>
-);
 
 const RootStack = createStackNavigator();
 const RootStackScreen = ({loggedIn}) => {
@@ -32,17 +24,29 @@ const RootStackScreen = ({loggedIn}) => {
   return (
     <RootStack.Navigator
       headerMode="none"
-      screenOptions={{ animationEnabled: false }}
       mode="modal"
     >
-      {isLoading 
-        ? <RootStack.Screen name="LoadingScreen" component={LoadingScreen} />
-        : loggedIn 
-          ? <RootStack.Screen name="AppTabsNavigator" component={AppTabsNavigator} />
-          : <RootStack.Screen name="AuthStackScreen" component={AuthStackScreen} />
+      { loggedIn 
+        ? <RootStack.Screen name="AppStackNavigator" component={AppStackNavigator} />
+        : <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
       }
     </RootStack.Navigator>
   );
+
+  // return (
+  //   <RootStack.Navigator
+  //     headerMode="none"
+  //     screenOptions={{ animationEnabled: false }}
+  //     mode="modal"
+  //   >
+  //     {isLoading 
+  //       ? <RootStack.Screen name="LoadingScreen" component={LoadingScreen} />
+  //       : loggedIn 
+  //         ? <RootStack.Screen name="AppTabsNavigator" component={AppTabsNavigator} />
+  //         : <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
+  //     }
+  //   </RootStack.Navigator>
+  // );
 };
 
 function Navigator({loggedIn}) {
