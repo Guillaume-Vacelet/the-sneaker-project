@@ -32,7 +32,7 @@ export default function ScanScreen(props) {
         <View style={ getStep(2) ? styles.currentStep : styles.step}><Text>2</Text></View>
         <View style={ getStep(3) ? styles.currentStep : styles.step}><Text>3</Text></View>
       </View>
-      <ScanStack.Navigator initialRouteName="Identification" mode={'modal'} >
+      <ScanStack.Navigator initialRouteName="Identification" >
         <ScanStack.Screen name="Identification" component={IdentificatonStep} options={{
             headerShown: false
           }}

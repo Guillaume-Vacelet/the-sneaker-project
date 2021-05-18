@@ -3,12 +3,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Icon } from 'react-native-elements';
-// import Colors from '../../../../constants/Colors';
+import Colors from '../../../constants/Colors';
+import GoBackArrow from '../../components/GoBackArrow';
 
 export default function IdentificatonStep(props) {
   return (
     <View style={styles.rootContainer}>
-      <View style={styles.headerContainer}></View>
+      <View style={styles.headerContainer}>
+        <GoBackArrow left={true} goBack={props.navigation.goBack} dark={false} />
+      </View>
       <View style={styles.bodyContainer}>
         <Text style={styles.title1}>Identification</Text>
         <Button title={"Next"} onPress={() => props.navigation.navigate("Scanning")} />
@@ -21,19 +24,21 @@ export default function IdentificatonStep(props) {
 const styles = StyleSheet.create({
   rootContainer: {
     height: '100%',
-    backgroundColor: '#161a1d'
+    backgroundColor: Colors.background
+  },
+  headerContainer: {
+    flex: 1,
   },
   bodyContainer: {
-    flex: 3,
+    flex: 11,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'green'
   },
   title1: {
     fontSize: 30,
     fontWeight: '600',
     marginBottom: '10%',
-    color: 'white'
+    color: Colors.primary
   }
 });
