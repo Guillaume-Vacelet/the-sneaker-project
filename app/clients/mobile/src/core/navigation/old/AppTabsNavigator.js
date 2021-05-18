@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import Colors from '../../../constants/Colors';
+import Colors from '../../../../constants/Colors';
 //views
-import HomeScreen from "../../views/Home/HomeScreen";
-import ProfileScreen from "../../views/Profile/ProfileScreen";
-import SearchScreen from "../../views/Search/SearchScreen";
-import ScanScreen from "../../views/Scan/ScanScreen";
-import SettingsScreen from '../../views/Settings/SettingsScreen';
+import HomeScreen from "../../../views/Home/HomeScreen";
+import ProfileScreen from "../../../views/Profile/ProfileScreen";
+import SearchScreen from "../../../views/Search/SearchScreen";
+import ScanScreen from "../../../views/Scan/ScanScreen";
+import SettingsScreen from '../../../views/Settings/SettingsScreen';
 
 const AppTabs = createBottomTabNavigator();
 

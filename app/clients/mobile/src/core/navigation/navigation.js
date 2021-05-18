@@ -22,10 +22,7 @@ const RootStackScreen = ({loggedIn}) => {
   }, [])
 
   return (
-    <RootStack.Navigator
-      headerMode="none"
-      mode="modal"
-    >
+    <RootStack.Navigator headerMode="none" mode={"modal"}>
       { loggedIn 
         ? <RootStack.Screen name="AppStackNavigator" component={AppStackNavigator} />
         : <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
