@@ -1,13 +1,16 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StatusBar, StyleSheet, Dimensions, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
 import SneakerCard_sizeable from '../../components/SneakerCard_sizeable';
 import Carousel from 'react-native-snap-carousel';
 //images
 import nmd_r1 from '../../../assets/sneaker-example.png';
+import Colors from '../../../constants/Colors';
+import GoBackArrow from '../../components/GoBackArrow';
 
 
-export default function ProfileScreen() { 
+export default function ProfileScreen(props) { 
   const [userProducts, setUserProducts] = React.useState([
     {id: '0', model: 'NMD_R1', brand: 'Adidas', color: 'pink', price: '180.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
     {id: '1', model: 'Air Force 1', brand: 'Nike', color: 'white', price: '100.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
@@ -17,15 +20,20 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.rootContainer}>
       <View style={styles.headerContainer}>
+        <View style={styles.header}>
+          <GoBackArrow left={false} goBack={props.navigation.goBack} dark={true}/>
+        </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.userName}>Username</Text>
-          <Text style={styles.userID}>#usernameID</Text>
+          <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={styles.userName}>Username</Text>
+            <Text style={styles.userID}>#usernameID</Text>
+          </View>
         </View>
         <View style={styles.avatarContainer}>
           <RoundUserAvatarWithScore />
         </View>
       </View>
-      <View>
+      <View style={styles.bodyContainer}>
         <View style={styles.userProductsContainer}>
           <Text style={styles.mesVerifs}>Mes vérifications</Text>
           <Carousel
@@ -37,6 +45,7 @@ export default function ProfileScreen() {
             itemWidth={220}
             firstItem={Math.floor(userProducts.length / 2)}
             containerCustomStyle={{marginVertical: 20}}
+            removeClippedSubviews={false}
           />
         </View>
       </View>
@@ -46,27 +55,40 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   rootContainer: {
-    // marginTop: StatusBar.currentHeight,
-    flex: 1,
+    height: '100%',
     alignItems: 'center',
+    backgroundColor: Colors.background
   },
   headerContainer: {
+    flex: 1,
     zIndex: 1,
     width: '100%',
-    height: '20%',
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightgray'
   },
+  bodyContainer: {
+    flex: 3,
+    backgroundColor: Colors.background,
+  },
+  header: {
+    flex: 1,
+    width: '100%',
+  },
   infoContainer: {
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
-    marginTop: '30%',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  avatarContainer: {
+    flex: 2,
+    top: '10%',
+    position: 'relative',
   },
   mesVerifs: {
     fontSize: 35,
     fontWeight: "600",
-    color: "black",
+    color: "white",
     marginTop: 15,
   },
   userID: {
@@ -80,10 +102,6 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color: "black",
     textTransform: 'capitalize',
-  },
-  avatarContainer: {
-    top: '10%',
-    position: 'relative',
   },
   userProductsContainer: {
     alignItems: 'center',
