@@ -1,39 +1,53 @@
 import axios from 'axios';
 
+// let localurl = 'http://77.153.254.113:5000/';
+// let localurl = 'http://0.0.0.0:5000/';
+let localurl = 'http://192.168.0.15:5000/';
+// let localurl = 'http://127.0.0.1:5000/';
+
+
 export default class Authentication {
-  signup(onSuccess, onFail, username, password, email) {
+  signup(username, password, email, onSuccess, onFail) {
+    console.log(localurl + 'account/register')
     axios.post(
-      '/account/register',
+      localurl + 'account/register',
       {
         username: username,
         password: password,
         email: email
       }
       ).then(res => {
+        console.log('succeed');
+        console.log(res);
         if (res.status === 200) {
-          onSuccess();
+          onSuccess(res.data);
         }
       }).catch(err => {
-        onFail();
+        console.log('failed');
+        console.log(err);
+        onFail(err);
     }); 
   }
 
   signin(email, password) {
     return new Promise((resolve, reject) => {
+      console.log(localurl + 'account/login')
       axios.post(
-        'account/login',
+        localurl +  'account/login',
         { email: email, password: password }
       ).then(async res => {
+        console.log(res);
         if (res.status == 200) {
           try {
-            await AsyncStorage.setItem('jwt', res.data.jwt);
+            // await AsyncStorage.setItem('jwt', res.data.jwt);
             resolve(res.data);
           } catch(error) {
             reject();
           }
         }
         reject();
-      }).catch(() => {
+      }).catch(err => {
+        console.log(err);
         reject()
       });
     });

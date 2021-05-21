@@ -4,13 +4,13 @@ import { Avatar, Icon } from 'react-native-elements';
 
 export default function RoundUserAvatarWithScore(props) {
   return (
-    <View>
+    <View style={styles.container}>
       <Avatar 
         rounded
         size="xlarge"
         title="GV"
         containerStyle={{ backgroundColor: 'black' }}
-        />
+      />
       <View style={styles.scoreContainer} >
         <Text style={{ fontSize: 25, fontWeight: '600'}}>Score</Text>
         <View style={styles.score} >

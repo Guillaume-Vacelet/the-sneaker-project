@@ -39,8 +39,8 @@ export default function ButtonScanner() {
   return (
     <View style={styles.container}>
       {startCamera 
-        ? (<Camera style={{flex:1}} ref={(r) => {camera = r}}>
-            <View style={{flex: 1, width: '100%', backgroundColor: 'transparent', flexDirection: 'row'}}>
+        ? (<Camera style={{flex:1, height:'100%'}} ref={(r) => {camera = r}}>
+            <View>
               <TouchableOpacity
                 onPress={() => {
                   setType(
@@ -54,17 +54,7 @@ export default function ButtonScanner() {
                   <Icon type={"entypo"} name={"cycle"} size={24} color={'white'} />
                 </Text>
               </TouchableOpacity>
-              <View
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  flexDirection: 'row',
-                  flex: 1,
-                  width: '100%',
-                  padding: 20,
-                  justifyContent: 'space-between',
-                }}
-              >
+              
                 <View style={{alignSelf: 'center', flex: 1, alignItems: 'center'}}>
                   <TouchableOpacity onPress={takePicture}
                     style={{
@@ -76,11 +66,11 @@ export default function ButtonScanner() {
                     }}
                   />
                 </View>
-              </View>
+              
             </View>
           </Camera>)
         : (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Button onPress={handleStartCamera}
+            <Button /*onPress={handleStartCamera}*/
               title='Scanner'
               titleStyle={{ fontSize: 25, marginRight: '10%' }}
               buttonStyle={{ backgroundColor: '#73eca6', borderRadius: 50, height: 50}}
@@ -95,7 +85,7 @@ export default function ButtonScanner() {
 
 const styles = StyleSheet.create({
  container: {
-    flex: 1,
-    width:300,
+   flex:1,
+   
   }
 })

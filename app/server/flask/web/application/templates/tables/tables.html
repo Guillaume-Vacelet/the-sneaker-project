@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+{% endblock %}
+
+{% block content %}
+  <header>
+    <h2 class="page-title">{% block title %}Tables{% endblock %}</h2>
+  </header>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>table name</th>
+        <th>description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for table in tables %}
+      <tr>
+        <td>
+          <a class="navbar-link" href="{{ table.to }}">{{ table.title }}</a>
+        </td>
+        <td>
+          {{ table.description }}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

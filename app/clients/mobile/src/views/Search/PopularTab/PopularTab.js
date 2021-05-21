@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, Text, StatusBar, StyleSheet, Image } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
-import SneakerCard from '../../../components/SneakerCard';
-import UserProductsContext from '../../../core/contexts/UserProductsContext';
+// import SneakerCard from '../../../components/SneakerCard';
+import ProductsContext from '../../../core/contexts/ProductsContext';
 
 export default function PopularTab() {
-  const userProducts = React.useContext(UserProductsContext);
+  const products = React.useContext(ProductsContext);
 
   return (
     <View style={styles.rootContainer}>
-      {userProducts
+      {products
         ? (<FlatGrid
-            data={userProducts}
+            data={products}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <SneakerCard item={item} hasBeenChecked={false} />

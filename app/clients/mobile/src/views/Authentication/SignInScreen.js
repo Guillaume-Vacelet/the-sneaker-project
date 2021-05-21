@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
 import { Button, Input, Icon } from "react-native-elements";
 import { useDispatch } from "react-redux";
@@ -6,24 +6,24 @@ import { signInUser } from "../../redux/actions/authActions";
 import Authentication from '../../core/Authentication'
 
 export default function SignInScreen(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [status, setStatus] = React.useState('');
   const dispatch = useDispatch();
 
   function handleSignIn() {
-  //   const auth = new Authentication();
+    const auth = new Authentication();
     if (!email || !password) {
       setStatus('Some inputs are empty');
       return;
     }
 
-  //   auth.signin(email, password).then((jwt) => {
-    dispatch(signInUser(email, password, "abc"))
-  //     props.navigation.navigate('App');
-  //   }).catch(() => {
-  //     setStatus('Something went wrong, please retry');
-  //   });
+    dispatch(signInUser('username', 'email', "abc"))
+    // auth.signin(email, password).then((/*jwt*/) => {
+      // dispatch(signInUser(user.username, user.email, "abc"))
+    // }).catch(() => {
+    //   setStatus('Something went wrong, please try again.');
+    // });
   };
 
   return (
