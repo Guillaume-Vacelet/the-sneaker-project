@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '5%',
   },
   tip: {
     fontSize: 23,
@@ -137,8 +136,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scanButton: {
-    width: Dimensions.get('window').width * 0.6,
-    height: Dimensions.get('window').width * 0.6,
+    width: Dimensions.get('window').width * 0.5,
+    height: Dimensions.get('window').width * 0.5,
     borderRadius: Dimensions.get('window').width / 2,
     justifyContent: 'center',
     backgroundColor: Colors.primary,

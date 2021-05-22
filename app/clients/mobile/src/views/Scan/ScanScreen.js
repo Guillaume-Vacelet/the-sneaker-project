@@ -1,52 +1,65 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { createStackNavigator } from '@react-navigation/stack';
-import IdentificatonStep from './IdentificationStep';
-import ScanStep from './ScanStep/ScanStep';
+import Colors from '../../../constants/Colors';
+import ScanStepsContext from '../../core/contexts/ScanStepsContext';
+import StepsHeader from './StepsHeader';
+import ModelSelectionStep from './ModelSelectionStep';
+import ScanStep from './ScanStep';
 import ResultsStep from './ResultsStep';
 
 export default function ScanScreen(props) {
-  const [currentStep, setCurrentStep] = React.useState(1);
   const ScanStack = createStackNavigator();
-  let steps = [
-    { route: 'Identification', id: 1 },
-    { route: 'Scanning', id: 2 },
-    { route: 'Results', id: 3 },
-  ]
-
-  function getStep(stepId) {
-    return true;
-    // steps.forEach(step => {
-    //   if (ScanStack.state.routeName == step.route) {
-    //     return true;
-    //   }
-    // });
-    return false
-  }
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const value = { 
+    currentStep, 
+    stepCount: 3, 
+    stepsTitle: ['ModelSelection', 'Scanning', 'Results'],
+    stepsSubtitle: [
+      {subtitle1: 'Select', subtitle2: 'you sneaker model'},
+      {subtitle1: 'Scan', subtitle2: 'you sneakers'},
+      {subtitle1: 'Get', subtitle2: 'your results'},
+    ],
+    setCurrentStep
+  };
 
   return (
-    <SafeAreaView style={styles.rootContainer}>
-      <View style={styles.headerContainer}>
-        <View style={ getStep(1) ? styles.currentStep : styles.step}><Text>1</Text></View>
-        <View style={ getStep(2) ? styles.currentStep : styles.step}><Text>2</Text></View>
-        <View style={ getStep(3) ? styles.currentStep : styles.step}><Text>3</Text></View>
-      </View>
-      <ScanStack.Navigator initialRouteName="Identification" >
-        <ScanStack.Screen name="Identification" component={IdentificatonStep} options={{
-            headerShown: false
-          }}
-        />
-        <ScanStack.Screen name="Scanning" component={ScanStep} options={{
-            headerShown: false
-          }}
-        />
-        <ScanStack.Screen name="Results" component={ResultsStep} options={{
-            headerShown: false
-          }}
-        />
-      </ScanStack.Navigator>
-    </SafeAreaView>
+    <ScanStepsContext.Provider value={value}>
+      <SafeAreaView style={styles.rootContainer}>
+        <View style={styles.headerContainer}>
+          <View style={{alignItems: 'flex-end'}}>
+            <Icon 
+              name={'close'}
+              type="font-awesome" 
+              size={30} 
+              color={props.dark ? Colors.background : Colors.secondary}
+              onPress={() => props.navigation.goBack()}
+              containerStyle={{margin: '2%'}}
+            />
+          </View>
+          <StepsHeader />
+        </View>
+        <ScanStack.Navigator initialRouteName="ModelSelection" >
+          <ScanStack.Screen name="ModelSelection" component={ModelSelectionStep} 
+            options={{
+              headerShown: false
+            }}
+          />
+          <ScanStack.Screen name="Scanning" component={ScanStep} 
+            options={{
+              headerShown: false
+            }}
+          />
+          <ScanStack.Screen name="Results" component={ResultsStep} 
+            options={{
+              headerShown: false
+            }}
+          />
+        </ScanStack.Navigator>
+      </SafeAreaView>
+    </ScanStepsContext.Provider>
   );
 }
 
@@ -56,31 +69,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#161a1d'
   },
   headerContainer: {
-    height: '10%',
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
   },
   title1: {
     fontSize: 30,
     fontWeight: '600',
     marginBottom: '10%',
   },
-  currentStep: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  step: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+  
 });
