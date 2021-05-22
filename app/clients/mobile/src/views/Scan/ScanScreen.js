@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import IdentificatonStep from './IdentificationStep';
-import ScanStep from './ScanStep';
+import ScanStep from './ScanStep/ScanStep';
 import ResultsStep from './ResultsStep';
 
 export default function ScanScreen(props) {

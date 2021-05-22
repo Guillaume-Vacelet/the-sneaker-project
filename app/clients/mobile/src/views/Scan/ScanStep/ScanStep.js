@@ -1,10 +1,9 @@
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Image, ScrollView,} from 'react-native';
 import { Icon, Button } from 'react-native-elements';
-import Colors from '../../../constants/Colors';
-import GoBackArrow from '../../components/GoBackArrow';
-import Grid_card from '../../components/grid_scan';
+import Colors from '../../../../constants/Colors';
+import GoBackArrow from '../../../components/GoBackArrow';
+import GridScan from './GridScan';
 
 export default function ScanStep(props) {
   return (
@@ -12,12 +11,9 @@ export default function ScanStep(props) {
       <View style={styles.headerContainer}>
         <GoBackArrow left={true} goBack={props.navigation.goBack} dark={false} />
       </View>
-        <Text style={styles.title1}>Takes your six pictures</Text>
-          <Grid_card/>
-        <View>
-        </View>
-        <Button title={"Next"} onPress={() => props.navigation.navigate("Results")} />
-       
+      {/* <Text style={styles.title1}>Takes your six pictures</Text> */}
+      {/* <GridScan/> */}
+      <Button title={"Next"} onPress={() => props.navigation.navigate("Results")} />
     </View>
   );
 }

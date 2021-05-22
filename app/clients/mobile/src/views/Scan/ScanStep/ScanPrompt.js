@@ -2,14 +2,13 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
-import Colors from '../../../constants/Colors';
-import GoBackArrow from '../../components/GoBackArrow';
-import Test_cam from '../../components/Test_cam';
-import ButtonScanner from '../../components/ButtonScanner';
-import ButtonScannerIcon from '../../components/ButtonScannerIcon';
+import Colors from '../../../../constants/Colors';
+import GoBackArrow from '../../../components/GoBackArrow';
+import Test_cam from '../../../components/Test_cam';
+import ButtonScanner from '../../../components/ButtonScanner';
+import ButtonScannerIcon from '../../../components/ButtonScannerIcon';
 
-export default function ResultsStep(props) {
+export default function ScanPrompt(props) {
 
   // Envoyer le take picture sur une autre page comme avec le scan pour le full ecran
   // puis stockage de la photo qui sera mise a la place du carré blanc
@@ -20,12 +19,12 @@ export default function ResultsStep(props) {
     <View style={styles.rootContainer}>
       <Text style={styles.title1}>Take your picture</Text>
       <View style={styles.Container0}>
-      <View style={styles.Container}>
-      <TouchableOpacity onPress={() => props.navigation.navigate("ScanOld")} >
-              <FontAwesome name="file-picture-o" size={70} color="black" />
-              <Text>  Empty</Text>
+        <View style={styles.Container}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("ScanOld")} >
+            <Icon name={"file-picture-o"} type={"font-awesome"} size={70} color={"black"} />
+            <Text>Empty</Text>
           </TouchableOpacity>
-      </View>
+        </View>
       </View>
       <View style={styles.button}>
        <TouchableOpacity  onPress={() => props.navigation.navigate("ScanOld")}> 

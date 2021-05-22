@@ -32,7 +32,7 @@ export default function Test_cam() {
 
   const CameraPreview = ({photo})=> {
 
-   alert(photo.uri);
+    alert(photo.uri);
 
     return (
       <View
@@ -54,8 +54,6 @@ export default function Test_cam() {
             <BasicBtn title={'Save'} onPress={__savePhoto} />  
           </View>  
         </ImageBackground>
-        
-        
       </View>
     )
   }
@@ -87,7 +85,7 @@ export default function Test_cam() {
   }
 
 
-let camera = Camera
+  let camera = Camera
 
   
   return (

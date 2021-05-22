@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
-import Test_cam from './Test_cam';
+import Test_cam from '../../../components/Test_cam';
 
-export default function Grid_card() {
+export default function GridScan() {
   const [items, setItems] = React.useState([
     { name: 'Sole', code: 'white', image:'https://img.icons8.com/ios/452/right-shoe.png' },
     { name: 'Right-side', code: 'white', image:'https://image.flaticon.com/icons/png/512/88/88746.png'},
@@ -14,30 +14,27 @@ export default function Grid_card() {
     
   ]);
 
-  const [photoUri, setphotoUri] = useState("");
+  const [photoUri, setphotoUri] = React.useState("");
 
   const Scan_grid = async () => {
     <Test_cam/>
   }
 
   return (
-      
-    
-        <FlatGrid
-        itemDimension={130}
-        data={items}
-        style={styles.gridView}
-        spacing={20}
-        renderItem={({ item }) => (
-            <TouchableOpacity onPress={Scan_grid}>
-            <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
+    <FlatGrid
+      itemDimension={130}
+      data={items}
+      style={styles.gridView}
+      spacing={20}
+      renderItem={({ item }) => (
+        <TouchableOpacity onPress={Scan_grid}>
+          <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
             <Image style={styles.tinyLogo} source={{uri: item.image}}/>
             <Text style={styles.itemName}>{item.name}</Text>
-            </View>
-            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
       )}
-      />
-    
+    />
   );
 }
 
