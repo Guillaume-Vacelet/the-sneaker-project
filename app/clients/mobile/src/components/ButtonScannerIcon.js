@@ -2,10 +2,11 @@ import {StatusBar} from 'expo-status-bar'
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, ImageBackground} from 'react-native'
 import { Icon } from 'react-native-elements'
+import { Entypo } from '@expo/vector-icons';
 import {Camera} from 'expo-camera'
 /* 
 Faire run bouton pour fermer l'appareil, redemander a reprendre la photo & afficher la photo prise
-Mettre la camera en full screen
+
 */
 
 export default function ButtonScannerIcon() {
@@ -37,8 +38,9 @@ export default function ButtonScannerIcon() {
   return (
     <View style={styles.container}>
       {startCamera 
-        ? (<Camera style={{flex:1}} ref={(r) => {camera = r}}>
-            <View style={{flex: 1, width: '100%', backgroundColor: 'transparent', flexDirection: 'row'}}>
+        ? (<View style={styles.container}>
+          <Camera type={type} style={styles.camera}>
+            <View >
               <TouchableOpacity
                 onPress={() => {
                   setType(
@@ -46,36 +48,28 @@ export default function ButtonScannerIcon() {
                       ? Camera.Constants.Type.front
                       : Camera.Constants.Type.back
                   );
-                }}
-              >
-                <Text style={styles.text}>
-                  <Icon type={"entypo"} name={"cycle"} size={24} color={'white'} />
-                </Text>
+                }}>
+                    <Text style={{marginLeft:30, marginTop:70}} > <Icon type={"entypo"} name={"cycle"} size={30} color={'white'} /> </Text>
               </TouchableOpacity>
-            <View style={{
-              position: 'absolute', 
-              bottom: 0, 
-              flexDirection: 'row', 
-              flex: 1, 
-              width: '100%', 
-              padding: 20, 
-              justifyContent: 'space-between'
-              }}
-            >
-              <View style={{alignSelf: 'center', flex: 1, alignItems: 'center'}}>
-                <TouchableOpacity onPress={takePicture}
-                  style={{
-                    width: 50,
-                    height: 50,
-                    bottom: 0,
-                    borderRadius: 50,
-                    backgroundColor: '#fff'
-                  }}
-                />
-              </View>
+              <TouchableOpacity onPress={() => {hasPermission === false}} >
+              <Text style={{marginLeft:23, marginTop:10}}> <Entypo name="cross" size={45} color="white" /></Text>
+              </TouchableOpacity>
+                    <TouchableOpacity onPress={takePicture}
+                        style={{
+                          width: 60,
+                          height: 60,
+                          bottom: 0,
+                          borderRadius: 50,
+                          backgroundColor: '#fff',
+                          alignSelf: 'center',
+                          alignItems: 'center',
+                          marginTop:'120%',
+    
+                        }}
+                      />
             </View>
-          </View>
-        </Camera>)
+          </Camera>
+        </View>)
       : (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <TouchableOpacity onPress={handleStartCamera}
             style={{
@@ -88,9 +82,7 @@ export default function ButtonScannerIcon() {
               height: 80
             }}
           >
-            <Text>
               <Icon type={"antdesign"} name={"scan1"} size={40} color={'white'} />
-            </Text>
           </TouchableOpacity>
        </View>)
       }
