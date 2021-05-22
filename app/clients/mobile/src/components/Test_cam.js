@@ -1,25 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity , ImageBackground, Image} from 'react-native';
 import { Icon } from 'react-native-elements'
 import { Camera } from 'expo-camera';
 import { Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements/dist/buttons/Button';
+import BasicBtn from './BasicBtn';
+import GoBackArrow from './GoBackArrow';
 
-export default function App() {
+
+//Faire la navigation retour a mettre dans la croix avec un retour ?
+// Supprimer le flip et la croix ?
+
+//Comment faire avec le save picture
+
+export default function Test_cam() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [previewVisible, setPreviewVisible] = React.useState(false);
-  const [capturedImage, setCapturedImage] = React.useState(null);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [capturedImage, setCapturedImage] = useState(null);
+  
 
   const takePicture = async () => {
     if (!camera) {
       return
     }
     const photo = await camera.takePictureAsync()
-    console.log(photo)
     setPreviewVisible(true)
     setCapturedImage(photo)
+    setphotoUri(photo.uri)
   }
+
+  const CameraPreview = ({photo})=> {
+
+   alert(photo.uri);
+
+    return (
+      <View
+        style={{
+          backgroundColor: 'transparent',
+          //flex: 1,
+          width: '100%',
+          height: '100%'
+        }}
+      >
+        <ImageBackground
+          source={{uri: photo && photo.uri}}
+          style={{
+            flex: 1
+          }}
+        >
+          <View style={styles.button}>
+            <BasicBtn title={'Retake'} onPress={__retakePicture} />  
+            <BasicBtn title={'Save'} onPress={__savePhoto} />  
+          </View>  
+        </ImageBackground>
+        
+        
+      </View>
+    )
+  }
+
+  const __retakePicture = () => {
+    setCapturedImage(null)
+    setPreviewVisible(false)
+    takePicture()
+  }
+
+  const __savePhoto = (photo) => {
+    alert(typeof(photo));
+  }
+  
   
   
   useEffect(() => {
@@ -35,9 +85,22 @@ export default function App() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+
+let camera = Camera
+
+  
   return (
+    
     <View style={styles.container}>
-      <Camera type={type} style={styles.camera}>
+      {previewVisible && capturedImage ? (
+            <CameraPreview photo={capturedImage} savePhoto={__savePhoto} retakePicture={__retakePicture} />
+          ) : (
+      <Camera type={type} style={styles.camera} 
+      ref={(r) => {
+        camera = r
+      }}
+      >
         <View >
           <TouchableOpacity
             onPress={() => {
@@ -47,7 +110,7 @@ export default function App() {
                   : Camera.Constants.Type.back
               );
             }}>
-                <Text style={{marginLeft:30, marginTop:70}} > <Icon type={"entypo"} name={"cycle"} size={30} color={'white'} /> </Text>
+                <Text style={{marginLeft:30, marginTop:40}} > <Icon type={"entypo"} name={"cycle"} size={30} color={'white'} /> </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {hasPermission === false}} >
           <Text style={{marginLeft:23, marginTop:10}}> <Entypo name="cross" size={45} color="white" /></Text>
@@ -65,8 +128,10 @@ export default function App() {
 
                     }}
                   />
+                  
         </View>
       </Camera>
+          )}
     </View>
   );
 }
@@ -74,5 +139,13 @@ export default function App() {
 const styles = StyleSheet.create({
      camera:{
         height:'100%',
-     }
+     },
+
+     button:{
+      flexDirection:'row',
+      justifyContent:'space-evenly',
+      height:'180%',
+     },
    })
+
+   
