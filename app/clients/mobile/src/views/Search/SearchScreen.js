@@ -2,10 +2,10 @@ import React from 'react';
 import { SafeAreaView, View, Text, StatusBar, StyleSheet, Image } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { SearchTabsNavigator } from '../../core/navigation/SearchTabsNavigator';
-import BrandsContext from '../../../core/contexts/BrandsContext';
-import ProductsContext from '../../../core/contexts/ProductsContext';
+import BrandsContext from '../../core/contexts/BrandsContext';
+import ProductsContext from '../../core/contexts/ProductsContext';
 import { FlatGrid } from 'react-native-super-grid';
-import SneakerCard from '../../../components/SneakerCard';
+import SneakerCard from '../../components/SneakerCard';
 // images
 import nmd_r1 from '../../../assets/sneaker-example.png';
 import nikeLogo from '../../../assets/nike-logo.svg';
