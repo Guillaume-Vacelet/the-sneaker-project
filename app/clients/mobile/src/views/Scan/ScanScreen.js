@@ -7,7 +7,7 @@ import Colors from '../../../constants/Colors';
 import ScanStepsContext from '../../core/contexts/ScanStepsContext';
 import StepsHeader from './StepsHeader';
 import ModelSelectionStep from './ModelSelectionStep';
-import ScanStep from './ScanStep';
+import ScanStep from './ScanStep/ScanStep';
 import ResultsStep from './ResultsStep';
 
 export default function ScanScreen(props) {

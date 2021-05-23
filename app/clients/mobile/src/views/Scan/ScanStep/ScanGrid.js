@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
-import Test_cam from '../../../components/Test_cam';
+import Colors from '../../../../constants/Colors';
+import ScanGridItem from './ScanGridItem';
+import GoToStepButton from '../GoToStepButton';
 
-export default function GridScan() {
+export default function ScanGrid() {
   const [items, setItems] = React.useState([
     { name: 'Sole', code: 'white', image:'https://img.icons8.com/ios/452/right-shoe.png' },
     { name: 'Right-side', code: 'white', image:'https://image.flaticon.com/icons/png/512/88/88746.png'},
@@ -16,32 +18,45 @@ export default function GridScan() {
 
   const [photoUri, setphotoUri] = React.useState("");
 
-  const Scan_grid = async () => {
-    <Test_cam/>
-  }
-
   return (
-    <FlatGrid
-      itemDimension={130}
-      data={items}
-      style={styles.gridView}
-      spacing={20}
-      renderItem={({ item }) => (
-        <TouchableOpacity onPress={Scan_grid}>
-          <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-            <Image style={styles.tinyLogo} source={{uri: item.image}}/>
-            <Text style={styles.itemName}>{item.name}</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-    />
+    <View style={styles.rootContainer}>
+      <View style={styles.bodyContainer}>
+        <FlatGrid
+          itemDimension={130}
+          data={items}
+          style={styles.gridView}
+          spacing={20}
+          renderItem={({ item }) => (<ScanGridItem item={item}/>)}
+        />
+      </View>
+      <View style={styles.footerContainer}>
+        <GoToStepButton goBack={true} />
+        <GoToStepButton goBack={false} />
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  gridView: {
-    marginTop: 10,
+  rootContainer: {
     flex: 1,
+    width: '100%',
+    backgroundColor: Colors.background,
+    padding: '5%'
+  },
+  bodyContainer: {
+    flex: 12,
+    width: '100%'
+  },
+  footerContainer: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  gridView: {
+    flex: 1,
+    width: '100%',
   },
   itemContainer: {
     justifyContent: 'flex-end',
