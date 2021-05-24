@@ -7,12 +7,12 @@ import GoToStepButton from '../GoToStepButton';
 
 export default function ScanGrid() {
   const scanCategories = [
-    { name: 'Sole', code: 'white', image:'https://img.icons8.com/ios/452/right-shoe.png' },
-    { name: 'Right-side', code: 'white', image:'https://image.flaticon.com/icons/png/512/88/88746.png'},
-    { name: 'Left-side', code: 'white', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJRgmJHQf3yp9xBIl46a_sJaZ1zf2Gs_m8Np6ceWvBZRAbJTzCZ-LovOQSKdZdc9DNyTs&usqp=CAU'},
-    { name: 'Front/Up', code: 'white', image:'https://img.icons8.com/carbon-copy/2x/pair-of-sneakers.png' },
-    { name: 'Back-side', code: 'white', image: 'https://4vector.com/i/free-vector-vans-classic-slip-on_014502_PNG/Vans%20Slip%20On%20Template%20-%20Back%20Right.png'},
-    { name: 'Box', code: 'white', image:'https://static.thenounproject.com/png/863873-200.png' }
+    { name: 'Sole', image:'https://img.icons8.com/ios/452/right-shoe.png' },
+    { name: 'Right-side', image:'https://image.flaticon.com/icons/png/512/88/88746.png'},
+    { name: 'Left-side', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJRgmJHQf3yp9xBIl46a_sJaZ1zf2Gs_m8Np6ceWvBZRAbJTzCZ-LovOQSKdZdc9DNyTs&usqp=CAU'},
+    { name: 'Front/Up', image:'https://img.icons8.com/carbon-copy/2x/pair-of-sneakers.png' },
+    { name: 'Back-side', image: 'https://4vector.com/i/free-vector-vans-classic-slip-on_014502_PNG/Vans%20Slip%20On%20Template%20-%20Back%20Right.png'},
+    { name: 'Box', image:'https://static.thenounproject.com/png/863873-200.png' }
   ];
 
   return (

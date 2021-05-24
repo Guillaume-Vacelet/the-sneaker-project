@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
+import Colors from '../../../../constants/Colors';
 
 export default function ScanGridItem(props) {
   const navigation = useNavigation();
-  const {setCurrentScanPart} = React.useContext(ScanPicturesContext);
+  const {savedPictures, setCurrentScanPart} = React.useContext(ScanPicturesContext);
 
   function handlingScanPart() {
     setCurrentScanPart(props.item.name);
@@ -13,8 +14,12 @@ export default function ScanGridItem(props) {
   }
 
   return (
-    <TouchableOpacity onPress={() => handlingScanPart()}>
-      <View style={[styles.itemContainer, { backgroundColor: props.item.code }]}>
+    <TouchableOpacity onPress={() => handlingScanPart()}
+      style={{
+        backgroundColor: savedPictures[props.item.name].uri ? Colors.primary : 'white'
+      }}
+    >
+      <View style={styles.itemContainer}>
         <Image style={styles.tinyLogo} source={{uri: props.item.image}}/>
         <Text style={styles.itemName}>{props.item.name}</Text>
       </View>
