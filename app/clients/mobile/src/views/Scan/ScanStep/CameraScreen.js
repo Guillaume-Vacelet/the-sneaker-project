@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity , ImageBackground, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity , ImageBackground } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 import BasicBtn from '../../../components/BasicBtn';
 import Colors from '../../../../constants/Colors';
 import { Camera } from 'expo-camera';
@@ -15,7 +16,8 @@ export default function CameraScreen() {
   const [picture, setPicture] = React.useState(null);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const navigation = useNavigation();
-
+  const {currentScanPart, savedPictures, setSavedPicture} = React.useContext(ScanPicturesContext);
+  
   React.useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -44,8 +46,13 @@ export default function CameraScreen() {
     }).then((photo) => {
       setPicture(photo.uri)
       setPreviewVisible(true);
+      setSavedPicture({
+        ...savedPictures,
+        [currentScanPart]: {uri: photo.uri},
+      });
     }).catch((error) => {
       alert(error);
+      console.log(error);
     });
   }
 

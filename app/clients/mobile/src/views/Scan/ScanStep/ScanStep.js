@@ -1,37 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView,} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Colors from '../../../../constants/Colors';
-import GoToStepButton from '../GoToStepButton';
+import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 //navigation
 import { createStackNavigator } from '@react-navigation/stack';
+//components
 import ScanGrid from './ScanGrid';
 import ScanPrompt from './ScanPrompt';
-import Test_cam from '../../../components/Test_cam';
 import CameraScreen from './CameraScreen';
 
-export default function ScanStep(props) {
+export default function ScanStep() {
   const ScanItemStack = createStackNavigator();
+  const [currentScanPart, setCurrentScanPart] = React.useState('');
+  const [savedPictures, setSavedPicture] = React.useState({
+    'Sole': { uri: '' },
+    'Right-side': { uri: '' },
+    'Left-side': { uri: '' },
+    'Front/Up': { uri: '' },
+    'Back-side': { uri: '' },
+    'Box': { uri: '' },
+  });
+  const contextValue = { 
+    currentScanPart,
+    setCurrentScanPart,
+    savedPictures,
+    setSavedPicture
+  };
 
   return (
-    <View style={styles.rootContainer}>
-      <View style={styles.bodyContainer}>
-        {/* <ScanItemStackNavigator /> */}
-        <ScanItemStack.Navigator initialRouteName={'ScanGrid'}
-          // mode={'modal'}
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <ScanItemStack.Screen name="ScanGrid" component={ScanGrid} />
-          <ScanItemStack.Screen name="ScanPrompt" component={ScanPrompt} />
-          <ScanItemStack.Screen name="Camera" component={CameraScreen} />
-        </ScanItemStack.Navigator>
+    <ScanPicturesContext.Provider value={contextValue}>
+      <View style={styles.rootContainer}>
+        <View style={styles.bodyContainer}>
+          <ScanItemStack.Navigator initialRouteName={'ScanGrid'}
+            screenOptions={{
+              headerShown: false
+            }}
+          >
+            <ScanItemStack.Screen name="ScanGrid" component={ScanGrid} />
+            <ScanItemStack.Screen name="ScanPrompt" component={ScanPrompt} />
+            <ScanItemStack.Screen name="Camera" component={CameraScreen} />
+          </ScanItemStack.Navigator>
+        </View>
       </View>
-      {/* <View style={styles.footerContainer}>
-        <GoToStepButton goBack={true} />
-        <GoToStepButton goBack={false} />
-      </View> */}
-    </View>
+    </ScanPicturesContext.Provider>
   );
 }
 
@@ -50,19 +61,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'row'
-  },
-  // headerContainer:{
-  //   flex:0.1
-  // },
-  // rootContainer: {
-  //   height: '100%',
-  //   backgroundColor: Colors.background
-  // },
-  
-  // title1: {
-  //   fontSize: 30,
-  //   fontWeight: '600',
-  //   marginBottom: '10%',
-  //   color: Colors.primary
-  // }
+  }
 });

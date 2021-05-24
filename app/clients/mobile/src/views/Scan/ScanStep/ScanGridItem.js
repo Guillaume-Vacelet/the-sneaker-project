@@ -1,16 +1,19 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import ScanPrompt from './ScanPrompt';
 import { useNavigation } from '@react-navigation/native';
+import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 
 export default function ScanGridItem(props) {
   const navigation = useNavigation();
-  // const Scan_grid = async () => {
-  //   <Test_cam/>
-  // }
+  const {setCurrentScanPart} = React.useContext(ScanPicturesContext);
+
+  function handlingScanPart() {
+    setCurrentScanPart(props.item.name);
+    navigation.navigate('ScanPrompt');
+  }
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ScanPrompt')}>
+    <TouchableOpacity onPress={() => handlingScanPart()}>
       <View style={[styles.itemContainer, { backgroundColor: props.item.code }]}>
         <Image style={styles.tinyLogo} source={{uri: props.item.image}}/>
         <Text style={styles.itemName}>{props.item.name}</Text>
