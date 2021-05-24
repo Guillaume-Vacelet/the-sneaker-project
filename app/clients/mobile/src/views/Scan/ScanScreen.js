@@ -31,7 +31,7 @@ export default function ScanScreen(props) {
         <View style={styles.headerContainer}>
           <View style={{alignItems: 'flex-end'}}>
             <Icon 
-              name={'close'}
+              name={'home'}
               type="font-awesome" 
               size={30} 
               color={props.dark ? Colors.background : Colors.secondary}

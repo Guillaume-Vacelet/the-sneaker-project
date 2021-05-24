@@ -1,24 +1,25 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Colors from '../../../../constants/Colors';
+import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 
 export default function ScanPrompt(props) {
-  // Envoyer le take picture sur une autre page comme avec le scan pour le full ecran
-  // puis stockage de la photo qui sera mise a la place du carré blanc
-  // Save permettra de revenir a la page d'avant
+  const {currentScanPart, savedPictures} = React.useContext(ScanPicturesContext);
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.title1}>Take your picture</Text>
       </View>
       <View style={styles.Container0}>
-        <View style={styles.Container}>
-          <TouchableOpacity onPress={null} >
-            <Icon name={"file-picture-o"} type={"font-awesome"} size={70} color={Colors.secondary} />
-            <Text style={{color: Colors.secondary}}>Empty</Text>
-          </TouchableOpacity>
-        </View>
+        { savedPictures[currentScanPart].uri
+          ? (<Image style={styles.picture} source={{uri: savedPictures[currentScanPart].uri}} />)
+          : (<View style={styles.Container}>
+              <Icon name={"file-picture-o"} type={"font-awesome"} size={70} color={Colors.secondary} />
+              <Text style={{color: Colors.secondary}}>Empty</Text>
+            </View>)
+        }
       </View>
       <View style={styles.buttons}>
         <TouchableOpacity  onPress={() => props.navigation.navigate("Camera")}> 
@@ -35,6 +36,7 @@ export default function ScanPrompt(props) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
@@ -58,13 +60,11 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     borderRadius:2,
   },
- 
   title1: {
     fontSize: 30,
     fontWeight: '600',
     color: Colors.primary
   },
-
   buttons:{
     flex: 1,
     flexDirection:'row',
@@ -80,5 +80,9 @@ const styles = StyleSheet.create({
   button_css2:{
     backgroundColor:'#73eca6',
     borderRadius:2,
+  },
+  picture: {
+    height: '100%',
+    width: '80%',
   }
 });
