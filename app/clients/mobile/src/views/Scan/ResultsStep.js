@@ -1,20 +1,16 @@
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../../constants/Colors';
-import GoBackArrow from '../../components/GoBackArrow';
+import GoToStepButton from './GoToStepButton';
 
 export default function ResultsStep(props) {
   return (
     <View style={styles.rootContainer}>
-      <View style={styles.headerContainer}>
-        <GoBackArrow left={true} goBack={props.navigation.goBack} dark={false} />
-      </View>
       <View style={styles.bodyContainer}>
-        <Text style={styles.title1}>Results</Text>
       </View>
-      <View style={styles.footerContainer}></View>
+      <View style={styles.footerContainer}>
+        <GoToStepButton goBack={true} />
+      </View>
     </View>
   );
 }
@@ -24,21 +20,15 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: Colors.background
   },
-  headerContainer: {
-    flex: 1,
-  },
   bodyContainer: {
-    flex: 11,
+    flex: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
   footerContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
-  title1: {
-    fontSize: 30,
-    fontWeight: '600',
-    marginBottom: '10%',
-    color: Colors.primary
-  }
 });

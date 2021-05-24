@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
+        borderRadius:2,
         // IOS Shadow
         shadowColor: "#000",
         shadowOffset: {

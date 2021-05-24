@@ -70,7 +70,7 @@ export default function ButtonScanner() {
             </View>
           </Camera>)
         : (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Button /*onPress={handleStartCamera}*/
+            <Button onPress={handleStartCamera}
               title='Scanner'
               titleStyle={{ fontSize: 25, marginRight: '10%' }}
               buttonStyle={{ backgroundColor: '#73eca6', borderRadius: 50, height: 50}}
