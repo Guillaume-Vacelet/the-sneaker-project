@@ -63,32 +63,30 @@ export default function SettingsScreen(props) {
           <RoundUserAvatarWithScore />
         </View>
         <View style={styles.settingsList}>
-          {
-            settings.map((setting, i) => (
-              <ListItem key={i} bottomDivider 
-                containerStyle={styles.setting}
-                chevron={{ color: 'red' }}
-                onPress={setting.goTo 
-                  ? () => props.navigation.navigate(setting.goTo) 
-                  : null
-                }
-              >
-                <Icon name={setting.icon} type='font-awesome' color={"lightgray"} />
-                <ListItem.Content>
-                  <ListItem.Title style={styles.settingTitle}>{setting.title}</ListItem.Title>
-                </ListItem.Content>
-                { setting.toggleSetter
-                  ? <Icon onPress={() => {setting.toggleSetter(!setting.toggleValue)}}
-                      type={'font-awesome'} 
-                      name={setting.toggleValue ? 'toggle-on' : 'toggle-off'}
-                      size={30} 
-                      color={'lightgray'} 
-                    />
-                  : <ListItem.Chevron />
-                }
-              </ListItem>
-            ))
-          }
+          {settings.map((setting, i) => (
+            <ListItem key={i} bottomDivider 
+              containerStyle={styles.setting}
+              chevron={{ color: 'red' }}
+              onPress={setting.goTo 
+                ? () => props.navigation.navigate(setting.goTo) 
+                : null
+              }
+            >
+              <Icon name={setting.icon} type='font-awesome' color={"lightgray"} />
+              <ListItem.Content>
+                <ListItem.Title style={styles.settingTitle}>{setting.title}</ListItem.Title>
+              </ListItem.Content>
+              {setting.toggleSetter
+                ? <Icon onPress={() => {setting.toggleSetter(!setting.toggleValue)}}
+                    type={'font-awesome'} 
+                    name={setting.toggleValue ? 'toggle-on' : 'toggle-off'}
+                    size={30} 
+                    color={'lightgray'} 
+                  />
+                : <ListItem.Chevron />
+              }
+            </ListItem>
+          ))}
         </View>
         <View style={styles.signOutContainer}>
           <Button 
