@@ -29,14 +29,14 @@ export default function ScanScreen(props) {
     <ScanStepsContext.Provider value={value}>
       <SafeAreaView style={styles.rootContainer}>
         <View style={styles.headerContainer}>
-          <View style={{alignItems: 'flex-end'}}>
+          <View style={{alignItems: 'flex-start'}}>
             <Icon 
               name={'home'}
               type="font-awesome" 
               size={30} 
               color={props.dark ? Colors.background : Colors.secondary}
               onPress={() => props.navigation.goBack()}
-              containerStyle={{margin: '2%'}}
+              containerStyle={{marginLeft: '5%', marginVertical: '2%'}}
             />
           </View>
           <StepsHeader />
