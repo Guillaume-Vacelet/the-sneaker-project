@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import Colors from '../../../constants/Colors';
 import GoToStepButton from './GoToStepButton';
-//import { BoxLoading } from 'react-loadingg';
 
 export default function ResultsStep(props) {
   return (
@@ -10,14 +9,14 @@ export default function ResultsStep(props) {
       <View style={styles.bodyContainer}>
         <Text style={{color: 'white', fontSize: 20, textAlign: 'center' }}> 
           <Text style={{fontSize: 35, fontWeight: 'bold'}}> Congrats! </Text> 
-          {"\n"}Your <Text style={{fontSize: 22, fontStyle: 'italic', fontWeight: 'bold'}}> Nike Jordan AF1 </Text>got :</Text>
+          {"\n"}Your <Text style={{fontSize: 22, fontStyle: 'italic', fontWeight: 'bold', color: Colors.primary}}> Nike Jordan AF1 </Text>got :</Text>
         <Image
           style={styles.legitCkdImg}
           source={require('../../../assets/legit_checked.png')}
         />
         <Image
           style={styles.sneakerImg}
-          source={require('../../../assets/sneaker-example.png')}
+          source={require('../../../assets/AirJordanLow_RoyalToe.png')}
         />
       </View>
       <View style={styles.footerContainer}>
@@ -52,8 +51,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   sneakerImg : {
-    height: 300,
-    width: 300,
+    width: '100%', 
+    height: '50%',
     zIndex: 0,
     margin: 20,
   },
