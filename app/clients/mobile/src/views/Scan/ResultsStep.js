@@ -19,6 +19,7 @@ export default function ResultsStep(props) {
         >
           <View style={styles.centeredView}>
             <ActivityIndicator size="large" color={Colors.primary} />
+            <Text style={{color: Colors.primary}}>Legit Checking your sneaker...</Text>
           </View>
         </Modal>
         <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>
