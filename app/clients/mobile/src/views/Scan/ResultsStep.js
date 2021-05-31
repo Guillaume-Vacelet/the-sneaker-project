@@ -1,15 +1,29 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, ActivityIndicator, Modal, Button } from 'react-native';
 import Colors from '../../../constants/Colors';
 import GoToStepButton from './GoToStepButton';
 
 export default function ResultsStep(props) {
+  const [modalVisible, setModalVisible] = useState(true);
+  const showModal = () => { setTimeout( () => setModalVisible(false), 3000)}
+  showModal();
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.bodyContainer}>
-        <Text style={{color: 'white', fontSize: 20, textAlign: 'center' }}> 
-          <Text style={{fontSize: 35, fontWeight: 'bold'}}> Congrats! </Text> 
-          {"\n"}Your <Text style={{fontSize: 22, fontStyle: 'italic', fontWeight: 'bold', color: Colors.primary}}> Nike Jordan AF1 </Text>got :</Text>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+        >
+          <View style={styles.centeredView}>
+            <ActivityIndicator size="large" color={Colors.primary} />
+            <Text style={{color: Colors.primary}}>Legit Checking your sneaker...</Text>
+          </View>
+        </Modal>
+        <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>
+          <Text style={{ fontSize: 35, fontWeight: 'bold' }}> Congrats! </Text>
+          {"\n"}Your <Text style={{ fontSize: 22, fontStyle: 'italic', fontWeight: 'bold' }}> Nike Jordan AF1 </Text>got :</Text>
         <Image
           style={styles.legitCkdImg}
           source={require('../../../assets/legit_checked.png')}
@@ -31,6 +45,14 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: Colors.background
   },
+  centeredView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '30%',
+    height: '70%',
+    width: '100%',
+    backgroundColor: Colors.background
+  },
   bodyContainer: {
     flex: 6,
     justifyContent: 'center',
@@ -42,7 +64,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  legitCkdImg : {
+  legitCkdImg: {
     height: 200,
     width: 200,
     position: 'absolute',
