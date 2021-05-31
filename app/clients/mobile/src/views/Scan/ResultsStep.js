@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ActivityIndicator, Modal, Button } from 'react-native';
 import Colors from '../../../constants/Colors';
 import GoToStepButton from './GoToStepButton';
-//import { BoxLoading } from 'react-loadingg';
 
 export default function ResultsStep(props) {
   const [modalVisible, setModalVisible] = useState(true);
@@ -31,7 +30,7 @@ export default function ResultsStep(props) {
         />
         <Image
           style={styles.sneakerImg}
-          source={require('../../../assets/sneaker-example.png')}
+          source={require('../../../assets/AirJordanLow_RoyalToe.png')}
         />
       </View>
       <View style={styles.footerContainer}>
@@ -73,9 +72,9 @@ const styles = StyleSheet.create({
     top: '40%',
     zIndex: 1,
   },
-  sneakerImg: {
-    height: 300,
-    width: 300,
+  sneakerImg : {
+    width: '100%', 
+    height: '50%',
     zIndex: 0,
     margin: 20,
   },
