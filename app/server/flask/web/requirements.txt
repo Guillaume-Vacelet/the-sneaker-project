@@ -1,8 +1,0 @@
-flask
-Flask-SQLAlchemy
-Flask-Migrate
-Flask-Script
-flask_restful
-psycopg2
-flask-cors
-pyOpenSSL
