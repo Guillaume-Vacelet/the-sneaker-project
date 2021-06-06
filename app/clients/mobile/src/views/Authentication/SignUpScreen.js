@@ -19,12 +19,6 @@ export default function SignUpScreen(props) {
       return;
     }
 
-    // auth.signup(username, email, password).then((/*jwt*/) => {
-    //   dispatch(signUpUser(username, email, "abc"))
-    // }).catch(() => {
-    //   setStatus('Something went wrong, please try again.');
-    // });
-
     auth.signup(username, email, password, () => {
       dispatch(signUpUser(username, email, "abc"));
       setStatus('Registered successfully!');

@@ -18,12 +18,14 @@ export default function SignInScreen(props) {
       return;
     }
 
-    dispatch(signInUser('username', 'email', "abc"))
-    // auth.signin(email, password).then((/*jwt*/) => {
-      // dispatch(signInUser(user.username, user.email, "abc"))
-    // }).catch(() => {
-    //   setStatus('Something went wrong, please try again.');
-    // });
+    auth.signin(email, password).then((data) => {
+      console.log(data)
+      dispatch(signInUser(data.username, data.email, "abc"))
+      setStatus('Successfully logged in!');
+    }).catch((error) => {
+      console.log(error)
+      setStatus('Something went wrong, please try again.');
+    });
   };
 
   return (

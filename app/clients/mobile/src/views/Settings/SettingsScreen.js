@@ -93,7 +93,7 @@ export default function SettingsScreen(props) {
             raised 
             title={"Logout"} 
             titleStyle={{color: Colors.background}}
-            buttonStyle={{backgroundColor: 'lightgray'}}
+            buttonStyle={{backgroundColor: '#CD5C5C'}}
             icon={<Icon 
               name="logout" 
               type={"antdesign"} 
