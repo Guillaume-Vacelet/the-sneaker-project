@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity , ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity , ImageBackground, Alert,Button } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 import BasicBtn from '../../../components/BasicBtn';
 import Colors from '../../../../constants/Colors';
 import { Camera } from 'expo-camera';
+
 
 export default function CameraScreen() {
   let camera = Camera;
@@ -88,9 +89,12 @@ export default function CameraScreen() {
     );
   }
 
+
   const OpenedCamera = () => {
     return (
+      
       <Camera type={cameraType} style={styles.camera} ref={(r) => {camera = r}}>
+        
         <View style={styles.cameraHeader}>
           <Icon 
             onPress={() => {switchCameraType()}}
@@ -107,6 +111,12 @@ export default function CameraScreen() {
             color={"white"}
           />
         </View>
+        <View><Text style={styles.baseText}>Take the picture of the sneakers horizontally inside the rectangle</Text></View>
+        
+          <View  style={styles.SquareShapeView}>
+          
+          </View>
+        
         <View style={styles.cameraFooter}>
           <TouchableOpacity onPress={() => {
               takePicture().then().catch(error => console.log(error))
@@ -133,6 +143,7 @@ export default function CameraScreen() {
             </View>
           </TouchableOpacity>
         </View>
+        
       </Camera>
     );
   }
@@ -182,5 +193,21 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-  }
+  },
+
+  baseText: {
+    fontSize:15,
+    fontWeight:'bold',
+    marginLeft:'5%',
+    color:"white",
+  },
+
+  SquareShapeView: {
+    justifyContent:'center',
+    marginLeft:'4%',
+    borderColor:'white',
+    borderWidth:5,
+    width: 350,
+    height: 500,
+  },
 });
