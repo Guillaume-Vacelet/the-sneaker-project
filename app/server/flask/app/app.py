@@ -14,8 +14,19 @@ cors = CORS(app, resource={
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Database
-import pymongo
-client = pymongo.MongoClient('localhost', 27017)
+from pymongo import MongoClient
+MONGO_HOST = "mongo" 
+MONGO_PORT = "27017"
+MONGO_DB = "safecheck-db"
+MONGO_USER = "root"
+MONGO_PASS = "pwd"
+client = MongoClient("mongodb://{}:{}@{}:{}/{}?authSource=admin".format(
+  MONGO_USER, 
+  MONGO_PASS, 
+  MONGO_HOST, 
+  MONGO_PORT, 
+  MONGO_DB
+))
 db = client['safecheck-db']
 
 # Routes

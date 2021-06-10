@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=safechek-db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pwd
+    volumes:
+      # - .data/mdata:/data/db
+      - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
+  
+  flask:
+    build: .
+    command: python -u wsgi.py
+    ports:
+      - "5000:5000"
+    environment: 
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app
+    depends_on:
+      - mongo

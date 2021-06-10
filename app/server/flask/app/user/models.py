@@ -26,8 +26,8 @@ class User:
     new_user['password'] = pbkdf2_sha256.hash(new_user['password'])
 
     # Check for existing email address
-    if db.users.find_one({"email": new_user['email']}):
-      return jsonify({"error": "Email adress already in use."}), 400
+    # if db.users.find_one({"email": new_user['email']}):
+    #   return jsonify({"error": "Email adress already in use."}), 400
 
     if db.users.insert_one(new_user):
       return self.start_session(new_user)

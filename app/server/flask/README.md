@@ -1,22 +1,14 @@
-# SAFECHECK FLASK APP
+# SAFECHECK FLASK SERVER APP
 
 This is the back-end application of the SafeCheck project.
 
-It has 3 parts :
-- :gear: Flask application, which links the two other parts and gives an API for the front-end.
-- :brain: AI module
+It has 3 parts:
+- :gear: Flask application, which links the two other parts and provides a REST API.
+- :brain: FastAI module
 - :file_cabinet: MongoDB database
 
-## Installs
+## How to run the server
 
+Simply do:
 
-
-1 - Launch MongoDB
-  
-  > mongod --dbpath ./data/db
-
-1.2 - You can now launch MongoDB Compass
-
-2 - Launch Flask app
-
-  > ./run
+` docker-compose up --build `
