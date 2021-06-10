@@ -1,62 +1,90 @@
 import React from 'react';
-import { View, StatusBar, Text, StyleSheet } from 'react-native';
-import { Button, Input, Icon } from "react-native-elements";
+import { View, StatusBar, Text, TextInput, StyleSheet } from 'react-native';
+import { Input } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { signInUser } from "../../redux/actions/authActions";
 import Authentication from '../../core/Authentication'
+import BasicBtn from '../../components/BasicBtn';
+import {showMessage} from "react-native-flash-message";
+import Colors from "../../../constants/Colors"
 
 export default function SignInScreen(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [status, setStatus] = React.useState('');
+  const [activity, setActivity] = React.useState(false);
   const dispatch = useDispatch();
 
   function handleSignIn() {
+    setActivity(true);
     const auth = new Authentication();
+
     if (!email || !password) {
-      setStatus('Some inputs are empty');
+      showMessage({
+        message: "Some fields are missing.",
+        type: "warning",
+        autoHide: true,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+      setActivity(false);
       return;
     }
 
     auth.signin(email, password).then((data) => {
-      console.log(data)
+      setActivity(false);
       dispatch(signInUser(data.username, data.email, "abc"))
-      setStatus('Successfully logged in!');
+      showMessage({
+        message: "Successfully logged in!",
+        type: "success",
+        backgroundColor: Colors.primary,
+        autoHide: true,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
+      });
     }).catch((error) => {
+      setActivity(false);
       console.log(error)
-      setStatus('Something went wrong, please try again.');
+      showMessage({
+        message: "Login failed, please try again.",
+        type: "danger",
+        autoHide: true,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
     });
   };
 
   return (
     <View style={styles.rootContainer}>
       <Text style={styles.title}>Welcome back!</Text>
-      <Text style={{color:'red'}}>{ status }</Text>
       <View style={styles.inputsContainer}>
         <Input
           placeholder='Email'
           onChangeText={(value) => setEmail(value)}
           inputContainerStyle={styles.authInput}
-          leftIcon={
-            <Icon type={"font-awesome-5"} name={"envelope"} size={20} />
-          }
         />
-        <Input
+        <TextInput 
           placeholder='Password'
+          secureTextEntry={true}
           onChangeText={(value) => setPassword(value)}
-          inputContainerStyle={styles.authInput}
-          leftIcon={
-            <Icon type={"font-awesome-5"} name={"key"} size={20} />
-          }
+          style={{
+            width: 300,
+            marginTop: '5%',
+            marginBottom: '15%',
+            borderRadius: 5,
+            fontSize: 18,
+            borderBottomWidth: 1,
+            borderBottomColor: 'slategray',
+            paddingBottom: '2%'
+          }}
+          placeholderTextColor='slategray'
         />
-        <Button title="Sign-in" 
-          buttonStyle={styles.authButton} 
+        <BasicBtn 
+          title="Sign-in"
           onPress={handleSignIn}
+          activity={activity}
         />
       </View>
-      <Button title="Sign-up" 
-        buttonStyle={styles.authButton} 
-        onPress={() => props.navigation.navigate("SignUp")} 
+      <BasicBtn 
+        title="Sign-up"
+        onPress={() => props.navigation.navigate("SignUp")}
       />
     </View>
   );
@@ -77,24 +105,17 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "600",
     padding: 20,
-    color: "#73eca6"
+    color: Colors.primary
   },
   inputsContainer: {
     alignItems: 'center',
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 15,
-    marginBottom: 30,
-    shadowColor: 'white',
-    shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 5 },
+    paddingTop: 30,
+    marginBottom: 30
   },
   authInput: {
     width: 300,
   },
-  authButton: {
-    marginBottom: 10,
-    width: 300,
-    backgroundColor: "#73eca6"
-  }
 });

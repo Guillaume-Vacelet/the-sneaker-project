@@ -1,11 +1,7 @@
 import axios from 'axios';
 
-// let localurl = 'http://77.153.254.113:5000/';
-// let localurl = 'http://0.0.0.0:5000/';
-// let localurl = 'http://192.168.0.15:5000/';
-// let localurl = 'http://127.0.0.1:5000/';
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://a80881dd2c26.ngrok.io/';
+let url = 'http://61ff09d574b6.ngrok.io/';
 
 export default class Authentication {
   signup(username, email, password, onSuccess, onFail) {
@@ -20,13 +16,11 @@ export default class Authentication {
         }
       },
       ).then(res => {
-        console.log('succeed');
         console.log(res);
         if (res.status === 200) {
           onSuccess(res.data);
         }
       }).catch(err => {
-        console.log('failed');
         console.log(err);
         onFail(err);
     }); 
