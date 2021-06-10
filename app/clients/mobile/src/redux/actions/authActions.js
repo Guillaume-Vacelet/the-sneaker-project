@@ -11,7 +11,7 @@ export const signInUser = (username, email, jwt) => ({
 	},
 })
 
-export const signUpUser = (username, jwt) => ({
+export const signUpUser = (username, email, jwt) => ({
 	type: SIGN_UP,
 	payload: {
 		user: {
