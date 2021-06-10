@@ -1,43 +1,20 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { Button } from 'react-native-elements';
 import Colors from '../../constants/Colors';
 
-const BasicBtn = (props) => {
+export default function BasicBtn(props) {
     return (
-        <TouchableOpacity onPress={ props.onPress } style={styles.container} >
-            <Text style={styles.txt} >{props.title}</Text>
-        </TouchableOpacity>
+        <Button title={props.title}
+            buttonStyle={{
+                marginBottom: 10,
+                borderRadius: 25,
+                width: 300,
+                backgroundColor: Colors.primary,
+            }} 
+            titleStyle={{color: 'black'}}
+            onPress={props.onPress}
+            loading={props.activity}
+            loadingProps={{color: 'black'}}
+        />
     )
 };
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: Colors.primary,
-        paddingVertical: 5,
-        paddingHorizontal: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        borderRadius:2,
-        // IOS Shadow
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        // Android shadow
-        elevation: 10,
-    },
-    txt: {
-        color: 'white',
-        //fontFamily : '',
-        fontWeight: 'bold',
-        fontSize: 22,
-        textTransform: 'uppercase',
-    }
-});
-
-export default BasicBtn;
