@@ -19,7 +19,7 @@ export default function ScanScreen(props) {
     stepsTitle: ['ModelSelection', 'Scanning', 'Results'],
     stepsSubtitle: [
       {subtitle1: 'Select', subtitle2: 'Search your sneaker model'},
-      {subtitle1: 'Scan', subtitle2: 'Please take photos of your sneakers from different angles as described below'},
+      {subtitle1: 'Scan', subtitle2: 'Take photos of your sneakers from different angles as described below'},
       {subtitle1: 'Result', subtitle2: ""},
     ],
     setCurrentStep
