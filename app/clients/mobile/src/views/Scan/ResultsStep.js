@@ -1,37 +1,64 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator, Modal, Button } from 'react-native';
+import { View, StyleSheet, Image, Text } from 'react-native';
 import Colors from '../../../constants/Colors';
 import GoToStepButton from './GoToStepButton';
+import { MaterialIndicator } from 'react-native-indicators';
+import { Icon } from 'react-native-elements';
+import ProductsContext from '../../core/contexts/ProductsContext';
 
 export default function ResultsStep(props) {
-  const [modalVisible, setModalVisible] = useState(true);
-  const showModal = () => { setTimeout( () => setModalVisible(false), 3000)}
-  showModal();
+  const [activity, setActivity] = useState(true);
+  const [legit, setLegit] = useState(false);
+  const { selectedModel } = React.useContext(ProductsContext);
+
+  setTimeout(() => setActivity(false), 5000);
+
+  console.log(selectedModel)
+
+  const ResultsLoader = () => (
+    <View>
+      <Text style={{fontSize: 25, color: Colors.primary}}>Waiting for AI results...</Text>
+      <MaterialIndicator color={Colors.primary} animationDuration={5000} size={100} />
+    </View>
+  )
+
+  const Results = () => (
+    <View style={styles.resultView}>
+      <View>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <Icon 
+            name="checkmark-circle-outline" 
+            type="ionicon" 
+            size={50} 
+            color={legit ? Colors.primary : '#CD5C5C'}
+            style={styles.profileIcon}
+            onPress={() => props.navigation.navigate("Profile")}
+          />
+          {legit
+            ? <Text style={styles.resultPositiveTitle1}>Authentic!</Text>
+            : <Text style={styles.resultNegativeTitle1}>Fake!</Text>
+          }
+        </View>
+        <Text style={styles.resultTitle2}>Your pair of {selectedModel.model}</Text>
+        {legit
+          ? <Text style={styles.resultTitle2}>has been approved by our AI.</Text>
+          : <Text style={styles.resultTitle2}>has not been approved by our AI.</Text>
+        }
+      </View>
+      <Image
+        style={styles.sneakerImg}
+        source={{uri: selectedModel.image}}
+      />
+    </View>
+  )
 
   return (
     <View style={styles.rootContainer}>
       <View style={styles.bodyContainer}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible}
-        >
-          <View style={styles.centeredView}>
-            <ActivityIndicator size="large" color={Colors.primary} />
-            <Text style={{color: Colors.primary}}>Legit Checking your sneaker...</Text>
-          </View>
-        </Modal>
-        <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>
-          <Text style={{ fontSize: 35, fontWeight: 'bold' }}> Congrats! </Text>
-          {"\n"}Your <Text style={{ fontSize: 22, fontStyle: 'italic', fontWeight: 'bold' }}> Nike Jordan AF1 </Text>got :</Text>
-        <Image
-          style={styles.legitCkdImg}
-          source={require('../../../assets/legit_checked.png')}
-        />
-        <Image
-          style={styles.sneakerImg}
-          source={require('../../../assets/AirJordanLow_RoyalToe.png')}
-        />
+        {activity
+          ? <ResultsLoader />
+          : <Results />
+        }
       </View>
       <View style={styles.footerContainer}>
         <GoToStepButton goBack={true} />
@@ -64,17 +91,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  legitCkdImg: {
-    height: 200,
-    width: 200,
-    position: 'absolute',
-    left: '25%',
-    top: '40%',
-    zIndex: 1,
-  },
-  sneakerImg : {
+  resultView: {
     width: '100%', 
-    height: '50%',
+    height: '100%', 
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  resultPositiveTitle1: {
+    fontSize: 30, 
+    fontWeight: '600',
+    color: Colors.primary, 
+  },
+  resultNegativeTitle1: {
+    fontSize: 30, 
+    fontWeight: '600',
+    color: '#CD5C5C', 
+  },
+  resultTitle2: {
+    fontSize: 22, 
+    color: Colors.secondary, 
+  },
+  sneakerImg: {
+    width: '70%', 
+    height: '35%',
     zIndex: 0,
     margin: 20,
   },

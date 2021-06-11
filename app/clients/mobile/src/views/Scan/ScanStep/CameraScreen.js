@@ -7,6 +7,7 @@ import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 import BasicBtn from '../../../components/BasicBtn';
 import Colors from '../../../../constants/Colors';
 import { Camera } from 'expo-camera';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 
 export default function CameraScreen() {
@@ -35,26 +36,46 @@ export default function CameraScreen() {
 
   async function takePicture() {
     if (!camera) {
-      return
+      return;
     }
     setPreviewVisible(false);
     setPicture(null);
-    const photo = await camera.takePictureAsync({
+
+    let photo = await camera.takePictureAsync({
       quality: 1,
       base64: true,
       exif: true,
       skipProcessing: true,
-    }).then((photo) => {
-      setPicture(photo.uri)
+    });
+    let resizedPhoto = await ImageManipulator.manipulateAsync(
+      photo.uri,
+      [{ crop: { originX: 50, originY: 600, width: 2000, height: 3000 } }],
+      { compress: 1, format: "jpeg", base64: false }
+    ).then((cropped) => {
+      setPicture(cropped.uri);
       setPreviewVisible(true);
       setSavedPicture({
         ...savedPictures,
-        [currentScanPart]: {uri: photo.uri},
+        [currentScanPart]: {uri: cropped.uri},
       });
-    }).catch((error) => {
-      alert(error);
-      console.log(error);
-    });
+    })
+
+    // const photo = await camera.takePictureAsync({
+    //   quality: 1,
+    //   base64: true,
+    //   exif: true,
+    //   skipProcessing: true,
+    // }).then((photo) => {
+    //   setPicture(photo.uri);
+    //   setPreviewVisible(true);
+    //   setSavedPicture({
+    //     ...savedPictures,
+    //     [currentScanPart]: {uri: photo.uri},
+    //   });
+    // }).catch((error) => {
+    //   alert(error);
+    //   console.log(error);
+    // });
   }
 
   function savePhoto() { 
@@ -79,10 +100,14 @@ export default function CameraScreen() {
           }}
         >
           <View style={styles.buttons}>
-            <BasicBtn title={'Retake'} onPress={() => {
-              takePicture().then().catch(error => console.log(error))
-            }} />
-            <BasicBtn title={'Save'} onPress={savePhoto} />
+            <BasicBtn 
+              title={'Retake'} 
+              onPress={() => {
+                takePicture().then().catch(error => console.log(error))
+              }} 
+              width={150}
+            />
+            <BasicBtn title={'Save'} onPress={savePhoto} width={150}/>
           </View>
         </ImageBackground>
       </View>

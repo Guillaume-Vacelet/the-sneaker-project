@@ -8,8 +8,8 @@ export default function BasicBtn(props) {
             buttonStyle={{
                 marginBottom: 10,
                 borderRadius: 25,
-                width: 300,
-                backgroundColor: Colors.primary,
+                width: props.width ? props.width : 300,
+                backgroundColor: props.color ? props.color : Colors.primary,
             }} 
             titleStyle={{color: 'black'}}
             onPress={props.onPress}

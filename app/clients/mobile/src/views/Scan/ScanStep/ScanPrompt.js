@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Colors from '../../../../constants/Colors';
 import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
+import BasicBtn from '../../../components/BasicBtn';
 
 export default function ScanPrompt(props) {
   const {currentScanPart, savedPictures} = React.useContext(ScanPicturesContext);
@@ -22,16 +23,16 @@ export default function ScanPrompt(props) {
         }
       </View>
       <View style={styles.buttons}>
-        <TouchableOpacity  onPress={() => props.navigation.navigate("Camera")}> 
-          <View style={styles.button_css2}>
-            <Text style={styles.button_css}>Take picture</Text>
-          </View>
-        </TouchableOpacity >
-        <TouchableOpacity  onPress={() => props.navigation.navigate("ScanGrid")}>
-          <View style={styles.button_css2}>
-            <Text style={styles.button_css}>Save</Text>
-          </View>
-        </TouchableOpacity >
+        <BasicBtn 
+          title='Take picture'
+          onPress={() => props.navigation.navigate("Camera")}
+          width={200}
+        />
+        <BasicBtn 
+          title='Save'
+          onPress={() => props.navigation.navigate("ScanGrid")}
+          width={100}
+        />
       </View>
     </View>
   );

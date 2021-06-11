@@ -16,6 +16,7 @@ export default function ScanGridItem(props) {
   return (
     <TouchableOpacity onPress={() => handlingScanPart()}
       style={{
+        borderRadius: 15,
         backgroundColor: savedPictures[props.item.name].uri ? Colors.primary : 'white'
       }}
     >
@@ -34,7 +35,6 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     justifyContent: 'flex-end',
-    borderRadius: 5,
     padding: 10,
     height: 150,
   },

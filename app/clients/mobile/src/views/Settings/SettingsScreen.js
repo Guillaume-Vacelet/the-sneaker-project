@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../../../constants/Colors';
 import GoBackArrow from '../../components/GoBackArrow';
+import BasicBtn from '../../components/BasicBtn';
 
 
 export default function SettingsScreen(props) {
@@ -88,21 +89,11 @@ export default function SettingsScreen(props) {
             </ListItem>
           ))}
         </View>
-        <View style={styles.signOutContainer}>
-          <Button 
-            raised 
-            title={"Logout"} 
-            titleStyle={{color: Colors.background}}
-            buttonStyle={{backgroundColor: '#CD5C5C'}}
-            icon={<Icon 
-              name="logout" 
-              type={"antdesign"} 
-              color={Colors.background}
-              style={{marginRight: '10%'}}
-            />}
-            onPress={handleSignOut}
-          />
-        </View>
+        <BasicBtn 
+          title={'Sign-out'}
+          onPress={handleSignOut}
+          color={'#CD5C5C'}
+        />
       </View>
     </SafeAreaView>
   );
