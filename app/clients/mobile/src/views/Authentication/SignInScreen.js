@@ -81,6 +81,9 @@ export default function SignInScreen(props) {
           onPress={handleSignIn}
           activity={activity}
         />
+        <Text style={styles.forgotPassword} onPress={() => props.navigation.navigate('ForgotPassword')}>
+          Forgot password?
+        </Text>
       </View>
       <BasicBtn 
         title="Sign-up"
@@ -92,14 +95,13 @@ export default function SignInScreen(props) {
 
 const styles = StyleSheet.create({
   rootContainer: {
-    marginTop: StatusBar.currentHeight,
     height: '100%',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
   title: {
     fontSize: 40,
@@ -118,4 +120,10 @@ const styles = StyleSheet.create({
   authInput: {
     width: 300,
   },
+  forgotPassword: {
+    marginTop: '5%',
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: "#000"
+  }
 });

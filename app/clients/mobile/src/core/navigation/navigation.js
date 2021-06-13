@@ -7,8 +7,6 @@ import { connect } from 'react-redux'
 //views
 import AuthStackNavigator from './AuthStackNavigator';
 import AppStackNavigator from './AppStackNavigator';
-// import LoadingScreen from '../../views/LoadingScreen';
-// import { AppTabsNavigator } from './AppTabsNavigator';
 
 
 const RootStack = createStackNavigator();
@@ -29,21 +27,6 @@ const RootStackScreen = ({loggedIn}) => {
       }
     </RootStack.Navigator>
   );
-
-  // return (
-  //   <RootStack.Navigator
-  //     headerMode="none"
-  //     screenOptions={{ animationEnabled: false }}
-  //     mode="modal"
-  //   >
-  //     {isLoading 
-  //       ? <RootStack.Screen name="LoadingScreen" component={LoadingScreen} />
-  //       : loggedIn 
-  //         ? <RootStack.Screen name="AppTabsNavigator" component={AppTabsNavigator} />
-  //         : <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
-  //     }
-  //   </RootStack.Navigator>
-  // );
 };
 
 function Navigator({loggedIn}) {
