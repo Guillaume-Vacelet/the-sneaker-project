@@ -7,7 +7,7 @@ export default function BasicBtn(props) {
         <Button title={props.title}
             buttonStyle={{
                 marginBottom: 10,
-                borderRadius: 25,
+                borderRadius: 8,
                 width: props.width ? props.width : 300,
                 backgroundColor: props.color ? props.color : Colors.primary,
             }} 
