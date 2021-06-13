@@ -7,6 +7,7 @@ import Authentication from '../../core/Authentication'
 import BasicBtn from '../../components/BasicBtn';
 import {showMessage} from "react-native-flash-message";
 import Colors from "../../../constants/Colors"
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignInScreen(props) {
   const [email, setEmail] = React.useState('');
@@ -52,7 +53,7 @@ export default function SignInScreen(props) {
   };
 
   return (
-    <View style={styles.rootContainer}>
+    <SafeAreaView style={styles.rootContainer}>
       <Text style={styles.title}>Welcome back!</Text>
       <View style={styles.inputsContainer}>
         <Input
@@ -89,7 +90,7 @@ export default function SignInScreen(props) {
         title="Sign-up"
         onPress={() => props.navigation.navigate("SignUp")}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

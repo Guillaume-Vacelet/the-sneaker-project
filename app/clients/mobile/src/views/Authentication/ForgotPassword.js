@@ -4,13 +4,14 @@ import { Input, Icon } from "react-native-elements";
 import BasicBtn from '../../components/BasicBtn';
 import {showMessage} from "react-native-flash-message";
 import Colors from "../../../constants/Colors"
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ForgotPassword(props) {
   const [email, setEmail] = React.useState('');
   const [activity, setActivity] = React.useState(false);
 
   return (
-    <View style={styles.rootContainer}>
+    <SafeAreaView style={styles.rootContainer}>
       <TouchableOpacity style={styles.goBack} onPress={() => props.navigation.goBack()}>
         <Icon 
           type={'antdesign'}
@@ -38,7 +39,7 @@ export default function ForgotPassword(props) {
             />
         </View>
       </View> */}
-    </View>
+    </SafeAreaView>
   );
 }
 

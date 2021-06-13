@@ -7,6 +7,7 @@ import { Input } from "react-native-elements";
 import {showMessage} from "react-native-flash-message";
 import Colors from "../../../constants/Colors"
 import BasicBtn from '../../components/BasicBtn';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUpScreen(props) {
   const [username, setUsername] = React.useState('');
@@ -69,7 +70,7 @@ export default function SignUpScreen(props) {
   };
 
   return (
-    <View style={styles.rootContainer}>
+    <SafeAreaView style={styles.rootContainer}>
       <Text style={styles.title}>Create your account</Text>
       <View style={styles.inputsContainer}>
         <Input
@@ -106,7 +107,7 @@ export default function SignUpScreen(props) {
         title="Sign-in"
         onPress={() => props.navigation.navigate("SignIn")}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
