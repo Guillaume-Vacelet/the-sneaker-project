@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StatusBar, ScrollView, SafeAreaView, StyleSheet, Image } from 'react-native';
 import { Icon, Button } from 'react-native-elements'
-import ButtonScanner from '../../components/ButtonScanner';
-import ProductCard from '../../components/ProductCard';
+import ButtonScanner from '../../../components/ButtonScanner';
+import ProductCard from '../../../components/ProductCard';
 import nmd_r1 from '../../../assets/sneaker-example.png';
 
 export default function ProductScreen() {
