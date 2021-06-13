@@ -1,13 +1,16 @@
+//React
 import React from 'react';
-import { View, StatusBar, Text, TextInput, StyleSheet } from 'react-native';
+import { View, StatusBar, Text, StyleSheet } from 'react-native';
+import { showMessage } from "react-native-flash-message";
+import { SafeAreaView } from "react-native-safe-area-context";
+//Redux
 import { useDispatch } from "react-redux";
 import { signUpUser } from "../../redux/actions/authActions";
-import Authentication from '../../core/Authentication'
-import { Input } from "react-native-elements";
-import {showMessage} from "react-native-flash-message";
-import Colors from "../../../constants/Colors"
+//Components
 import BasicBtn from '../../components/BasicBtn';
-import { SafeAreaView } from "react-native-safe-area-context";
+import BasicInput from '../../components/BasicInput';
+import Authentication from '../../core/Authentication'
+import Colors from "../../../constants/Colors"
 
 export default function SignUpScreen(props) {
   const [username, setUsername] = React.useState('');
@@ -73,40 +76,13 @@ export default function SignUpScreen(props) {
     <SafeAreaView style={styles.rootContainer}>
       <Text style={styles.title}>Create your account</Text>
       <View style={styles.inputsContainer}>
-        <Input
-          placeholder='Username'
-          onChangeText={(value) => setUsername(value)}
-          inputContainerStyle={styles.authInput}
-        />
-        <Input
-          placeholder='Email'
-          onChangeText={(value) => setEmail(value)}
-          inputContainerStyle={styles.authInput}
-        />
-        <TextInput 
-          placeholder='Password'
-          secureTextEntry={true}
-          onChangeText={(value) => setPassword(value)}
-          style={[styles.textInput, {marginBottom: '8%'}]}
-          placeholderTextColor='slategray'
-        />
-        <TextInput 
-          placeholder='Confirm password'
-          secureTextEntry={true}
-          onChangeText={(value) => setConfirmPassword(value)}
-          style={[styles.textInput, {marginBottom: '15%'}]}
-          placeholderTextColor='slategray'
-        />
-        <BasicBtn
-          title="Sign-up"
-          onPress={handleSignUp}
-          activity={activity}
-        />
+        <BasicInput label={'Username'} setter={setUsername}/>
+        <BasicInput label={'Email'} setter={setEmail}/>
+        <BasicInput label={'Password'} setter={setPassword} secured={true}/>
+        <BasicInput label={'Confirm password'} setter={setConfirmPassword} secured={true}/>
+        <BasicBtn title="Sign-up" onPress={handleSignUp} activity={activity}/>
       </View>
-      <BasicBtn
-        title="Sign-in"
-        onPress={() => props.navigation.navigate("SignIn")}
-      />
+      <BasicBtn title="Sign-in" onPress={() => props.navigation.navigate("SignIn")}/>
     </SafeAreaView>
   );
 }
@@ -135,23 +111,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     paddingVertical: '7%',
     marginBottom: 30
-  },
-  authInput: {
-    width: 300,
-  },
-  authButton: {
-    marginBottom: 10,
-    borderRadius: 25,
-    width: 300,
-    backgroundColor: Colors.primary,
-  },
-  textInput: {
-    width: 300,
-    marginTop: '3%',
-    borderRadius: 5,
-    fontSize: 18,
-    borderBottomWidth: 1,
-    borderBottomColor: 'slategray',
-    paddingBottom: '2%'
   }
 });
