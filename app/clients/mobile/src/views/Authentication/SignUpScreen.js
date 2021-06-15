@@ -47,20 +47,21 @@ export default function SignUpScreen(props) {
     }
 
     auth.signup(username, email, password).then((data) => {
-      console.log(data);
       dispatch(signUpUser(username, email, "abc"));
-      showMessage({message: "Account successfully created.", type: "success", duration:5000,
+      showMessage({message: data.status, type: "success", duration:5000,
         backgroundColor: Colors.primary, 
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
       setActivity(false);
-      props.navigation.navigate('EmailConfirmation', { email: email })
+      props.navigation.navigate('EmailVerification', { email: email })
     }).catch((error) => {
-      console.log(error);
       setActivity(false);
-      showMessage({message: error, type: "danger", duration:5000,
+      showMessage({message: error.data.error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
+      if (error.status === 403) {
+        props.navigation.navigate('SignIn');
+      }
     });
   };
 

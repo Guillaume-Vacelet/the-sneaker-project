@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://ff7e8ea54923.ngrok.io/';
+let url = 'http://5f8a685f977d.ngrok.io/';
 
 export default class Authentication {
   signup(username, email, password) {
@@ -21,7 +21,7 @@ export default class Authentication {
           resolve(res.data);
         }
       }).catch(error => {
-        reject(error.response.data.error);
+        reject(error.response);
       }); 
     });
   }
@@ -34,13 +34,30 @@ export default class Authentication {
         null,
         { params: {email: email}}
       ).then(async res => {
-        console.log(res);
         if (res.status == 200) {
           resolve(res.data);
         }
         reject();
       }).catch(error => {
-        reject(error.response.data.error);
+        reject(error.response);
+      });
+    });
+  }
+
+  sendNewCode(email) {
+    console.log(url + 'user/email/verify/send-new-code')
+    return new Promise((resolve, reject) => {
+      axios.post(
+        url +  'user/email/verify/send-new-code',
+        null,
+        { params: {email: email}}
+      ).then(async res => {
+        if (res.status == 200) {
+          resolve(res.data);
+        }
+        reject();
+      }).catch(error => {
+        reject(error.response);
       });
     });
   }
@@ -63,7 +80,7 @@ export default class Authentication {
         }
         reject();
       }).catch(error => {
-        reject(error.response.data.error);
+        reject(error.response);
       });
     });
   }

@@ -28,5 +28,9 @@ def signin():
   return User().signin()
 
 @app.route('/user/email/verify/<code>', methods=['POST'])
-def email_confirm(code):
+def verify_email(code):
   return User().verify_email(code)
+
+@app.route('/user/email/verify/send-new-code', methods=['POST'])
+def send_new_code():
+  return User().send_new_code()

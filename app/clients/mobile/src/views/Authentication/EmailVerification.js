@@ -10,7 +10,7 @@ import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
 import Authentication from '../../core/Authentication'
 
-export default function EmailConfirmation(props) {
+export default function EmailVerification(props) {
   const [inputCode, setInputCode] = React.useState('');
   const [validCode, setValidCode] = React.useState(false);
   const [activity, setActivity] = React.useState(false);
@@ -28,11 +28,13 @@ export default function EmailConfirmation(props) {
 
     const auth = new Authentication();
     auth.verifyEmail(email, inputCode).then((data) => {
-      console.log(data);
+      showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
       setValidCode(true);
       setActivity(false);
     }).catch(error => {
-      showMessage({message: error, type: "danger", duration:5000,
+      showMessage({message: error.data.error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
@@ -40,11 +42,21 @@ export default function EmailConfirmation(props) {
   }
 
   function sendNewCode() {
-
+    const auth = new Authentication();
+    auth.sendNewCode(email).then((data) => {
+      showMessage({message: data.status, backgroundColor: Colors.primary, duration:3000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+    }).catch(error => {
+      showMessage({message: error.data.error, type: "danger", duration:5000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+    });
+    
   }
 
   const ValidCode = () => (
-    <View style={styles.emailConfirmation}>
+    <View style={styles.EmailVerification}>
       <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
       <View style={[styles.titles, {alignItems: 'center'}]}>
         <Text style={styles.title}>Email verified!</Text>
@@ -64,10 +76,10 @@ export default function EmailConfirmation(props) {
         {validCode
           ? <ValidCode />
           : <View style={{display: 'flex', flex: 1, justifyContent: 'flex-start', padding: '5%'}}>
-              <View style={[styles.titles, {justifyContent: 'flex-start'}]}>
+              <View style={[styles.titles, {alignItems: 'center'}]}>
                 <Text style={styles.title}>Check your email</Text>
                 <Text style={styles.title2}>
-                  Enter the code we sent you at your email adress to verify your email adress
+                  Enter the code we sent at your email to verify your email adress
                 </Text>
               </View>
               <View style={styles.inputsContainer}>
@@ -119,6 +131,7 @@ const styles = StyleSheet.create({
   },
   titles: {
     marginBottom: '10%',
+    justifyContent: 'center'
   },
   title: {
     fontSize: 40,
@@ -138,7 +151,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginBottom: 30
   },
-  emailConfirmation: {
+  EmailVerification: {
     display: 'flex', 
     flex: 1,
     height: '100%',

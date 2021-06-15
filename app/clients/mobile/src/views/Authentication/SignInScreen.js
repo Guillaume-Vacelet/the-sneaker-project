@@ -23,10 +23,7 @@ export default function SignInScreen(props) {
     setActivity(true);
 
     if (!email || !password) {
-      showMessage({
-        message: "Some fields are missing.",
-        type: "warning",
-        duration:3000,
+      showMessage({message: "Some fields are missing.", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
@@ -37,20 +34,17 @@ export default function SignInScreen(props) {
     auth.signin(email, password).then((data) => {
       setActivity(false);
       dispatch(signInUser(data.username, data.email, "abc"))
-      showMessage({
-        message: data.msg,
-        backgroundColor: Colors.primary, 
-        duration:5000,
+      showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
     }).catch((error) => {
       setActivity(false);
-      showMessage({
-        message: error,
-        type: "danger",
-        duration:5000,
+      showMessage({message: error.data.error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
+      if (error.status === 403) {
+        props.navigation.navigate('EmailVerification', {email: email});
+      }
     });
   };
 
@@ -60,7 +54,7 @@ export default function SignInScreen(props) {
       <View style={styles.inputsContainer}>
         <BasicInput label={'Email'} setter={setEmail} type={"email-address"}/>
         <BasicInput label={'Password'} setter={setPassword} secured={true}/>
-        <BasicBtn title="Sign-in" onPress={handleSignIn} activity={activity}/>
+        <BasicBtn title="Sign-in" onPress={handleSignIn} activity={activity} />
         <Text style={styles.forgotPassword} onPress={() => props.navigation.navigate('ForgotPassword')}>
           Forgot password?
         </Text>

@@ -25,30 +25,14 @@ class User:
         print(new_user)
 
         # Check for existing verified email address
-        existing_user = db.users.find_one({"email": new_user['email']})
-        if existing_user:
-            # User exists and is fully registered
-            if existing_user['email_verified'] == True:
-                return jsonify({"error": "Email adress is already in use."}), 400
-            # User exists but has not verified email
-            else:
-                db.users.update_one(
-                    {"email": request.args.get('email')},
-                    {"$set": {
-                        "username": new_user['username'],
-                        "password": new_user['password'],
-                        "email_verification_code": new_user['email_verification_code'],
-                        "email_verification_code_timestamp": new_user['email_verification_code_timestamp']
-                    }}
-                )
-                Email().sendConfirmEmail(request.args.get('email'), email_verification_code)
-                return jsonify({"msg": "Account successfully created!"}), 200
+        if db.users.find_one({"email": new_user['email']}):
+            return jsonify({"error": "Email adress is already in use, \nplease sign-in"}), 403
 
         # Enter new user in DB
         if db.users.insert_one(new_user):
             # Send email confirmation code
             Email().sendConfirmEmail(request.args.get('email'), email_verification_code)
-            return jsonify({"msg": "Account successfully created!"}), 200
+            return jsonify({"status": "Account successfully created!"}), 200
 
         return jsonify({"error": "Signup failed."}), 400
 
@@ -59,11 +43,16 @@ class User:
         print(user)
 
         if (user['email_verified'] == False):
-            return jsonify({"error": "Account does not exist"}), 400
+            return jsonify({"error": "You must verify you email address to login"}), 403
 
         if user and pbkdf2_sha256.verify(request.args.get('password'), user['password']):
-            return jsonify({"msg": "Successfully logged in!"}), 200
+            return jsonify({
+                "username": user['username'],
+                "email": user['email'],
+                "status": "Successfully logged in!"
+            }), 200
         return jsonify({"error": "The email or password you entered is incorrect"}), 400
+
 
     def verify_email(self, code):
         user = db.users.find_one({
@@ -87,9 +76,27 @@ class User:
                 "email_verification_code": "",
                 "email_verification_code_timestamp": ""
             }
-            })
+        })
         db.users.update_one(
             {"email": request.args.get('email')},
             {"$set": {"email_verified": True}
-             })
+        })
         return jsonify({"msg": "Email successfully verified. You can now login!"}), 200
+
+
+    def send_new_code(self):
+        user = db.users.find_one({
+            "email": request.args.get('email'),
+        })
+        if not user:
+            return jsonify({"error": "Email adress is invalid"}), 400
+        email_verification_code = random_code(5)
+        db.users.update_one(
+            {"email": request.args.get('email')},
+            {"$set": {
+                "email_verification_code": email_verification_code,
+                "email_verification_code_timestamp": time.time()
+            }
+        })
+        Email().sendConfirmEmail(request.args.get('email'), email_verification_code)
+        return jsonify({"status": "New code sent!"}), 200
