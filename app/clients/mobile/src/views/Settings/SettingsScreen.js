@@ -1,11 +1,15 @@
+//React
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, StatusBar, View, Text } from 'react-native';
-import { ListItem, Icon, Button } from 'react-native-elements';
-import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
-import { signOutUser } from "../../redux/actions/authActions";
-import { useDispatch } from "react-redux";
+import { StyleSheet, View, Text } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {showMessage} from "react-native-flash-message";
+//Redux
+import { useDispatch } from "react-redux";
+import { signOutUser } from "../../redux/actions/authActions";
+//Components
+import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
 import Colors from '../../../constants/Colors';
 import GoBackArrow from '../../components/GoBackArrow';
 import BasicBtn from '../../components/BasicBtn';
@@ -17,6 +21,9 @@ export default function SettingsScreen(props) {
 
   const dispatch = useDispatch();
   function handleSignOut() {
+    showMessage({message: "Successfully logged out", backgroundColor: Colors.primary, duration: 3000,
+      titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
+    });
     dispatch(signOutUser());
     // AsyncStorage.removeItem();
     // navigation.navigate('AuthStackScreen', { screen: 'SignIn' });
@@ -89,11 +96,7 @@ export default function SettingsScreen(props) {
             </ListItem>
           ))}
         </View>
-        <BasicBtn 
-          title={'Sign-out'}
-          onPress={handleSignOut}
-          color={'#CD5C5C'}
-        />
+        <BasicBtn title={'Sign-out'} onPress={handleSignOut} color={'#CD5C5C'} />
       </View>
     </SafeAreaView>
   );
