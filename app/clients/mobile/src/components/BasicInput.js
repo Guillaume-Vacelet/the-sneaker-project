@@ -8,6 +8,7 @@ export default function BasicInput(props) {
         {props.label}
       </Text>
       <TextInput 
+        keyboardType={props.type ? props.type : 'default'}
         secureTextEntry={props.secured}
         onChangeText={(value) => props.setter(value)}
         style={{
