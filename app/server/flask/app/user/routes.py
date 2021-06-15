@@ -34,3 +34,7 @@ def verify_email(code):
 @app.route('/user/email/verify/send-new-code', methods=['POST'])
 def send_new_code():
   return User().send_new_code()
+
+@app.route('/user/reset-password', methods=['POST'])
+def reset_password():
+  return User().reset_password()

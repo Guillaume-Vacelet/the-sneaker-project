@@ -10,19 +10,32 @@ import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
 import Authentication from '../../core/Authentication'
 
-export default function ForgotPassword(props) {
-  const [email, setEmail] = React.useState('');
+export default function ResetPassword(props) {
   const [activity, setActivity] = React.useState(false);
-  const [emailSent, setEmailSent] = React.useState(false);
+  const [newPassword, setNewPassword] = React.useState('');
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = React.useState('');
+
+  const { email } = props.route.params;
 
   function handleResetPassword() {
     setActivity(true);
 
-    if (!email) {
-      showMessage({
-        message: "Email adress missing",
-        type: "warning",
-        autoHide: true,
+    if (!newPassword || !newPasswordConfirmation) {
+      showMessage({message: "Some fields are missing", type: "warning", duration: 3000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+      setActivity(false);
+      return;
+    }
+    if (newPassword !== newPasswordConfirmation) {
+      showMessage({message: "Confirm password correctly.", type: "warning", duration:3000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+      setActivity(false);
+      return;
+    }
+    if (newPassword.length < 6) {
+      showMessage({message: "Password must be atleast 6 characters long.", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
@@ -30,42 +43,16 @@ export default function ForgotPassword(props) {
     }
 
     const auth = new Authentication();
-    auth.resetPassword(email).then((data) => {
-      setActivity(false);
-      setEmailSent(true);
-    }).catch((error) => {
-      setActivity(false);
-      console.log(error)
-      showMessage({
-        message: "An error occurred, please try again.",
-        type: "danger",
-        autoHide: true,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
-    });
-  }
-
-  function handleSendCode() {
-    setActivity(true);
-
-    if (!email) {
-      showMessage({message: "Enter an email address", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
-      setActivity(false);
-      return;
-    }
-
-    const auth = new Authentication();
-    auth.sendNewCode(email).then(data => {
+    auth.resetPassword(email, newPassword).then((data) => {
+      console.log(data);
       setActivity(false);
       showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
-      props.navigation.navigate('EmailVerification', {email: email, destination: 'ResetPassword'})
-    }).catch(error => {
+      props.navigation.navigate('SignIn')
+    }).catch((error) => {
       setActivity(false);
-      showMessage({message: error.data.error, type: "danger", duration:5000,
+      showMessage({message: error.data.error, type:"danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
     });
@@ -111,17 +98,15 @@ export default function ForgotPassword(props) {
       <View style={styles.bodyContainer}>
         <View style={{display: 'flex', flex: 1, justifyContent: 'flex-start', padding: '5%'}}>
           <View style={[styles.titles, {justifyContent: 'flex-start'}]}>
-            <Text style={styles.title}>Forgot password</Text>
+            <Text style={styles.title}>Reset password</Text>
             <Text style={styles.title2}>
-              Enter your email address and we'll send you a code to confirm you are the account owner.
+              Enter a new password:
             </Text>
           </View>
           <View style={styles.inputsContainer}>
-            <BasicInput label={'Email address'} setter={setEmail} type={"email-address"}/>
-            <BasicBtn title="Send code" 
-              onPress={handleSendCode}
-              activity={activity}
-            />
+            <BasicInput label={'New password'} setter={setNewPassword} secured={true}/>
+            <BasicInput label={'Confirm new password'} setter={setNewPasswordConfirmation} secured={true}/>
+            <BasicBtn title="Update my password" onPress={handleResetPassword} activity={activity} />
           </View>
         </View>
       </View>

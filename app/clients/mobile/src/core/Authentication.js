@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://5f8a685f977d.ngrok.io/';
+let url = 'http://3be33c63a538.ngrok.io/';
 
 export default class Authentication {
   signup(username, email, password) {
-    console.log(url + 'user/signup')
+    console.log(url + 'user/signup?username='+username+'email='+email+'&password='+password)
     return new Promise((resolve, reject) => {
       axios.post(
         url + 'user/signup',
@@ -27,7 +27,7 @@ export default class Authentication {
   }
 
   verifyEmail(email, code) {
-    console.log(url + 'user/email/verify/' + code)
+    console.log(url + 'user/email/verify/' + code+'?email='+email)
     return new Promise((resolve, reject) => {
       axios.post(
         url +  'user/email/verify/' + code,
@@ -45,7 +45,7 @@ export default class Authentication {
   }
 
   sendNewCode(email) {
-    console.log(url + 'user/email/verify/send-new-code')
+    console.log(url + 'user/email/verify/send-new-code?email='+email)
     return new Promise((resolve, reject) => {
       axios.post(
         url +  'user/email/verify/send-new-code',
@@ -63,7 +63,7 @@ export default class Authentication {
   }
 
   signin(email, password) {
-    console.log(url + 'user/signin')
+    console.log(url + 'user/signin?email='+email+'&password='+password)
     return new Promise((resolve, reject) => {
       axios.post(
         url +  'user/signin',
@@ -85,20 +85,20 @@ export default class Authentication {
     });
   }
 
-  forgotPassword(email) {
-    console.log(url + 'user/forgot-password')
+  resetPassword(email, newPassword) {
+    console.log(url + 'user/reset-password?email='+email+'&newPassword='+newPassword)
     return new Promise((resolve, reject) => {
       axios.post(
-        url + 'user/forgot-password',
+        url + 'user/reset-password',
         null,
-        { params: {email: email} }
+        { params: {email: email, newPassword: newPassword} }
       ).then(async res => {
         if (res.status == 200) {
           resolve(res.data)
         }
         reject();
       }).catch(error => {
-        reject(error.response.data.error);
+        reject(error.response);
       });
     });
   }

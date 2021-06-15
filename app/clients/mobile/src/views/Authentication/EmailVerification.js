@@ -13,64 +13,69 @@ import Authentication from '../../core/Authentication'
 export default function EmailVerification(props) {
   const [inputCode, setInputCode] = React.useState('');
   const [validCode, setValidCode] = React.useState(false);
-  const [activity, setActivity] = React.useState(false);
-  const { email } = props.route.params;
+  const [verifyActivity, setVerifyActivity] = React.useState(false);
+  const [sendNewCodeActivity, setSendNewCodeActivity] = React.useState(false);
+
+  const { email, destination } = props.route.params;
 
   function checkCode() {
-    setActivity(true);
+    setVerifyActivity(true);
     if (!inputCode) {
       showMessage({message: "Enter a code", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
-      setActivity(false);
+      setVerifyActivity(false);
       return;
     }
 
     const auth = new Authentication();
     auth.verifyEmail(email, inputCode).then((data) => {
       showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
       setValidCode(true);
-      setActivity(false);
+      setVerifyActivity(false);
     }).catch(error => {
       showMessage({message: error.data.error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
-      setActivity(false);
+      setVerifyActivity(false);
     });
   }
 
   function sendNewCode() {
+    setSendNewCodeActivity(true);
+
     const auth = new Authentication();
     auth.sendNewCode(email).then((data) => {
+      setSendNewCodeActivity(false);
       showMessage({message: data.status, backgroundColor: Colors.primary, duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
     }).catch(error => {
+      setSendNewCodeActivity(false);
       showMessage({message: error.data.error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
     });
-    
   }
 
   const ValidCode = () => (
-    <View style={styles.EmailVerification}>
+    <View style={styles.emailVerification}>
       <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
       <View style={[styles.titles, {alignItems: 'center'}]}>
         <Text style={styles.title}>Email verified!</Text>
-        <Text style={styles.title2}>Your account has been successfully created</Text>
+        <Text style={styles.title2}>Your email has been successfully verified</Text>
       </View>
-      <BasicBtn title="Next" onPress={() => props.navigation.navigate('SignIn')}/>
+      <BasicBtn title="Next" onPress={() => props.navigation.navigate(destination, {email: email})}/>
     </View>
   )
 
   return (
     <SafeAreaView style={styles.rootContainer}>
       <TouchableOpacity style={styles.goBack} onPress={() => props.navigation.goBack()}>
-        <Icon type={'antdesign'} name={'arrowleft'} color={Colors.secondary}/>
-        <Text style={{color: Colors.secondary, fontSize: 20, marginLeft: '1%'}}>Back</Text>
+          <Icon type={'antdesign'} name={'arrowleft'} color={Colors.secondary}/>
+          <Text style={{color: Colors.secondary, fontSize: 20, marginLeft: '1%'}}>Back</Text>
       </TouchableOpacity>
       <View style={styles.bodyContainer}>
         {validCode
@@ -84,10 +89,8 @@ export default function EmailVerification(props) {
               </View>
               <View style={styles.inputsContainer}>
                 <BasicInput label={'Code'} type={'number-pad'} setter={setInputCode} />
-                <BasicBtn title="Verify my email" onPress={checkCode} activity={activity}/>
-                <Text style={styles.sendNewCode} onPress={sendNewCode}>
-                  Send a new code
-                </Text>
+                <BasicBtn title="Verify my email" onPress={checkCode} activity={verifyActivity}/>
+                <BasicBtn title="Send a new code" onPress={sendNewCode} activity={sendNewCodeActivity} color={"white"}/>
               </View>
               <Text style={{
                   fontSize: 13, 
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginBottom: 30
   },
-  EmailVerification: {
+  emailVerification: {
     display: 'flex', 
     flex: 1,
     height: '100%',
@@ -159,11 +162,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: '2%',
     marginBottom: '30%'
-  },
-  sendNewCode: {
-    marginTop: '5%',
-    textDecorationLine: "underline",
-    textDecorationStyle: "solid",
-    textDecorationColor: "#000"
   }
 });

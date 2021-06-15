@@ -36,6 +36,7 @@ class User:
 
         return jsonify({"error": "Signup failed."}), 400
 
+
     def signin(self):
         user = db.users.find_one({
             "email": request.args.get('email')
@@ -81,7 +82,7 @@ class User:
             {"email": request.args.get('email')},
             {"$set": {"email_verified": True}
         })
-        return jsonify({"msg": "Email successfully verified. You can now login!"}), 200
+        return jsonify({"status": "Email successfully verified!"}), 200
 
 
     def send_new_code(self):
@@ -89,7 +90,7 @@ class User:
             "email": request.args.get('email'),
         })
         if not user:
-            return jsonify({"error": "Email adress is invalid"}), 400
+            return jsonify({"error": "This email address is not linked to an account"}), 400
         email_verification_code = random_code(5)
         db.users.update_one(
             {"email": request.args.get('email')},
@@ -100,3 +101,21 @@ class User:
         })
         Email().sendConfirmEmail(request.args.get('email'), email_verification_code)
         return jsonify({"status": "New code sent!"}), 200
+
+
+    def reset_password(self):
+        user = db.users.find_one({
+            "email": request.args.get('email'),
+        })
+
+        if not user:
+            return jsonify({"error": "This email address is not linked to an account"}), 400
+        if pbkdf2_sha256.verify(request.args.get('newPassword'), user['password']):
+            return jsonify({"error": "Your new password must be different from your previous password"}), 400
+        db.users.update_one(
+            {"email": request.args.get('email')},
+            {"$set": {
+                "password": pbkdf2_sha256.hash(request.args.get('newPassword'))
+            }
+        })
+        return jsonify({"status": "Password successfully updated!"}), 200

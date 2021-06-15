@@ -43,7 +43,7 @@ export default function SignInScreen(props) {
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       if (error.status === 403) {
-        props.navigation.navigate('EmailVerification', {email: email});
+        props.navigation.navigate('EmailVerification', {email: email, destination: 'SignIn'});
       }
     });
   };
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: Colors.background
   },
   title: {
     fontSize: 40,

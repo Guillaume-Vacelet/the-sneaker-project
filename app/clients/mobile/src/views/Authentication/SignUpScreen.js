@@ -16,7 +16,7 @@ export default function SignUpScreen(props) {
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = React.useState('');
   const [activity, setActivity] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -24,14 +24,14 @@ export default function SignUpScreen(props) {
     setActivity(true);
     const auth = new Authentication();
 
-    if (!username || !email || !password || !confirmPassword) {
+    if (!username || !email || !password || !newPasswordConfirmation) {
       showMessage({message: "Some fields are missing.", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
       return;
     }
-    if (password !== confirmPassword) {
+    if (password !== newPasswordConfirmation) {
       showMessage({message: "Confirm password correctly.", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
@@ -53,7 +53,7 @@ export default function SignUpScreen(props) {
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
       setActivity(false);
-      props.navigation.navigate('EmailVerification', { email: email })
+      props.navigation.navigate('EmailVerification', { email: email, destination: 'SignIn'})
     }).catch((error) => {
       setActivity(false);
       showMessage({message: error.data.error, type: "danger", duration:5000,
@@ -72,7 +72,7 @@ export default function SignUpScreen(props) {
         <BasicInput label={'Username'} setter={setUsername}/>
         <BasicInput label={'Email'} setter={setEmail} type={"email-address"}/>
         <BasicInput label={'Password'} setter={setPassword} secured={true}/>
-        <BasicInput label={'Confirm password'} setter={setConfirmPassword} secured={true}/>
+        <BasicInput label={'Confirm password'} setter={setNewPasswordConfirmation} secured={true}/>
         <BasicBtn title="Sign-up" onPress={handleSignUp} activity={activity}/>
       </View>
       <BasicBtn title="Sign-in" onPress={() => props.navigation.navigate("SignIn")}/>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black'
+    backgroundColor: Colors.background
   },
   title: {
     fontSize: 35,
