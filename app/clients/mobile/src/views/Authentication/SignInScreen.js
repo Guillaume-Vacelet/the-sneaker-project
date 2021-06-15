@@ -12,6 +12,7 @@ import BasicInput from '../../components/BasicInput';
 import Authentication from '../../core/Authentication'
 import Colors from "../../../constants/Colors"
 
+
 export default function SignInScreen(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -25,7 +26,7 @@ export default function SignInScreen(props) {
       showMessage({
         message: "Some fields are missing.",
         type: "warning",
-        autoHide: true,
+        duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
@@ -37,19 +38,17 @@ export default function SignInScreen(props) {
       setActivity(false);
       dispatch(signInUser(data.username, data.email, "abc"))
       showMessage({
-        message: "Successfully logged in!",
-        type: "success",
-        backgroundColor: Colors.primary,
-        autoHide: true,
+        message: data.msg,
+        backgroundColor: Colors.primary, 
+        duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
     }).catch((error) => {
       setActivity(false);
-      console.log(error)
       showMessage({
-        message: "Login failed, please try again.",
+        message: error,
         type: "danger",
-        autoHide: true,
+        duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
     });
@@ -59,7 +58,7 @@ export default function SignInScreen(props) {
     <SafeAreaView style={styles.rootContainer}>
       <Text style={styles.title}>Welcome back!</Text>
       <View style={styles.inputsContainer}>
-        <BasicInput label={'Email'} setter={setEmail}/>
+        <BasicInput label={'Email'} setter={setEmail} type={"email-address"}/>
         <BasicInput label={'Password'} setter={setPassword} secured={true}/>
         <BasicBtn title="Sign-in" onPress={handleSignIn} activity={activity}/>
         <Text style={styles.forgotPassword} onPress={() => props.navigation.navigate('ForgotPassword')}>

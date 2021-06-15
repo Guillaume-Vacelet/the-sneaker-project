@@ -25,48 +25,40 @@ export default function SignUpScreen(props) {
     const auth = new Authentication();
 
     if (!username || !email || !password || !confirmPassword) {
-      showMessage({
-        message: "Some fields are missing.",
-        type: "warning",
-        autoHide: true,
+      showMessage({message: "Some fields are missing.", type: "warning", duration:3000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+      setActivity(false);
+      return;
+    }
+    if (password !== confirmPassword) {
+      showMessage({message: "Confirm password correctly.", type: "warning", duration:3000,
+        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
+      });
+      setActivity(false);
+      return;
+    }
+    if (password.length < 6) {
+      showMessage({message: "Password must be atleast 6 characters long.", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
       return;
     }
 
-    if (password !== confirmPassword) {
-      showMessage({
-        message: "Please confirm password correctly.",
-        type: "warning",
-        autoHide: true,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
-      setActivity(false);
-      return;
-    }
-    
-    auth.signup(username, email, password, () => {
+    auth.signup(username, email, password).then((data) => {
+      console.log(data);
       dispatch(signUpUser(username, email, "abc"));
-      setUsername('');
-      setEmail('');
-      setPassword('');
-      showMessage({
-        message: "Account successfully created.",
-        type: "success",
-        backgroundColor: Colors.primary,
-        autoHide: true,
+      showMessage({message: "Account successfully created.", type: "success", duration:5000,
+        backgroundColor: Colors.primary, 
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
       });
       setActivity(false);
-      props.navigation.navigate('SignIn')
-    }, (error) => {
-      setActivity(false);
+      props.navigation.navigate('EmailConfirmation', { email: email })
+    }).catch((error) => {
       console.log(error);
-      showMessage({
-        message: "An error occurred, please try again.",
-        type: "danger",
-        autoHide: true,
+      setActivity(false);
+      showMessage({message: error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
     });
@@ -77,7 +69,7 @@ export default function SignUpScreen(props) {
       <Text style={styles.title}>Create your account</Text>
       <View style={styles.inputsContainer}>
         <BasicInput label={'Username'} setter={setUsername}/>
-        <BasicInput label={'Email'} setter={setEmail}/>
+        <BasicInput label={'Email'} setter={setEmail} type={"email-address"}/>
         <BasicInput label={'Password'} setter={setPassword} secured={true}/>
         <BasicInput label={'Confirm password'} setter={setConfirmPassword} secured={true}/>
         <BasicBtn title="Sign-up" onPress={handleSignUp} activity={activity}/>

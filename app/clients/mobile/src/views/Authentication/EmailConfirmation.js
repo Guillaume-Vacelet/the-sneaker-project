@@ -10,19 +10,16 @@ import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
 import Authentication from '../../core/Authentication'
 
-export default function ForgotPassword(props) {
-  const [email, setEmail] = React.useState('');
+export default function EmailConfirmation(props) {
+  const [inputCode, setInputCode] = React.useState('');
+  const [validCode, setValidCode] = React.useState(false);
   const [activity, setActivity] = React.useState(false);
-  const [emailSent, setEmailSent] = React.useState(false);
+  const { email } = props.route.params;
 
-  function handleResetPassword() {
+  function checkCode() {
     setActivity(true);
-
-    if (!email) {
-      showMessage({
-        message: "Email adress missing",
-        type: "warning",
-        autoHide: true,
+    if (!inputCode) {
+      showMessage({message: "Enter a code", type: "warning", duration:3000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
       setActivity(false);
@@ -30,51 +27,32 @@ export default function ForgotPassword(props) {
     }
 
     const auth = new Authentication();
-    auth.forgotPassword(email).then((data) => {
+    auth.verifyEmail(email, inputCode).then((data) => {
+      console.log(data);
+      setValidCode(true);
       setActivity(false);
-      setEmailSent(true);
-    }).catch((error) => {
-      setActivity(false);
-      console.log(error)
-      showMessage({
-        message: "An error occurred, please try again.",
-        type: "danger",
-        autoHide: true,
+    }).catch(error => {
+      showMessage({message: error, type: "danger", duration:5000,
         titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
       });
+      setActivity(false);
     });
   }
 
-  const EmailSent = () => (
-    <View style={styles.emailSent}>
-      <View style={{
-          flex: 10, 
-          width: '100%',
-          alignItems: 'center', 
-          paddingTop: '30%',
-        }}
-      >
-        <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
-        <View style={[styles.titles, {alignItems: 'center'}]}>
-          <Text style={styles.title}>Email sent</Text>
-          <Text style={styles.title2}>Check your email and open the link</Text>
-          <Text style={styles.title2}>we sent to continue.</Text>
-        </View>
-        <BasicBtn title="Go back" onPress={() => props.navigation.goBack()}/>
+  function sendNewCode() {
+
+  }
+
+  const ValidCode = () => (
+    <View style={styles.emailConfirmation}>
+      <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
+      <View style={[styles.titles, {alignItems: 'center'}]}>
+        <Text style={styles.title}>Email verified!</Text>
+        <Text style={styles.title2}>Your account has been successfully created</Text>
       </View>
-      <Text style={{
-          flex: 1, 
-          fontSize: 13, 
-          color: Colors.secondary, 
-          width: '100%', 
-          textAlign: 'center',
-          alignSelf: 'flex-end'
-        }}
-      >
-        Did not receive the email? Check your spam filter.
-      </Text>
+      <BasicBtn title="Next" onPress={() => props.navigation.navigate('SignIn')}/>
     </View>
-  );
+  )
 
   return (
     <SafeAreaView style={styles.rootContainer}>
@@ -83,22 +61,33 @@ export default function ForgotPassword(props) {
         <Text style={{color: Colors.secondary, fontSize: 20, marginLeft: '1%'}}>Back</Text>
       </TouchableOpacity>
       <View style={styles.bodyContainer}>
-        {emailSent
-          ? <EmailSent />
+        {validCode
+          ? <ValidCode />
           : <View style={{display: 'flex', flex: 1, justifyContent: 'flex-start', padding: '5%'}}>
               <View style={[styles.titles, {justifyContent: 'flex-start'}]}>
-                <Text style={styles.title}>Reset password</Text>
+                <Text style={styles.title}>Check your email</Text>
                 <Text style={styles.title2}>
-                  Enter your email and we'll send you a link to reset your password.
+                  Enter the code we sent you at your email adress to verify your email adress
                 </Text>
               </View>
               <View style={styles.inputsContainer}>
-                <BasicInput label={'Email address'} setter={setEmail} type={"email-address"}/>
-                <BasicBtn title="Reset password" onPress={handleResetPassword}activity={activity}/>
+                <BasicInput label={'Code'} type={'number-pad'} setter={setInputCode} />
+                <BasicBtn title="Verify my email" onPress={checkCode} activity={activity}/>
+                <Text style={styles.sendNewCode} onPress={sendNewCode}>
+                  Send a new code
+                </Text>
               </View>
+              <Text style={{
+                  fontSize: 13, 
+                  color: Colors.secondary, 
+                  width: '100%', 
+                  textAlign: 'center',
+                  alignSelf: 'flex-end'
+                }}
+              >Did not receive the email? Check your spam filter</Text>
             </View>
         }
-      </View>
+        </View>
     </SafeAreaView>
   );
 }
@@ -149,17 +138,19 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginBottom: 30
   },
-  forgotPassword: {
+  emailConfirmation: {
+    display: 'flex', 
+    flex: 1,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '2%',
+    marginBottom: '30%'
+  },
+  sendNewCode: {
     marginTop: '5%',
     textDecorationLine: "underline",
     textDecorationStyle: "solid",
     textDecorationColor: "#000"
-  },
-  emailSent: {
-    display: 'flex', 
-    flex: 1,
-    height: '100%',
-    alignItems: 'flex-start',
-    paddingHorizontal: '7%',
   }
 });

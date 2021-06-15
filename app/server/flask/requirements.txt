@@ -3,3 +3,4 @@ gunicorn
 pymongo
 passlib
 flask-cors
+Flask-Mail

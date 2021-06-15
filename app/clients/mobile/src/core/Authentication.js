@@ -1,34 +1,53 @@
 import axios from 'axios';
 
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://c0d51aa6f56c.ngrok.io/';
+let url = 'http://ff7e8ea54923.ngrok.io/';
 
 export default class Authentication {
-  signup(username, email, password, onSuccess, onFail) {
+  signup(username, email, password) {
     console.log(url + 'user/signup')
-    axios.post(
-      url + 'user/signup',
-      null,
-      { params: {
-          username: username,
-          password: password,
-          email: email
-        }
-      },
+    return new Promise((resolve, reject) => {
+      axios.post(
+        url + 'user/signup',
+        null,
+        { params: {
+            username: username,
+            password: password,
+            email: email
+          }
+        },
       ).then(res => {
-        console.log(res);
         if (res.status === 200) {
-          onSuccess(res.data);
+          resolve(res.data);
         }
-      }).catch(err => {
-        console.log(err);
-        onFail(err);
-    }); 
+      }).catch(error => {
+        reject(error.response.data.error);
+      }); 
+    });
+  }
+
+  verifyEmail(email, code) {
+    console.log(url + 'user/email/verify/' + code)
+    return new Promise((resolve, reject) => {
+      axios.post(
+        url +  'user/email/verify/' + code,
+        null,
+        { params: {email: email}}
+      ).then(async res => {
+        console.log(res);
+        if (res.status == 200) {
+          resolve(res.data);
+        }
+        reject();
+      }).catch(error => {
+        reject(error.response.data.error);
+      });
+    });
   }
 
   signin(email, password) {
+    console.log(url + 'user/signin')
     return new Promise((resolve, reject) => {
-      console.log(url + 'user/signin')
       axios.post(
         url +  'user/signin',
         null,
@@ -43,9 +62,26 @@ export default class Authentication {
           }
         }
         reject();
-      }).catch(err => {
-        console.log(err);
-        reject()
+      }).catch(error => {
+        reject(error.response.data.error);
+      });
+    });
+  }
+
+  forgotPassword(email) {
+    console.log(url + 'user/forgot-password')
+    return new Promise((resolve, reject) => {
+      axios.post(
+        url + 'user/forgot-password',
+        null,
+        { params: {email: email} }
+      ).then(async res => {
+        if (res.status == 200) {
+          resolve(res.data)
+        }
+        reject();
+      }).catch(error => {
+        reject(error.response.data.error);
       });
     });
   }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="eu">
+	<head>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeCheck email confirmation</title>
+  </head>
+  <body style="width: 100%; background-color: #161a1d; font-family: Helvetica, sans-serif;padding: 10%">
+    <div style="display:flex; flex-direction: column; justify-content:center; align-items: center;">
+      <h1 style="color: #1FFFAA">Safecheck email confirmation</h1>
+      <h3 style="color: lightgray">Enter the following code in the SafeCheck app to verify your email adress:</h2>
+    </div>
+    <div style="display:flex; flex-direction: column; justify-content:center; align-items: center;">
+        <div style="
+            display: flex; 
+            width: 250px;
+            height: 50px;
+            background-color: #1FFFAA;
+            border-radius: 8px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            "
+        >
+            <p style="font-size: 30px;text-align: center;">{{ code }}</p>
+        </div>
+    </div>
+    <p style="color: lightgray;text-align: center;">This code will be valid for 5 minutes.</p>
+  </body>
+</html>

@@ -3,16 +3,6 @@ from flask_cors import cross_origin
 from app.app import app, db
 from .models import User
 
-@app.route('/user/signup', methods=['POST'])
-@cross_origin()
-def signup():
-  return User().signup()
-
-@app.route('/user/signin', methods=['POST'])
-@cross_origin()
-def signin():
-  return User().signin()
-
 @app.route('/users', methods=['GET'])
 def get_users():
   _users = db.users.find()
@@ -26,3 +16,17 @@ def get_users():
     'password': user['password']
   } for user in _users]
   return jsonify({"users": users})
+
+@app.route('/user/signup', methods=['POST'])
+@cross_origin()
+def signup():
+  return User().signup()
+
+@app.route('/user/signin', methods=['POST'])
+@cross_origin()
+def signin():
+  return User().signin()
+
+@app.route('/user/email/verify/<code>', methods=['POST'])
+def email_confirm(code):
+  return User().verify_email(code)
