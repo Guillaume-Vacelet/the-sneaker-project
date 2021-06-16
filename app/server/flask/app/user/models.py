@@ -5,6 +5,7 @@ from app.emails import Email
 from app.utils import random_code
 import time
 import uuid
+import datetime
 
 
 class User:
@@ -14,6 +15,7 @@ class User:
         email_verification_code = random_code(5)
         new_user = {
             "_id": uuid.uuid4().hex,
+            'creation_date': datetime.datetime.utcnow(),
             "username": request.args.get('username'),
             "email": request.args.get('email'),
             # Encrypt the password
@@ -30,8 +32,15 @@ class User:
 
         # Enter new user in DB
         if db.users.insert_one(new_user):
+            # Set index to automatically delete user if email_verified==False for 24h
+            db.users.create_index(
+                "creation_date", 
+                expireAfterSeconds=86400, 
+                partialFilterExpression={"email_verified": False}
+            )
             # Send email confirmation code
             Email().sendConfirmEmail(request.args.get('email'), email_verification_code)
+            db.users.createIndex
             return jsonify({"status": "Account successfully created!"}), 200
 
         return jsonify({"error": "Signup failed."}), 400

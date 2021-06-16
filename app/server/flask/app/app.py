@@ -7,8 +7,8 @@ app.secret_key = b'\x9e\xc8\x12\xb9\x1cW\x98\xe4\x17@\xf5\x9e\x86\x0c\x1a\x92'
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'guillaume.vacelet@gmail.com'
-app.config['MAIL_PASSWORD'] = 'IBought8PairsOfShoes'
+app.config['MAIL_USERNAME'] = 'safecheckapp@gmail.com'
+app.config['MAIL_PASSWORD'] = 'BC9qqF7z!fU1'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
