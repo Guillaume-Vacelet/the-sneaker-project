@@ -2,13 +2,13 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Icon } from "react-native-elements";
-import {showMessage} from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 //Components
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
 import Authentication from '../../core/Authentication'
+import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function EmailVerification(props) {
   const [inputCode, setInputCode] = React.useState('');
@@ -21,25 +21,19 @@ export default function EmailVerification(props) {
   function checkCode() {
     setVerifyActivity(true);
     if (!inputCode) {
-      showMessage({message: "Enter a code", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setVerifyActivity(false);
+      basicFlashMessage("warning", "Enter a code", 3000);
       return;
     }
 
     const auth = new Authentication();
     auth.verifyEmail(email, inputCode).then((data) => {
-      showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
-      });
+      setVerifyActivity(false);
+      basicFlashMessage("success", data.status, 5000);
       setValidCode(true);
-      setVerifyActivity(false);
     }).catch(error => {
-      showMessage({message: error.data.error, type: "danger", duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setVerifyActivity(false);
+      basicFlashMessage("danger", error.data.error, 5000);
     });
   }
 
@@ -49,14 +43,10 @@ export default function EmailVerification(props) {
     const auth = new Authentication();
     auth.sendNewCode(email).then((data) => {
       setSendNewCodeActivity(false);
-      showMessage({message: data.status, backgroundColor: Colors.primary, duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
+      basicFlashMessage("success", data.status, 3000);
     }).catch(error => {
       setSendNewCodeActivity(false);
-      showMessage({message: error.data.error, type: "danger", duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
+      basicFlashMessage("danger", error.data.error, 5000);
     });
   }
 

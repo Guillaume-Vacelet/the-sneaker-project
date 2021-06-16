@@ -1,7 +1,6 @@
 //React
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
-import { showMessage } from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 //Redux
 import { useDispatch } from "react-redux";
@@ -11,6 +10,7 @@ import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Authentication from '../../core/Authentication'
 import Colors from "../../../constants/Colors"
+import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function SignUpScreen(props) {
   const [username, setUsername] = React.useState('');
@@ -25,40 +25,29 @@ export default function SignUpScreen(props) {
     const auth = new Authentication();
 
     if (!username || !email || !password || !newPasswordConfirmation) {
-      showMessage({message: "Some fields are missing.", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Some fields are missing", 3000);
       return;
     }
     if (password !== newPasswordConfirmation) {
-      showMessage({message: "Confirm password correctly.", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Confirm password correctly", 3000);
       return;
     }
     if (password.length < 6) {
-      showMessage({message: "Password must be atleast 6 characters long.", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Password must be atleast 6 characters long", 3000);
       return;
     }
 
     auth.signup(username, email, password).then((data) => {
       dispatch(signUpUser(username, email, "abc"));
-      showMessage({message: data.status, type: "success", duration:5000,
-        backgroundColor: Colors.primary, 
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
-      });
       setActivity(false);
+      basicFlashMessage("success", data.status, 5000);
       props.navigation.navigate('EmailVerification', { email: email, destination: 'SignIn'})
     }).catch((error) => {
       setActivity(false);
-      showMessage({message: error.data.error, type: "danger", duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
+      basicFlashMessage("danger", error.data.error, 5000);
       if (error.status === 403) {
         props.navigation.navigate('SignIn');
       }

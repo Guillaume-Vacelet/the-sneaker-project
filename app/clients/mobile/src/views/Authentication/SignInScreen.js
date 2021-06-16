@@ -1,7 +1,6 @@
 //React
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import {showMessage} from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 //Redux
 import { useDispatch } from "react-redux";
@@ -11,6 +10,7 @@ import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Authentication from '../../core/Authentication'
 import Colors from "../../../constants/Colors"
+import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 
 export default function SignInScreen(props) {
@@ -23,10 +23,8 @@ export default function SignInScreen(props) {
     setActivity(true);
 
     if (!email || !password) {
-      showMessage({message: "Some fields are missing.", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Some fields are missing", 3000);
       return;
     }
 
@@ -34,14 +32,10 @@ export default function SignInScreen(props) {
     auth.signin(email, password).then((data) => {
       setActivity(false);
       dispatch(signInUser(data.username, data.email, "abc"))
-      showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
-      });
+      basicFlashMessage("success", data.status, 5000);
     }).catch((error) => {
       setActivity(false);
-      showMessage({message: error.data.error, type: "danger", duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
+      basicFlashMessage("danger", error.data.error, 5000);
       if (error.status === 403) {
         props.navigation.navigate('EmailVerification', {email: email, destination: 'SignIn'});
       }

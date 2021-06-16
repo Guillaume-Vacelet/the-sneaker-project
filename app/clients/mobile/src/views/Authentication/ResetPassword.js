@@ -2,13 +2,13 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Icon } from "react-native-elements";
-import {showMessage} from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 //Components
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
 import Authentication from '../../core/Authentication'
+import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function ResetPassword(props) {
   const [activity, setActivity] = React.useState(false);
@@ -21,73 +21,31 @@ export default function ResetPassword(props) {
     setActivity(true);
 
     if (!newPassword || !newPasswordConfirmation) {
-      showMessage({message: "Some fields are missing", type: "warning", duration: 3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Some fields are missing", 3000);
       return;
     }
     if (newPassword !== newPasswordConfirmation) {
-      showMessage({message: "Confirm password correctly.", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Confirm password correctly", 3000);
       return;
     }
     if (newPassword.length < 6) {
-      showMessage({message: "Password must be atleast 6 characters long.", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Password must be atleast 6 characters long", 3000);
       return;
     }
 
     const auth = new Authentication();
     auth.resetPassword(email, newPassword).then((data) => {
-      console.log(data);
       setActivity(false);
-      showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
-      });
+      basicFlashMessage("success", data.status, 5000);
       props.navigation.navigate('SignIn')
     }).catch((error) => {
       setActivity(false);
-      showMessage({message: error.data.error, type:"danger", duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
+      basicFlashMessage("danger", error.data.error, 5000);
     });
   }
-
-  const EmailSent = () => (
-    <View style={styles.emailSent}>
-      <View style={{
-          flex: 10, 
-          width: '100%',
-          alignItems: 'center', 
-          paddingTop: '30%',
-        }}
-      >
-        <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
-        <View style={[styles.titles, {alignItems: 'center'}]}>
-          <Text style={styles.title}>Email sent</Text>
-          <Text style={styles.title2}>Check your email and open the link</Text>
-          <Text style={styles.title2}>we sent to continue.</Text>
-        </View>
-        <BasicBtn title="Go back" onPress={() => props.navigation.goBack()}/>
-      </View>
-      <Text style={{
-          flex: 1, 
-          fontSize: 13, 
-          color: Colors.secondary, 
-          width: '100%', 
-          textAlign: 'center',
-          alignSelf: 'flex-end'
-        }}
-      >
-        Did not receive the email? Check your spam filter.
-      </Text>
-    </View>
-  );
 
   return (
     <SafeAreaView style={styles.rootContainer}>

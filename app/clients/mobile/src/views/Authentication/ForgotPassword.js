@@ -2,105 +2,37 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Icon } from "react-native-elements";
-import {showMessage} from "react-native-flash-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 //Components
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
 import Authentication from '../../core/Authentication'
+import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function ForgotPassword(props) {
   const [email, setEmail] = React.useState('');
   const [activity, setActivity] = React.useState(false);
-  const [emailSent, setEmailSent] = React.useState(false);
-
-  function handleResetPassword() {
-    setActivity(true);
-
-    if (!email) {
-      showMessage({
-        message: "Email adress missing",
-        type: "warning",
-        autoHide: true,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
-      setActivity(false);
-      return;
-    }
-
-    const auth = new Authentication();
-    auth.resetPassword(email).then((data) => {
-      setActivity(false);
-      setEmailSent(true);
-    }).catch((error) => {
-      setActivity(false);
-      console.log(error)
-      showMessage({
-        message: "An error occurred, please try again.",
-        type: "danger",
-        autoHide: true,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
-    });
-  }
 
   function handleSendCode() {
     setActivity(true);
 
     if (!email) {
-      showMessage({message: "Enter an email address", type: "warning", duration:3000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
       setActivity(false);
+      basicFlashMessage("warning", "Enter an email address", 3000);
       return;
     }
 
     const auth = new Authentication();
     auth.sendNewCode(email).then(data => {
       setActivity(false);
-      showMessage({message: data.status, backgroundColor: Colors.primary, duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
-      });
+      basicFlashMessage("success", data.status, 5000);
       props.navigation.navigate('EmailVerification', {email: email, destination: 'ResetPassword'})
     }).catch(error => {
       setActivity(false);
-      showMessage({message: error.data.error, type: "danger", duration:5000,
-        titleStyle: {fontSize: 18, alignSelf: 'center', color: 'white'},
-      });
+      basicFlashMessage("danger", error.data.error, 5000);
     });
   }
-
-  const EmailSent = () => (
-    <View style={styles.emailSent}>
-      <View style={{
-          flex: 10, 
-          width: '100%',
-          alignItems: 'center', 
-          paddingTop: '30%',
-        }}
-      >
-        <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
-        <View style={[styles.titles, {alignItems: 'center'}]}>
-          <Text style={styles.title}>Email sent</Text>
-          <Text style={styles.title2}>Check your email and open the link</Text>
-          <Text style={styles.title2}>we sent to continue.</Text>
-        </View>
-        <BasicBtn title="Go back" onPress={() => props.navigation.goBack()}/>
-      </View>
-      <Text style={{
-          flex: 1, 
-          fontSize: 13, 
-          color: Colors.secondary, 
-          width: '100%', 
-          textAlign: 'center',
-          alignSelf: 'flex-end'
-        }}
-      >
-        Did not receive the email? Check your spam filter.
-      </Text>
-    </View>
-  );
 
   return (
     <SafeAreaView style={styles.rootContainer}>

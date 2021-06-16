@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, View, Text } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {showMessage} from "react-native-flash-message";
 //Redux
 import { useDispatch } from "react-redux";
 import { signOutUser } from "../../redux/actions/authActions";
@@ -13,6 +12,7 @@ import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore'
 import Colors from '../../../constants/Colors';
 import GoBackArrow from '../../components/GoBackArrow';
 import BasicBtn from '../../components/BasicBtn';
+import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 
 export default function SettingsScreen(props) {
@@ -21,9 +21,7 @@ export default function SettingsScreen(props) {
 
   const dispatch = useDispatch();
   function handleSignOut() {
-    showMessage({message: "Successfully logged out", backgroundColor: Colors.primary, duration: 3000,
-      titleStyle: {fontSize: 18, alignSelf: 'center', color: 'black'},
-    });
+    basicFlashMessage("success", "Successfully logged out", 3000);
     dispatch(signOutUser());
     // AsyncStorage.removeItem();
     // navigation.navigate('AuthStackScreen', { screen: 'SignIn' });
