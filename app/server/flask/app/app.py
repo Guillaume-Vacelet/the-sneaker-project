@@ -39,6 +39,12 @@ client = MongoClient("mongodb://{}:{}@{}:{}/{}?authSource=admin".format(
   MONGO_DB
 ))
 db = client['safecheck-db']
+# Set index to automatically delete user if email_verified==False for 24h
+db.users.create_index(
+    "creation_date", 
+    expireAfterSeconds=86400, 
+    partialFilterExpression={"email_verified": False}
+)
 
 # Routes
 from .user import routes
