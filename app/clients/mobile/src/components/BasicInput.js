@@ -11,6 +11,7 @@ export default function BasicInput(props) {
         keyboardType={props.type ? props.type : 'default'}
         secureTextEntry={props.secured}
         onChangeText={(value) => props.setter(value)}
+        maxLength={props.type == "email-address" ? 40 : 12}
         style={{
           width: '100%',
           height: 43,
