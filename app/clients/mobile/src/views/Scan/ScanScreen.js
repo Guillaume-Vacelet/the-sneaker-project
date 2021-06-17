@@ -91,7 +91,7 @@ export default function ScanScreen(props) {
 const styles = StyleSheet.create({
   rootContainer: {
     height: '100%',
-    backgroundColor: '#161a1d'
+    backgroundColor: Colors.background
   },
   headerContainer: {
     width: '100%',
