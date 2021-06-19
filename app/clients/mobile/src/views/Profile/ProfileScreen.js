@@ -34,18 +34,13 @@ export default function ProfileScreen(props) {
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-        
       <View style={styles.headerContainer}>
         <Icon onPress={() => props.navigation.navigate('EditProfile')}
           type={'material-community'}
           name={'pencil'}
           size={26}
           color={Colors.secondary}
-          containerStyle={{
-            position: 'absolute',
-            top: '5%', 
-            left: '5%', 
-          }}
+          containerStyle={{position: 'absolute', top: '5%', left: '5%'}}
         />
         <GoBackArrow left={false} goBack={props.navigation.goBack} dark={false}/>
         <View style={{width: 130, height: 130, margin: '5%'}}>

@@ -171,6 +171,8 @@ class User:
         if new_username:
             updated['username'] = new_username
         if new_email:
+            if db.users.find_one({"email": new_email}):
+                return jsonify({"error": "Email adress is already in use"}), 400
             updated['email'] = new_email
         db.users.update_one(
             {"_id" : request.args.get('userid')},

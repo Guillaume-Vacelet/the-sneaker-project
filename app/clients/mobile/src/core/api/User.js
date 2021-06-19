@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://8e2cdb0f76af.ngrok.io/';
+let url = 'http://893510eaae65.ngrok.io/';
 
 export default class User {
   signup(username, email, password) {

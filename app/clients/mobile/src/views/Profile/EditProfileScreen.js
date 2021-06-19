@@ -1,7 +1,7 @@
 //React
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Image, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet,TouchableOpacity, LogBox } from 'react-native';
 import { Icon } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 //Redux
@@ -26,6 +26,12 @@ export default function EditProfileScreen(props) {
   const [emailEdit, setEmailEdit] = React.useState(user.email);
   const [passwordEdit, setPasswordEdit] = React.useState('');
   const [activity, setActivity] = React.useState(false);
+
+  // See: https://reactnavigation.org/docs/troubleshooting/#i-get-the-warning-non-serializable-values-were-found-in-the-navigation-state
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+
 
   React.useEffect(() => {
     (async () => {
@@ -53,6 +59,18 @@ export default function EditProfileScreen(props) {
     }
   };
 
+  function updateProfile() {
+    const userApi = new User();
+    userApi.update(user.userid, usernameEdit, emailEdit).then(data => {
+      setActivity(false);
+      dispatch(userUpdate(data.user.username, data.user.email));
+      basicFlashMessage("success", data.status, 3000);
+    }).catch(error => {
+      setActivity(false);
+      basicFlashMessage("danger", error.data.error, 5000);
+    });
+  }
+
   function handleUpdateProfile() {
     setActivity(true);
 
@@ -64,42 +82,35 @@ export default function EditProfileScreen(props) {
     if (!emailEdit) {
       basicFlashMessage("warning", "Email is empty", 3000);
       setActivity(false);
-    return;
+      return;
     }
-    let newUsername = '';
-    let newEmail = emailEdit;
-    if (usernameEdit !== user.username) {
-      newUsername = usernameEdit;
+    if (usernameEdit === user.username && emailEdit === user.email) {
+      basicFlashMessage("warning", "There's nothing to update!", 3000);
+      setActivity(false);
+      return;
     }
-
     const userApi = new User();
-    // if (emailEdit !== user.email) {
-    //   newEmail = emailEdit;
-    //   userApi.sendCode(newEmail).then(data => {
-    //     setActivity(false);
-    //     basicFlashMessage("success", "A verification code has been sent to your new email adress", 5000);
-    //     props.navigation.navigate(
-    //       'EmailVerification', 
-    //       { userid: data.userid, email: newEmail, destination: 'Profile'}
-    //     )
-    //   }).catch(error => {
-    //     setActivity(false);
-    //     basicFlashMessage("danger", error.data.error, 5000);
-    //   });
-    // } else {
-      userApi.update(user.userid, newUsername, '').then(data => {
-        console.log(data);
+    if (emailEdit !== user.email) {
+      userApi.sendCode(user.userid, emailEdit).then(data => {
         setActivity(false);
-        dispatch(userUpdate(newUsername, newEmail));
-        basicFlashMessage("success", data.status, 3000);
-        props.navigation.goBack();
+        basicFlashMessage("success", "A verification code has been sent to your new email adress", 5000);
+        props.navigation.navigate(
+          'EmailVerification', 
+          {
+            userid: data.userid, 
+            email: emailEdit, 
+            destination: 'Profile',
+            callback: updateProfile
+          },
+        )
       }).catch(error => {
-        console.log(error);
-        setActivity(false);
-        basicFlashMessage("danger", error.data.error, 5000);
+          console.log(error);
+          setActivity(false);
+          basicFlashMessage("danger", error.data.error, 5000);
       });
-    // }
-
+    } else {
+      updateProfile();
+    }
   }
 
   return (
@@ -132,12 +143,8 @@ export default function EditProfileScreen(props) {
             />
           </View>
         </TouchableOpacity>
-        <BasicInput label={"Username"} value={usernameEdit} setter={setUsernameEdit} 
-        />
-        <BasicInput label={"Email"} 
-          value={emailEdit} setter={setEmailEdit} 
-          type={'email-address'}
-        />
+        <BasicInput label={"Username"} value={usernameEdit} setter={setUsernameEdit} />
+        <BasicInput label={"Email"} value={emailEdit} setter={setEmailEdit} type={'email-address'} />
         <BasicInput label={"Password"} value={passwordEdit} setter={setPasswordEdit} />
       </View>
     </SafeAreaView>

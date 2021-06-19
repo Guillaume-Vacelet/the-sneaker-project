@@ -16,7 +16,7 @@ export default function EmailVerification(props) {
   const [verifyActivity, setVerifyActivity] = React.useState(false);
   const [sendNewCodeActivity, setSendNewCodeActivity] = React.useState(false);
 
-  const { userid, email, destination } = props.route.params;
+  const { userid, email, destination, callback } = props.route.params;
 
   function checkCode() {
     setVerifyActivity(true);
@@ -50,6 +50,13 @@ export default function EmailVerification(props) {
     });
   }
 
+  function handleEmailVerificationCallback() {
+    if (callback) {
+      callback();
+    }
+    props.navigation.navigate(destination, {userid: userid});
+  }
+
   const ValidCode = () => (
     <View style={styles.emailVerification}>
       <Icon name={"checkcircleo"} type={"antdesign"} color={Colors.primary} size={50}/>
@@ -58,7 +65,7 @@ export default function EmailVerification(props) {
         <Text style={styles.title2}>Your email has been successfully verified</Text>
       </View>
       <BasicBtn title="Next" 
-        onPress={() => props.navigation.navigate(destination, {userid: userid})}
+        onPress={() => handleEmailVerificationCallback()}
       />
     </View>
   )
