@@ -12,7 +12,7 @@ export default function UserProductCard(props) {
       flexDirection: 'row',
       justifyContent: 'center', 
       alignItems: 'center',
-      borderRadius: '25%',
+      borderRadius: 15,
       marginVertical: '3%',
       paddingLeft: '5%',
       paddingRight: '5%',
