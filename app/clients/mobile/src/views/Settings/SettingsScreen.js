@@ -48,12 +48,10 @@ export default function SettingsScreen(props) {
     {
       title: 'Help',
       icon: 'question-circle-o',
-      goTo: 'Help'
     },
     {
       title: 'About us',
       icon: 'info-circle',
-      goTo: 'AboutUs'
     },
   ];
 
