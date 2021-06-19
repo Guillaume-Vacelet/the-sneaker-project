@@ -39,7 +39,7 @@ function Navigator({loggedIn}) {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.auth.loggedIn,
+    loggedIn: state.user.loggedIn,
   };
 };
 export default connect(mapStateToProps)(Navigator)

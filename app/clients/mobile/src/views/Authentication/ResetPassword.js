@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
-import Authentication from '../../core/Authentication'
+import User from '../../core/api/User'
 import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function ResetPassword(props) {
@@ -15,7 +15,7 @@ export default function ResetPassword(props) {
   const [newPassword, setNewPassword] = React.useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = React.useState('');
 
-  const { email } = props.route.params;
+  const { userid } = props.route.params;
 
   function handleResetPassword() {
     setActivity(true);
@@ -36,8 +36,8 @@ export default function ResetPassword(props) {
       return;
     }
 
-    const auth = new Authentication();
-    auth.resetPassword(email, newPassword).then((data) => {
+    const user = new User();
+    user.resetPassword(userid, newPassword).then((data) => {
       setActivity(false);
       basicFlashMessage("success", data.status, 5000);
       props.navigation.navigate('SignIn')

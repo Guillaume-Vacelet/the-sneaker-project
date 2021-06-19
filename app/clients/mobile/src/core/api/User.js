@@ -1,11 +1,14 @@
 import axios from 'axios';
 
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://dcfbc2dfc19f.ngrok.io/';
+let url = 'http://8e2cdb0f76af.ngrok.io/';
 
-export default class Authentication {
+export default class User {
   signup(username, email, password) {
-    console.log(url + 'user/signup?username='+username+'email='+email+'&password='+password)
+    console.log(url + 'user/signup?'
+    +'username='+username
+    +'&email='+email
+    +'&password='+password)
     return new Promise((resolve, reject) => {
       axios.post(
         url + 'user/signup',
@@ -26,13 +29,15 @@ export default class Authentication {
     });
   }
 
-  verifyEmail(email, code) {
-    console.log(url + 'user/email/verify/' + code+'?email='+email)
+  verifyEmail(userid, code) {
+    console.log(url + 'user/email/verify/'+code+'?userid='+userid)
     return new Promise((resolve, reject) => {
       axios.post(
         url +  'user/email/verify/' + code,
         null,
-        { params: {email: email}}
+        { params: {
+          userid: userid
+        }}
       ).then(async res => {
         if (res.status == 200) {
           resolve(res.data);
@@ -44,13 +49,15 @@ export default class Authentication {
     });
   }
 
-  sendNewCode(email) {
-    console.log(url + 'user/email/verify/send-new-code?email='+email)
+  sendCode(userid, email) {
+    console.log(url + 'user/email/verify/send-code?'
+    +'userid='+userid
+    +'&email='+email)
     return new Promise((resolve, reject) => {
       axios.post(
-        url +  'user/email/verify/send-new-code',
+        url +  'user/email/verify/send-code',
         null,
-        { params: {email: email}}
+        { params: {userid: userid, email: email}}
       ).then(async res => {
         if (res.status == 200) {
           resolve(res.data);
@@ -63,12 +70,17 @@ export default class Authentication {
   }
 
   signin(email, password) {
-    console.log(url + 'user/signin?email='+email+'&password='+password)
+    console.log(url + 'user/signin?'
+    +'email='+email
+    +'&password='+password)
     return new Promise((resolve, reject) => {
       axios.post(
         url +  'user/signin',
         null,
-        { params: {email: email, password: password }}
+        { params: {
+          email: email, 
+          password: password 
+        }}
       ).then(async res => {
         if (res.status == 200) {
           try {
@@ -85,13 +97,15 @@ export default class Authentication {
     });
   }
 
-  resetPassword(email, newPassword) {
-    console.log(url + 'user/reset-password?email='+email+'&newPassword='+newPassword)
+  resetPassword(userid, newPassword) {
+    console.log(url + 'user/reset-password'
+    +'?userid='+userid
+    +'&newPassword='+newPassword)
     return new Promise((resolve, reject) => {
       axios.post(
         url + 'user/reset-password',
         null,
-        { params: {email: email, newPassword: newPassword} }
+        { params: {userid: userid, newPassword: newPassword} }
       ).then(async res => {
         if (res.status == 200) {
           resolve(res.data)
@@ -100,6 +114,32 @@ export default class Authentication {
       }).catch(error => {
         reject(error.response);
       });
+    });
+  }
+
+  update(userid, newUsername, newEmail) {
+    console.log(url + 'user/update?'
+      +'userid='+userid
+      +'&newusername='+newUsername
+      +'&newemail='+newEmail
+    )
+    return new Promise((resolve, reject) => {
+      axios.post(
+        url + 'user/update',
+        null,
+        { params: {
+            userid: userid,
+            newusername: newUsername,
+            newemail: newEmail
+          }
+        },
+      ).then(res => {
+        if (res.status === 200) {
+          resolve(res.data);
+        }
+      }).catch(error => {
+        reject(error.response);
+      }); 
     });
   }
 }

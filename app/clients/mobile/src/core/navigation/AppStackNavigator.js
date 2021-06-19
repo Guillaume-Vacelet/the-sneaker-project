@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../../views/Home/HomeScreen";
 import SettingsStackNavigator from './SettingsStackNavigator';
-import ProfileScreen from "../../views/Profile/ProfileScreen";
+import ProfileStackNavigator from './ProfileStackNavigator';
 import ScanScreen from "../../views/Scan/ScanScreen";
 
 const AppStack = createStackNavigator();
@@ -22,7 +22,7 @@ const AppStackNavigator = () => (
         headerShown: false,
       }} 
     />
-    <AppStack.Screen name="Profile" component={ProfileScreen} 
+    <AppStack.Screen name="Profile" component={ProfileStackNavigator} 
       options={{
         headerShown: false,
         gestureDirection: 'horizontal-inverted',

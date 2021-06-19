@@ -1,53 +1,86 @@
+//React
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-import RoundUserAvatarWithScore from '../../components/RoundUserAvatarWithScore';
-import SneakerCard_sizeable from '../../components/SneakerCard_sizeable';
-import Carousel from 'react-native-snap-carousel';
-//images
-import nmd_r1 from '../../../assets/sneaker-example.png';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { SearchBar, Icon } from 'react-native-elements';
+//Redux
+import { useSelector } from 'react-redux'
+//Images
+import dunklow_blackwhite from '../../../assets/dunklow_blackwhite.png';
+import airforce1 from '../../../assets/airforce1.png';
+import airJordanLow from '../../../assets/AirJordanLow_RoyalToe.png';
+import b23_dior from '../../../assets/b23_dior.png';
+import profilePicture from '../../../assets/profile_picture.jpg';
+//Components
 import Colors from '../../../constants/Colors';
 import GoBackArrow from '../../components/GoBackArrow';
-
+import UserProductCard from '../../components/UserProductCard';
+import ProfilePicture from './ProfilePicture';
 
 export default function ProfileScreen(props) { 
-  const [userProducts, setUserProducts] = React.useState([
-    {id: '0', model: 'NMD_R1', brand: 'Adidas', color: 'pink', price: '180.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
-    {id: '1', model: 'Air Force 1', brand: 'Nike', color: 'white', price: '100.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: true},
-    {id: '2', model: 'Air Max 87 Off-White', brand: 'Nike', color: 'gray', price: '180.00', image: Image.resolveAssetSource(nmd_r1).uri, checked: false},
-  ]);
+  const user = useSelector(state => state.user.data);
+  const [searchInput, setSearchInput] = React.useState('');
+
+  const test = [
+    { id: '#12345', legit: true, brand: 'Nike', title: 'Air Force 1', image: airforce1 },
+    { id: '#12346', legit: true, brand: 'Nike', title: 'Dunk low', image: dunklow_blackwhite },
+    { id: '#12347', legit: false, brand: 'Dior/Converse', title: 'B23', image: b23_dior },
+    { id: '#12348', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
+    { id: '#12349', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
+    { id: '#12350', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
+    { id: '#12351', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
+  ];
+  
 
   return (
     <SafeAreaView style={styles.rootContainer}>
+        
       <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          <GoBackArrow left={false} goBack={props.navigation.goBack} dark={true}/>
+        <Icon onPress={() => props.navigation.navigate('EditProfile')}
+          type={'material-community'}
+          name={'pencil'}
+          size={26}
+          color={Colors.secondary}
+          containerStyle={{
+            position: 'absolute',
+            top: '5%', 
+            left: '5%', 
+          }}
+        />
+        <GoBackArrow left={false} goBack={props.navigation.goBack} dark={false}/>
+        <View style={{width: 130, height: 130, margin: '5%'}}>
+          <ProfilePicture source={profilePicture} />
         </View>
-        <View style={styles.infoContainer}>
-          <View style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={styles.userName}>Username</Text>
-            <Text style={styles.userID}>#usernameID</Text>
-          </View>
-        </View>
-        <View style={styles.avatarContainer}>
-          <RoundUserAvatarWithScore />
-        </View>
+        <Text style={styles.userName}>{user.username}</Text>
       </View>
       <View style={styles.bodyContainer}>
-        <View style={styles.userProductsContainer}>
-          <Text style={styles.mesVerifs}>Mes vérifications</Text>
-          <Carousel
-            data={userProducts}
-            renderItem={({item}) => (
-              <SneakerCard_sizeable item={item} hasBeenChecked={true} size={1}/>
-            )}
-            sliderWidth={Dimensions.get('window').width}
-            itemWidth={220}
-            firstItem={Math.floor(userProducts.length / 2)}
-            containerCustomStyle={{marginVertical: 20}}
-            removeClippedSubviews={false}
+        <ScrollView 
+          style={{width: '100%', marginTop: '1%', padding: '5%'}} 
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            width: '100%',
+            paddingBottom: '20%'
+          }}
+        >
+          <SearchBar 
+            containerStyle={{backgroundColor: Colors.secondary, marginBottom: '5%', borderTopWidth: 0, borderBottomWidth: 0}} 
+            inputContainerStyle={{backgroundColor: 'lightgray', borderRadius: 15, width: '100%'}}
+            placeholder={"Search"}
+            onChangeText={setSearchInput}
+            value={searchInput}
+            inputStyle={{color: Colors.background}}
           />
-        </View>
+          <Text style={{fontSize: 23, fontWeight: '600', color: Colors.background, margin: '2%'}}>My checks</Text>
+          {test.map((product) => (
+            <UserProductCard key={product.id}
+              id={product.id}
+              legit={product.legit}
+              brand={product.brand}
+              title={product.title} 
+              image={product.image}
+            />
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -60,51 +93,23 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background
   },
   headerContainer: {
-    flex: 1,
-    zIndex: 1,
+    flex: 3,
     width: '100%',
     alignItems: 'center',
-    backgroundColor: 'lightgray'
+    justifyContent: 'center',
   },
   bodyContainer: {
-    flex: 3,
-    backgroundColor: Colors.background,
-  },
-  header: {
-    flex: 1,
+    flex: 5,
     width: '100%',
-  },
-  infoContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    backgroundColor: Colors.secondary,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flexDirection: 'row',
-  },
-  avatarContainer: {
-    flex: 2,
-    top: '10%',
-    position: 'relative',
-  },
-  mesVerifs: {
-    fontSize: 35,
-    fontWeight: "600",
-    color: "white",
-    marginTop: 15,
-  },
-  userID: {
-    fontSize: 16,
-    fontWeight: "300",
-    color: "black",
-    textTransform: 'uppercase',
   },
   userName: {
     fontSize: 30,
     fontWeight:'bold',
-    color: "black",
-    textTransform: 'capitalize',
-  },
-  userProductsContainer: {
-    alignItems: 'center',
-    marginTop: '35%',
+    color: Colors.secondary,
   },
 });

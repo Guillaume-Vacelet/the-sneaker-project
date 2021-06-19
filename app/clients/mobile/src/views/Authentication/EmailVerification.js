@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
-import Authentication from '../../core/Authentication'
+import User from '../../core/api/User'
 import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function EmailVerification(props) {
@@ -16,7 +16,7 @@ export default function EmailVerification(props) {
   const [verifyActivity, setVerifyActivity] = React.useState(false);
   const [sendNewCodeActivity, setSendNewCodeActivity] = React.useState(false);
 
-  const { email, destination } = props.route.params;
+  const { userid, email, destination } = props.route.params;
 
   function checkCode() {
     setVerifyActivity(true);
@@ -26,8 +26,8 @@ export default function EmailVerification(props) {
       return;
     }
 
-    const auth = new Authentication();
-    auth.verifyEmail(email, inputCode).then((data) => {
+    const user = new User();
+    user.verifyEmail(userid, inputCode).then((data) => {
       setVerifyActivity(false);
       basicFlashMessage("success", data.status, 5000);
       setValidCode(true);
@@ -40,8 +40,8 @@ export default function EmailVerification(props) {
   function sendNewCode() {
     setSendNewCodeActivity(true);
 
-    const auth = new Authentication();
-    auth.sendNewCode(email).then((data) => {
+    const user = new User();
+    user.sendCode(userid, email).then((data) => {
       setSendNewCodeActivity(false);
       basicFlashMessage("success", data.status, 3000);
     }).catch(error => {
@@ -57,7 +57,9 @@ export default function EmailVerification(props) {
         <Text style={styles.title}>Email verified!</Text>
         <Text style={styles.title2}>Your email has been successfully verified</Text>
       </View>
-      <BasicBtn title="Next" onPress={() => props.navigation.navigate(destination, {email: email})}/>
+      <BasicBtn title="Next" 
+        onPress={() => props.navigation.navigate(destination, {userid: userid})}
+      />
     </View>
   )
 

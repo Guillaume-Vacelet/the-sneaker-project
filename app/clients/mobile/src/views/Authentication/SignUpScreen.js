@@ -2,13 +2,10 @@
 import React from 'react';
 import { View, StatusBar, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
-//Redux
-import { useDispatch } from "react-redux";
-import { signUpUser } from "../../redux/actions/authActions";
 //Components
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
-import Authentication from '../../core/Authentication'
+import User from '../../core/api/User'
 import Colors from "../../../constants/Colors"
 import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
@@ -18,11 +15,9 @@ export default function SignUpScreen(props) {
   const [password, setPassword] = React.useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = React.useState('');
   const [activity, setActivity] = React.useState(false);
-  const dispatch = useDispatch();
 
   function handleSignUp() {
     setActivity(true);
-    const auth = new Authentication();
 
     if (!username || !email || !password || !newPasswordConfirmation) {
       setActivity(false);
@@ -40,11 +35,18 @@ export default function SignUpScreen(props) {
       return;
     }
 
-    auth.signup(username, email, password).then((data) => {
-      dispatch(signUpUser(username, email, "abc"));
+    const user = new User();
+    user.signup(username, email, password).then((data) => {
       setActivity(false);
       basicFlashMessage("success", data.status, 5000);
-      props.navigation.navigate('EmailVerification', { email: email, destination: 'SignIn'})
+      props.navigation.navigate(
+        'EmailVerification', 
+        { 
+          userid: data.userid,
+          email: email,
+          destination: 'SignIn'
+        }
+      )
     }).catch((error) => {
       setActivity(false);
       basicFlashMessage("danger", error.data.error, 5000);

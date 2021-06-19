@@ -4,11 +4,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 //Redux
 import { useDispatch } from "react-redux";
-import { signInUser } from "../../redux/actions/authActions";
+import { userSignIn } from "../../redux/actions/userActions";
 //Components
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
-import Authentication from '../../core/Authentication'
+import User from '../../core/api/User'
 import Colors from "../../../constants/Colors"
 import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
@@ -28,23 +28,30 @@ export default function SignInScreen(props) {
       return;
     }
 
-    const auth = new Authentication();
-    auth.signin(email, password).then((data) => {
+    const user = new User();
+    user.signin(email, password).then((data) => {
       setActivity(false);
-      dispatch(signInUser(data.username, data.email, "abc"))
+      dispatch(userSignIn(data.user, "abc"))
       basicFlashMessage("success", data.status, 5000);
     }).catch((error) => {
       setActivity(false);
       basicFlashMessage("danger", error.data.error, 5000);
       if (error.status === 403) {
-        props.navigation.navigate('EmailVerification', {email: email, destination: 'SignIn'});
+        props.navigation.navigate(
+          'EmailVerification', 
+          {
+            userid: error.data.userid,
+            email: email,
+            destination: 'SignIn'
+          }
+        );
       }
     });
   };
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <Text style={styles.title}>Welcome back!</Text>
+      <Text style={styles.title}>Welcome!</Text>
       <View style={styles.inputsContainer}>
         <BasicInput label={'Email'} setter={setEmail} type={"email-address"}/>
         <BasicInput label={'Password'} setter={setPassword} secured={true}/>

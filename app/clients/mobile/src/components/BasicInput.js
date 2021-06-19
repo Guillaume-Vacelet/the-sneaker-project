@@ -7,11 +7,11 @@ export default function BasicInput(props) {
       <Text style={{color: 'grey', fontSize: 16, fontWeight: '500'}}>
         {props.label}
       </Text>
-      <TextInput 
+      <TextInput value={props.value}
+        onChangeText={(value) => props.setter(value)}
         keyboardType={props.type ? props.type : 'default'}
         secureTextEntry={props.secured}
-        onChangeText={(value) => props.setter(value)}
-        maxLength={props.type == "email-address" ? 40 : 12}
+        maxLength={props.type == "email-address" ? 40 : 20}
         style={{
           width: '100%',
           height: 43,
@@ -22,7 +22,6 @@ export default function BasicInput(props) {
           paddingLeft: 10,
           borderColor: 'lightgray',
         }}
-        placeholderTextColor='lightgray'
       />
     </View>
   )

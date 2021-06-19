@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BasicBtn from '../../components/BasicBtn';
 import BasicInput from '../../components/BasicInput';
 import Colors from "../../../constants/Colors"
-import Authentication from '../../core/Authentication'
+import User from '../../core/api/User'
 import basicFlashMessage from '../../core/utils/basicFlashMessage';
 
 export default function ForgotPassword(props) {
@@ -23,11 +23,18 @@ export default function ForgotPassword(props) {
       return;
     }
 
-    const auth = new Authentication();
-    auth.sendNewCode(email).then(data => {
+    const user = new User();
+    user.sendCode('', email).then(data => {
       setActivity(false);
       basicFlashMessage("success", data.status, 5000);
-      props.navigation.navigate('EmailVerification', {email: email, destination: 'ResetPassword'})
+      props.navigation.navigate(
+        'EmailVerification', 
+        {
+          userid: data.userid,
+          email: email, 
+          destination: 'ResetPassword'
+        }
+      )
     }).catch(error => {
       setActivity(false);
       basicFlashMessage("danger", error.data.error, 5000);
