@@ -32,33 +32,6 @@ export default function EditProfileScreen(props) {
     'Non-serializable values were found in the navigation state',
   ]);
 
-
-  React.useEffect(() => {
-    (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
-      }
-    })();
-  }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setPictureEdit(result.uri);
-    }
-  };
-
   function updateProfile() {
     const userApi = new User();
     userApi.update(user.userid, usernameEdit, emailEdit).then(data => {
@@ -112,6 +85,35 @@ export default function EditProfileScreen(props) {
       updateProfile();
     }
   }
+
+  const askPermission = async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        return false;
+      }
+      return true;
+    }
+  }
+  
+  const pickImage = async () => {
+    let status = await askPermission();
+    if (!status) {
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    console.log(result);
+  
+    if (!result.cancelled) {
+      setPictureEdit(result.uri);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.rootContainer}>
