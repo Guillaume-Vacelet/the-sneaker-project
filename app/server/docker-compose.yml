@@ -10,20 +10,23 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=pwd
     volumes:
       # - .data/mdata:/data/db
-      - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+      - ./db/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
     ports:
       - "27017:27017"
+    restart: always
     logging:
       driver: none
   
   flask:
-    build: .
-    command: python -u wsgi.py
+    build: ./flask
     ports:
       - "5000:5000"
     environment: 
       - PYTHONUNBUFFERED=1
+      - FLASK_APP=wsgi.py
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
     volumes:
-      - .:/app
+      - ./flask:/app
     depends_on:
       - mongo
