@@ -1,34 +1,50 @@
+//React
 import React from 'react';
-import { Dimensions, View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from 'react-native-elements';
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { userSignIn } from '../../redux/actions/userActions';
+//Components
 import Colors from '../../../constants/Colors';
+import User from '../../core/api/User';
 
 export default function HomeScreen(props) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.data);
+  const theme = useSelector(state => state.theme);
+
   return (
     <SafeAreaView style={styles.rootContainer}>
       <View style={styles.headerContainer}>
         <TouchableOpacity style={styles.headerButton} onPress={() => props.navigation.navigate("Scan")}>
-          <Icon 
+          <Icon onPress={() => {
+              const userAPI = new User();
+              userAPI.getUserInformations(user.userid).then(data => {
+                console.log(data);
+                dispatch(userSignIn(data))
+              }).catch(error => {
+                console.log(error);
+                console.log(error.data.error);
+              })
+              props.navigation.navigate("Profile");
+            }}
             name="user-circle" 
             type="font-awesome" 
             size={35} 
-            color={"white"}
+            color={Colors.secondary}
             style={styles.profileIcon}
-            onPress={() => props.navigation.navigate("Profile")}
           />
-          {/* <Text style={styles.profileIconLabel}>My Sneakers</Text> */}
         </TouchableOpacity>
         <TouchableOpacity style={styles.headerButton} onPress={() => props.navigation.navigate("Scan")}>
-          <Icon 
+          <Icon onPress={() => props.navigation.navigate("Settings")}
             name="cog" 
             type="font-awesome" 
             size={35} 
-            color={"white"}
+            color={Colors.secondary}
             style={styles.profileIcon}
-            onPress={() => props.navigation.navigate("Settings")}
           />
-          {/* <Text style={styles.profileIconLabel}>Settings</Text> */}
         </TouchableOpacity>
       </View>
       <View style={styles.bodyContainer}>
@@ -46,7 +62,7 @@ export default function HomeScreen(props) {
           </View>
           <View style={styles.titleTextContainer}>
             <Text style={styles.title1}>Legit Check</Text>
-            <Text style={styles.title2}>your sneakers</Text>
+            <Text style={styles.title2}>your sneakers!</Text>
           </View>
         </View>
         <View style={styles.tipContainer}>
@@ -54,7 +70,7 @@ export default function HomeScreen(props) {
             name="camera" 
             type="font-awesome-5" 
             size={20} 
-            color={'white'}
+            color={Colors.secondary}
             style={styles.profileIcon}
             onPress={() => props.navigation.navigate("Profile")}
           />
@@ -62,7 +78,7 @@ export default function HomeScreen(props) {
         </View>
         <View style={styles.scanButtonContainer}>
           <TouchableOpacity style={styles.scanButton} onPress={() => props.navigation.navigate("Scan")}>
-            <Icon name="scan-sharp" type="ionicon" size={120} color={"white"} />
+            <Icon name="scan-sharp" type="ionicon" size={120} color={Colors.secondary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -82,24 +98,30 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'row',
     backgroundColor: Colors.background,
+    padding: '5%',
   },
   bodyContainer: {
-    flex: 5,
+    flex: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '5%',
     backgroundColor: Colors.background,
   },
   titleContainer: {
-    flex: 1,
+    flex: 2,
+    width: '100%',
     flexDirection: 'row',
     marginBottom: '10%',
   },
   titleIconContainer: {
+    flex: 2,
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    marginHorizontal: '2%',
   },
   titleTextContainer: {
+    flex: 4,
     justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   title1: {
     fontSize: 35,
@@ -112,7 +134,7 @@ const styles = StyleSheet.create({
   title2: {
     fontSize: 25,
     fontWeight: '600',
-    color: 'white',
+    color: Colors.primary,
     marginHorizontal: '2%',
     marginVertical: 0,
     paddingVertical: 0
@@ -126,7 +148,7 @@ const styles = StyleSheet.create({
   tip: {
     fontSize: 23,
     fontWeight: '600',
-    color: 'white',
+    color: Colors.secondary,
     marginHorizontal: '2%',
   },
   scanButtonContainer: {
@@ -141,24 +163,16 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.get('window').width / 2,
     justifyContent: 'center',
     backgroundColor: Colors.primary,
-    elevation: 10,
-    shadowColor: "white",
+    elevation: 20,
+    shadowColor: Colors.secondary,
     shadowOffset: {width: 0, height: 0},
-    shadowRadius: 5,
-    shadowOpacity: 0.5
+    shadowRadius: 10,
+    shadowOpacity: 0.5,
   },
   headerButton: {
     flexDirection: 'column',
-    margin: '5%',
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  profileIcon: {
-    paddingBottom: '2%',
-  },
-  profileIconLabel: {
-    color: 'white',
-    fontSize: 15
+    // backgroundColor: 'transparent',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   }
 });

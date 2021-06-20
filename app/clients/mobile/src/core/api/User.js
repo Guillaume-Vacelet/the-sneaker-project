@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // let url = 'https://safecheck-flask-app.herokuapp.com/';
-let url = 'http://893510eaae65.ngrok.io/';
+let url = 'http://1ca74529ecec.ngrok.io/';
 
 export default class User {
   signup(username, email, password) {
@@ -133,6 +133,21 @@ export default class User {
             newemail: newEmail
           }
         },
+      ).then(res => {
+        if (res.status === 200) {
+          resolve(res.data);
+        }
+      }).catch(error => {
+        reject(error.response);
+      }); 
+    });
+  }
+
+  getUserInformations(userid) {
+    console.log(url + 'user/' + userid);
+    return new Promise((resolve, reject) => {
+      axios.get(
+        url + 'user/' + userid,
       ).then(res => {
         if (res.status === 200) {
           resolve(res.data);

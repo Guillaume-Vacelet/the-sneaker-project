@@ -53,8 +53,9 @@ export default function EmailVerification(props) {
   function handleEmailVerificationCallback() {
     if (callback) {
       callback();
+    } else {
+      props.navigation.navigate(destination, {userid: userid});
     }
-    props.navigation.navigate(destination, {userid: userid});
   }
 
   const ValidCode = () => (

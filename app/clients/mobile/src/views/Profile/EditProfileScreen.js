@@ -5,8 +5,7 @@ import { View, Image, Text, StyleSheet,TouchableOpacity, LogBox } from 'react-na
 import { Icon } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 //Redux
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { userUpdate } from "../../redux/actions/userActions";
 //Assets
 import profilePicture from '../../../assets/profile_picture.jpg';
@@ -33,10 +32,16 @@ export default function EditProfileScreen(props) {
   ]);
 
   function updateProfile() {
+    let email = '';
+    if (emailEdit !== user.email) {
+      email = emailEdit;
+    }
+  
     const userApi = new User();
-    userApi.update(user.userid, usernameEdit, emailEdit).then(data => {
+    userApi.update(user.userid, usernameEdit, email).then(data => {
       setActivity(false);
       dispatch(userUpdate(data.user.username, data.user.email));
+      props.navigation.navigate('Profile');
       basicFlashMessage("success", data.status, 3000);
     }).catch(error => {
       setActivity(false);
@@ -72,7 +77,7 @@ export default function EditProfileScreen(props) {
           {
             userid: data.userid, 
             email: emailEdit, 
-            destination: 'Profile',
+            // destination: 'Profile',
             callback: updateProfile
           },
         )

@@ -5,15 +5,15 @@ import GoToStepButton from './GoToStepButton';
 import { MaterialIndicator } from 'react-native-indicators';
 import { Icon } from 'react-native-elements';
 import ProductsContext from '../../core/contexts/ProductsContext';
+import BasicBtn from '../../components/BasicBtn';
 
 export default function ResultsStep(props) {
   const [activity, setActivity] = useState(true);
   const [legit, setLegit] = useState(false);
   const { selectedModel } = React.useContext(ProductsContext);
+  const { goHome } = props.route.params;
 
   setTimeout(() => setActivity(false), 5000);
-
-  console.log(selectedModel)
 
   const ResultsLoader = () => (
     <View>
@@ -39,16 +39,17 @@ export default function ResultsStep(props) {
             : <Text style={styles.resultNegativeTitle1}>Fake!</Text>
           }
         </View>
-        <Text style={styles.resultTitle2}>Your pair of {selectedModel.model}</Text>
-        {legit
-          ? <Text style={styles.resultTitle2}>has been approved by our AI.</Text>
-          : <Text style={styles.resultTitle2}>has not been approved by our AI.</Text>
-        }
       </View>
       <Image
         style={styles.sneakerImg}
         source={{uri: selectedModel.image}}
       />
+      <Text style={styles.resultTitle2}>Your {selectedModel.model}</Text>
+      {legit
+        ? <Text style={styles.resultTitle2}>has been approved by our AI.</Text>
+        : <Text style={styles.resultTitle2}>has not been approved by our AI.{'\n'}</Text>
+      }
+      <Text style={styles.resultTitle2}>We added your product to your profile.</Text>
     </View>
   )
 
@@ -61,7 +62,13 @@ export default function ResultsStep(props) {
         }
       </View>
       <View style={styles.footerContainer}>
-        <GoToStepButton goBack={true} />
+        {/* <GoToStepButton goBack={true} /> */}
+
+        {activity
+          ? null
+          : <BasicBtn title={'Go home'} width={200} onPress={goHome}/>
+        }
+        
       </View>
     </View>
   );
@@ -92,29 +99,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   resultView: {
-    width: '100%', 
-    height: '100%', 
+    width: '90%', 
+    height: '65%', 
     justifyContent: 'center', 
-    alignItems: 'center'
+    alignItems: 'center',
   },
   resultPositiveTitle1: {
-    fontSize: 30, 
+    fontSize: 35, 
     fontWeight: '600',
     color: Colors.primary, 
   },
   resultNegativeTitle1: {
-    fontSize: 30, 
+    fontSize: 35, 
     fontWeight: '600',
     color: '#CD5C5C', 
   },
   resultTitle2: {
-    fontSize: 22, 
+    fontSize: 20, 
     color: Colors.secondary, 
   },
   sneakerImg: {
     width: '70%', 
     height: '35%',
     zIndex: 0,
-    margin: 20,
+    margin: '10%',
   },
 });

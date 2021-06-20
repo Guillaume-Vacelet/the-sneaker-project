@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SearchBar, Icon } from 'react-native-elements';
 //Redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { userSignIn } from '../../redux/actions/userActions';
 //Images
 import dunklow_blackwhite from '../../../assets/dunklow_blackwhite.png';
 import airforce1 from '../../../assets/airforce1.png';
@@ -19,6 +20,7 @@ import ProfilePicture from './ProfilePicture';
 
 export default function ProfileScreen(props) { 
   const user = useSelector(state => state.user.data);
+  const dispatch = useDispatch();
   const [searchInput, setSearchInput] = React.useState('');
 
   const test = [
@@ -30,7 +32,6 @@ export default function ProfileScreen(props) {
     { id: '#12350', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
     { id: '#12351', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
   ];
-  
 
   return (
     <SafeAreaView style={styles.rootContainer}>

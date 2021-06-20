@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     flex: 12,
-    width: '100%'
+    width: '100%',
   },
   footerContainer: {
     flex: 1,

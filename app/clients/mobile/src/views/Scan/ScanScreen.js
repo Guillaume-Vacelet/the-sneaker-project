@@ -77,6 +77,7 @@ export default function ScanScreen(props) {
               }}
             />
             <ScanStack.Screen name="Results" component={ResultsStep} 
+              initialParams={{goHome: props.navigation.goBack}}
               options={{
                 headerShown: false
               }}

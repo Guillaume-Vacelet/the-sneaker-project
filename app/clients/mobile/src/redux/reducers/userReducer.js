@@ -1,7 +1,7 @@
 import { USER_SIGN_IN, USER_SIGN_OUT, USER_UPDATE } from '../constants/userActionTypes';
 
 const initialState = {
-  loggedIn: false,
+  loggedIn: true,
   data: {
     userid: '',
     username: '',

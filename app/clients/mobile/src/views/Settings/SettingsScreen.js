@@ -5,8 +5,9 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userSignOut } from "../../redux/actions/userActions";
+import { switchTheme } from '../../redux/actions/themeActions';
 //Components
 import Colors from '../../../constants/Colors';
 import GoBackArrow from '../../components/GoBackArrow';
@@ -18,6 +19,16 @@ export default function SettingsScreen(props) {
   const [notifications, setNotifications] = React.useState(false);
   const [darkTheme, setDarkTheme] = React.useState(true);
   const dispatch = useDispatch();
+  const theme = useSelector(state => state.theme);
+
+  function switchAppTheme() {
+    dispatch(switchTheme());
+    // setDarkTheme(!darkTheme);
+  }
+
+  function switchEnableNotification() {
+    setNotifications(!notifications);
+  }
 
   function handleSignOut() {
     basicFlashMessage("success", "Successfully logged out", 3000);
@@ -32,14 +43,14 @@ export default function SettingsScreen(props) {
       icon: 'bell',
       canToggle: true,
       toggleValue: notifications,
-      toggleSetter: setNotifications
+      action: switchEnableNotification
     },
     {
       title: 'Dark theme',
       icon: 'moon-o',
       canToggle: true,
-      toggleValue: darkTheme,
-      toggleSetter: setDarkTheme
+      toggleValue: theme.darkMode,
+      action: switchAppTheme
     },
     {
       title: 'Language',
@@ -76,8 +87,9 @@ export default function SettingsScreen(props) {
               <ListItem.Content>
                 <ListItem.Title style={styles.settingTitle}>{setting.title}</ListItem.Title>
               </ListItem.Content>
-              {setting.toggleSetter
-                ? <Icon onPress={() => {setting.toggleSetter(!setting.toggleValue)}}
+              {setting.action
+                ? <Icon onPress={setting.action}
+                // ? <Icon onPress={() => {setting.toggleSetter(!setting.toggleValue)}}
                     type={'font-awesome'} 
                     name={setting.toggleValue ? 'toggle-on' : 'toggle-off'}
                     size={30} 

@@ -16,41 +16,38 @@ export default function ScanGridItem(props) {
   return (
     <TouchableOpacity onPress={() => handlingScanPart()}
       style={{
+        backgroundColor: savedPictures[props.item.name].uri ? Colors.primary : 'white',
         borderRadius: 15,
-        backgroundColor: savedPictures[props.item.name].uri ? Colors.primary : 'white'
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '10%',
+        height: 130,
+        // width: 150,
       }}
     >
-      <View style={styles.itemContainer}>
+      <View style={{
+        height: '100%', 
+        width: '100%', 
+        justifyContent: 'center', 
+        alignItems: 'center'
+      }}>
         <Image style={styles.tinyLogo} source={{uri: props.item.image}}/>
-        <Text style={styles.itemName}>{props.item.name}</Text>
       </View>
+      <Text style={styles.itemName}>{props.item.name}</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  gridView: {
-    marginTop: 10,
-    flex: 1,
-  },
-  itemContainer: {
-    justifyContent: 'flex-end',
-    padding: 10,
-    height: 150,
-  },
   itemName: {
     fontSize: 16,
-    color: 'black',
+    color: Colors.background,
     fontWeight: '600',
-  },
-  itemCode: {
-    fontWeight: '600',
-    fontSize: 12,
-    color: '#fff',
+    alignSelf: 'flex-start',
+    width: '100%',
   },
   tinyLogo: {
-    width: 90,
-    height: 90,
-    marginLeft:'20%',
+    width: 85,
+    height: 85,
   },
 });

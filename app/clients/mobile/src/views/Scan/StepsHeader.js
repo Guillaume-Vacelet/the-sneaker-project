@@ -45,7 +45,9 @@ export default function StepsHeader() {
         justifyContent: 'center',
       }}>
         <Text style={styles.title1}>{stepsSubtitle[currentStep].subtitle1}</Text>
-        <Text style={styles.title2}>{stepsSubtitle[currentStep].subtitle2}</Text>
+        <Text style={[styles.title2, {paddingHorizontal: currentStep == 1 ? '5%' : 0}]}>
+          {stepsSubtitle[currentStep].subtitle2}
+        </Text>
       </View>
     </View>
   );
@@ -64,8 +66,8 @@ const styles = StyleSheet.create({
     color: Colors.primary
   },
   title2: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
-    color: Colors.secondary
+    color: Colors.secondary,
   },
 });
