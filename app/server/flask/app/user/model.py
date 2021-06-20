@@ -182,3 +182,18 @@ class User:
             "status": "User informations successfully updated",
             "user" : db.users.find_one({"_id" : request.args.get('userid')})
         }), 200
+
+
+    def get_user_informations(self, userid):
+        user = db.users.find_one({"_id" : userid})
+
+        if not user:
+            return jsonify({"error": "Can't find user"}), 400
+        return jsonify({
+            "userid": user["_id"],
+            "creation_date": user["creation_date"],
+            "username": user["username"],
+            "email": user['email'],
+            "products": user['products'],
+            "profile_picture": user['profile_picture']
+        }), 200

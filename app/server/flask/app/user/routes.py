@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
-from flask_cors import cross_origin
 from app.app import app, db
-from .models import User
+from .model import User
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -17,13 +16,15 @@ def get_users():
   } for user in _users]
   return jsonify({"users": users})
 
+@app.route('/user/<userid>', methods=['GET'])
+def get_user(userid):
+  return User().get_user_informations(userid)
+
 @app.route('/user/signup', methods=['POST'])
-@cross_origin()
 def signup():
   return User().signup()
 
 @app.route('/user/signin', methods=['POST'])
-@cross_origin()
 def signin():
   return User().signin()
 
