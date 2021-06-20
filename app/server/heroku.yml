@@ -1,0 +1,4 @@
+build:
+  docker:
+    mongo: db/Dockerfile
+    flask: flask/Dockerfile
