@@ -6,5 +6,6 @@ db.users.insertOne(
     username: "",
     email: "",
     password: "",
+    emailVerified: True,
   }
 )
