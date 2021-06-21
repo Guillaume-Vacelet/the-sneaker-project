@@ -1,7 +1,7 @@
 FROM mongo
 
 RUN mkdir -p data/db
-COPY ./init-db.js /docker-entrypoint-initdb.d/init-db.js:ro
+COPY ./init-db.js /docker-entrypoint-initdb.d/init-db.js
 
 WORKDIR /data
 
