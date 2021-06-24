@@ -26,7 +26,8 @@ mail = Mail(app)
 
 # Database
 from pymongo import MongoClient
-MONGO_HOST = "mongo" 
+# MONGO_HOST = "mongo" 
+MONGO_HOST = os.environ.get('DYNO')
 MONGO_PORT = "27017"
 MONGO_DB = "safecheck-db"
 MONGO_USER = "root"
@@ -40,11 +41,11 @@ client = MongoClient("mongodb://{}:{}@{}:{}/{}?authSource=admin".format(
 ))
 db = client['safecheck-db']
 # Set index to automatically delete user if email_verified==False for 24h
-db.users.create_index(
-    "creation_date", 
-    expireAfterSeconds=86400, 
-    partialFilterExpression={"email_verified": False}
-)
+# db.users.create_index(
+#     "creation_date", 
+#     expireAfterSeconds=86400, 
+#     partialFilterExpression={"email_verified": False}
+# )
 
 # Routes
 from .user import routes
