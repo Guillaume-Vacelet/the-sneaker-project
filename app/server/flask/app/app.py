@@ -1,6 +1,7 @@
 from flask import Flask
 # from flask_cors import CORS
 from flask_mail import Mail, Message
+import os
 
 app = Flask(__name__)
 app.secret_key = b'\x9e\xc8\x12\xb9\x1cW\x98\xe4\x17@\xf5\x9e\x86\x0c\x1a\x92'
