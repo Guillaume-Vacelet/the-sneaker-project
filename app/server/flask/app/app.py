@@ -28,7 +28,7 @@ mail = Mail(app)
 # Database
 from pymongo import MongoClient
 # MONGO_HOST = "mongo" 
-MONGO_HOST = os.environ.get('DYNO')
+MONGO_HOST = "worker.1"
 MONGO_PORT = "27017"
 MONGO_DB = "safecheck-db"
 MONGO_USER = "root"
