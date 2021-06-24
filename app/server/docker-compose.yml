@@ -9,9 +9,9 @@ services:
     #   - MONGO_INITDB_DATABASE=safechek-db
     #   - MONGO_INITDB_ROOT_USERNAME=root
     #   - MONGO_INITDB_ROOT_PASSWORD=pwd
-    volumes:
+    # volumes:
       # - .data/mdata:/data/db
-      - ./db/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+      # - ./db/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
     ports:
       - "27017:27017"
     restart: always
@@ -20,8 +20,8 @@ services:
   
   flask:
     build: ./flask
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
     environment: 
       - PYTHONUNBUFFERED=1
       # - FLASK_APP=wsgi.py
