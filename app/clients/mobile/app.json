@@ -2,7 +2,7 @@
   "expo": {
     "name": "Safecheck",
     "slug": "safe-check-app",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/app_logo.png",
     "splash": {
@@ -26,7 +26,9 @@
         "foregroundImage": "./assets/app_logo.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.safcheck.safecheckapp"
+      "package": "com.safcheck.safecheckapp",
+      "permissions": ["CAMERA"],
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
