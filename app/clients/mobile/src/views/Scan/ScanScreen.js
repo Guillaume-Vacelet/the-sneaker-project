@@ -19,6 +19,7 @@ import nmdr1 from '../../../assets/nmdr1.png';
 import dunklow_bw from '../../../assets/dunklow_blackwhite.png';
 import b23_dior from '../../../assets/b23_dior.png';
 import AirJordanLow_RoyalToe from '../../../assets/AirJordanLow_RoyalToe.png';
+import yeezy_700_v3_alvah from '../../../assets/yeezy_700_v3_alvah.png';
 
 export default function ScanScreen(props) {
   const ScanStack = createStackNavigator();
@@ -43,6 +44,7 @@ export default function ScanScreen(props) {
       {id: '3', model: 'Dunk Low', brand: 'Nike', color: 'black', image: Image.resolveAssetSource(dunklow_bw).uri, checked: false},
       {id: '4', model: 'B23 Dior', brand: 'Nike', color: 'black', image: Image.resolveAssetSource(b23_dior).uri, checked: false},
       {id: '5', model: 'Air Jordan Low Royal Toe', brand: 'Nike', color: 'black', image: Image.resolveAssetSource(AirJordanLow_RoyalToe).uri, checked: false},
+      {id: '6', model: 'Yeezy 700 V3 Alvah', brand: 'Adidas', color: 'black', image: Image.resolveAssetSource(yeezy_700_v3_alvah).uri, checked: false},
     ],
     selectedModel: selectedModel,
     setSelectedModel: setSelectedModel
