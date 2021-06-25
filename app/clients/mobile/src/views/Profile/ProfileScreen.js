@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SearchBar, Icon } from 'react-native-elements';
 //Redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { userSignIn } from '../../redux/actions/userActions';
 //Images
 import dunklow_blackwhite from '../../../assets/dunklow_blackwhite.png';
@@ -20,7 +20,6 @@ import ProfilePicture from './ProfilePicture';
 
 export default function ProfileScreen(props) { 
   const user = useSelector(state => state.user.data);
-  const dispatch = useDispatch();
   const [searchInput, setSearchInput] = React.useState('');
 
   const test = [
@@ -28,9 +27,6 @@ export default function ProfileScreen(props) {
     { id: '#12346', legit: true, brand: 'Nike', title: 'Dunk low', image: dunklow_blackwhite },
     { id: '#12347', legit: false, brand: 'Dior/Converse', title: 'B23', image: b23_dior },
     { id: '#12348', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
-    { id: '#12349', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
-    { id: '#12350', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
-    { id: '#12351', legit: true, brand: 'Nike', title: 'Air Jordan Low', image: airJordanLow },
   ];
 
   return (
@@ -47,7 +43,8 @@ export default function ProfileScreen(props) {
         <View style={{width: 130, height: 130, margin: '5%'}}>
           <ProfilePicture source={profilePicture} />
         </View>
-        <Text style={styles.userName}>{user.username}</Text>
+        <Text style={styles.userName}>Tinker Hatfield</Text>
+        {/* <Text style={styles.userName}>{user.username}</Text> */}
       </View>
       <View style={styles.bodyContainer}>
         <ScrollView 
