@@ -4,6 +4,7 @@ import { SearchBar, ListItem } from 'react-native-elements';
 import Colors from '../../../constants/Colors';
 import ProductsContext from '../../core/contexts/ProductsContext';
 import ScanStepsContext from '../../core/contexts/ScanStepsContext';
+import { LogBox } from 'react-native';
 
 export default function ModelSelectionStep(props) {
   const [searchInput, setSearchInput] = React.useState('');
@@ -25,6 +26,10 @@ export default function ModelSelectionStep(props) {
     setCurrentStep(currentStep + 1);
     props.navigation.navigate(stepsTitle[currentStep + 1]);
   }
+
+  LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+  ]);
   
   return (
     <View style={styles.rootContainer}>
@@ -45,7 +50,6 @@ export default function ModelSelectionStep(props) {
         >
           {searchInput
             ? getSearchResults().map((product, i) => {
-                console.log(product.image)
                 return (
                 <ListItem key={i} bottomDivider 
                   containerStyle={styles.result}
