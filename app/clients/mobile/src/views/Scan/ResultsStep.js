@@ -9,11 +9,16 @@ import BasicBtn from '../../components/BasicBtn';
 
 export default function ResultsStep(props) {
   const [activity, setActivity] = useState(true);
-  const [legit, setLegit] = useState(false);
+  const [legit, setLegit] = useState(true);
   const { selectedModel } = React.useContext(ProductsContext);
   const { goHome } = props.route.params;
 
-  setTimeout(() => setActivity(false), 5000);
+  setTimeout(() => {
+    setActivity(false);
+    if (selectedModel.model === "Yeezy 700 V3 Alvah") {
+      setLegit(false);
+    }
+  }, 5000);
 
   const ResultsLoader = () => (
     <View>

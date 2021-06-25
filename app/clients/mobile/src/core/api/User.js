@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// let url = 'https://safecheck-flask-server.herokuapp.com/';
 let url = 'https://safecheck-app.herokuapp.com/';
 // let url = 'http://1ca74529ecec.ngrok.io/';
 
