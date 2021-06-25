@@ -102,7 +102,7 @@ export default function SettingsScreen(props) {
         </View>
       </View>
       <View style={styles.footerContainer}>
-        <BasicBtn title={'Sign-out'} onPress={handleSignOut} color={'#CD5C5C'} />
+        {/* <BasicBtn title={'Sign-out'} onPress={handleSignOut} color={'#CD5C5C'} /> */}
       </View>
     </SafeAreaView>
   );
