@@ -7,8 +7,6 @@ import ScanPicturesContext from '../../../core/contexts/ScanPicturesContext';
 import BasicBtn from '../../../components/BasicBtn';
 import Colors from '../../../../constants/Colors';
 import { Camera } from 'expo-camera';
-import * as ImageManipulator from 'expo-image-manipulator';
-
 
 export default function CameraScreen() {
   let camera = Camera;
@@ -46,36 +44,29 @@ export default function CameraScreen() {
       base64: true,
       exif: true,
       skipProcessing: true,
-    });
-    let resizedPhoto = await ImageManipulator.manipulateAsync(
-      photo.uri,
-      [{ crop: { originX: 50, originY: 600, width: 2000, height: 3000 } }],
-      { compress: 1, format: "jpeg", base64: false }
-    ).then((cropped) => {
-      setPicture(cropped.uri);
+    }).then((photo) => {
+      setPicture(photo.uri)
       setPreviewVisible(true);
       setSavedPicture({
         ...savedPictures,
-        [currentScanPart]: {uri: cropped.uri},
+        [currentScanPart]: {uri: photo.uri},
       });
-    })
-
-    // const photo = await camera.takePictureAsync({
-    //   quality: 1,
-    //   base64: true,
-    //   exif: true,
-    //   skipProcessing: true,
-    // }).then((photo) => {
-    //   setPicture(photo.uri);
+    }).catch((error) => {
+      alert(error);
+      console.log(error);
+    });
+    // let resizedPhoto = await ImageManipulator.manipulateAsync(
+    //   photo.uri,
+    //   [{ crop: { originX: 50, originY: 600, width: 2000, height: 3000 } }],
+    //   { compress: 1, format: "jpeg", base64: false }
+    // ).then((cropped) => {
+    //   setPicture(cropped.uri);
     //   setPreviewVisible(true);
     //   setSavedPicture({
     //     ...savedPictures,
-    //     [currentScanPart]: {uri: photo.uri},
+    //     [currentScanPart]: {uri: cropped.uri},
     //   });
-    // }).catch((error) => {
-    //   alert(error);
-    //   console.log(error);
-    // });
+    // })
   }
 
   function savePhoto() { 
