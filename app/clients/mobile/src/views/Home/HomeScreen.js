@@ -13,7 +13,6 @@ import User from '../../core/api/User';
 export default function HomeScreen(props) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.data);
-  const theme = useSelector(state => state.theme);
 
   return (
     <SafeAreaView style={styles.rootContainer}>
@@ -22,10 +21,8 @@ export default function HomeScreen(props) {
           <Icon onPress={() => {
               const userAPI = new User();
               userAPI.getUserInformations(user.userid).then(data => {
-                console.log(data);
                 dispatch(userSignIn(data))
               }).catch(error => {
-                console.log(error);
                 console.log(error.data.error);
               })
               props.navigation.navigate("Profile");
